@@ -7,27 +7,51 @@
 #     :reconnect => true,
 #     :database  => 'your_database',
 #     :pool      => 5,
-#     :username  => 'root',
+#     :username  => 'bizevo',
 #     :password  => '',
 #     :host      => 'localhost',
 #     :socket    => '/tmp/mysql.sock'
 #   }
 #
 ActiveRecord::Base.configurations[:development] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'bizevo_development.db')
+  :adapter   => 'mysql2',
+  :encoding  => 'utf8',
+  :reconnect => true,
+  :database  => 'bizevo_development',
+  :collation => 'utf8_general_ci',
+  :pool      => 5,
+  :username  => 'bizevo',
+  :password  => 'bizevo',
+  :host      => 'localhost',
+  :socket    => '/var/lib/mysql/mysql.sock'
 
 }
 
 ActiveRecord::Base.configurations[:production] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'bizevo_production.db')
+  :adapter   => 'mysql2',
+  :encoding  => 'utf8',
+  :reconnect => true,
+  :database  => 'bizevo_production',
+  :collation => 'utf8_general_ci',
+  :pool      => 5,
+  :username  => 'bizevo',
+  :password  => 'bizevo',
+  :host      => 'localhost',
+  :socket    => '/var/lib/mysql/mysql.sock'
 
 }
 
 ActiveRecord::Base.configurations[:test] = {
-  :adapter => 'sqlite3',
-  :database => Padrino.root('db', 'bizevo_test.db')
+  :adapter   => 'mysql2',
+  :encoding  => 'utf8',
+  :reconnect => true,
+  :database  => 'bizevo_test',
+  :collation => 'utf8_general_ci',
+  :pool      => 5,
+  :username  => 'bizevo',
+  :password  => 'bizevo',
+  :host      => 'localhost',
+  :socket    => '/var/lib/mysql/mysql.sock'
 
 }
 
