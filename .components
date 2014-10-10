@@ -1,0 +1,9 @@
+---
+:orm: activerecord
+:test: rspec
+:mock: rr
+:script: none
+:renderer: erb
+:stylesheet: none
+:namespace: Bizevo
+:migration_format: number
