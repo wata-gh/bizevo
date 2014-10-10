@@ -1,4 +1,5 @@
 language: ruby
+cache: bundler
 notifications:
   slack:
     secure: aRPu1JYsIfOK0xQ0ZAkAESzNZSzPKKBsW8pzOtoZidPR0vzIpicSLgKNq7dPfHb3hJ0puXWTMXBB91XCFAVp76/DuAgsDdn4gTfQSUbqiUwAcff1KFXOb1BsvYJ45Lmo8qoA5ltfTp2eoyhiWQAxCReI/NjoLw1/Pe3mWB2Prco=
