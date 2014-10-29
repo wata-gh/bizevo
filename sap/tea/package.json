@@ -8,6 +8,7 @@
     "chalk": "^0.4.0",
     "gulp": "^3.8.0",
     "gulp-autoprefixer": "^0.0.6",
+    "gulp-bower": "0.0.7",
     "gulp-cache": "^0.2.0",
     "gulp-csso": "^0.2.6",
     "gulp-filter": "^1.0.0",

@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 
 // inject bower components
-gulp.task('wiredep', function () {
+gulp.task('wiredep', ['bower'], function () {
   var wiredep = require('wiredep').stream;
 
   gulp.src('src/{app,components}/*.scss')
