@@ -9,5 +9,5 @@ start browser and sample page up!
 ## TODO
 - Gulpfile rewrite by coffee script.
 - dest to erb directory.
-- unit and e2e test settings.
+- unit and e2e test settings. -> DONE
 
