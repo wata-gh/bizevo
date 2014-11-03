@@ -1,36 +1,38 @@
 Bizevo::App.controllers :kiita do
 
   get :index do
-    'hello'
+    @articles = Article.joins(:article_tags).includes(:article_tags).all
+    render 'kiita/index'
   end
 
   get :new do
     render 'kiita/new'
   end
 
+  get :update, :with => :id do
+    @article = Article.joins(:article_tags).includes(:article_tags).find_by_id(params[:id])
+    halt 404 unless @article
+    render 'kiita/update'
+  end
+
+  post :update do
+    update_article params
+    redirect '/kiita/'
+  end
+
   get :view, :with => :id do
-    @article = Article.find(params[:id])
-    @mdText = markDownParse(@article.article)
+    @article = Article.find_by_id params[:id]
+    halt 404 unless @article
+    @md_text = mark_down_parse @article.article
     render 'kiita/view'
   end
 
   post :create do
-    tag_data = ''
-    params[:draft_item][:tag_data].each do |value|
-      tag_data << value[:name]
-    end
-    article_param = {
-      :title => params[:draft_item][:title],
-      :article => params[:draft_item][:article],
-      :tag => tag_data
-      }
-    @article = Article.new(article_param)
-    if @article.save
-      redirect(url(:kiita, :view, :id => @article.id))
-    else
-      p 'failed'
-    end
-    'hello'
+    save_article params
+    redirect '/kiita/'
   end
 
+  # error 404 do
+  #   render 'errors/404'
+  # end
 end

@@ -2,20 +2,15 @@
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<link href="//cdn.qiita.com/assets/bootstrap3_application-29a82f635aca83631de2ed1bbf3aa93b.css" media="all" rel="stylesheet">
+  <%= stylesheet_link_tag 'semantic', 'kiita' %>
+  <%= javascript_include_tag 'semantic' %>
 </head>
 <body>
 <div class="draftFormWrapper">
   <div class="container-fluid">
     <div class="row">
-      <% form_for :article, url(:kiita, :create), :class => 'form-horizontal' do |f| %>
-        <%= partial 'kiita/form_new', :locals => { :f => f } %>
+      <% form_for :article, url(:kiita, :create), :name => 'article_form' do |f| %>
+        <%= partial 'kiita/form_article', :locals => { :f => f } %>
       <% end %>
     </div>
   </div>
