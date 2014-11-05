@@ -14,9 +14,12 @@ source 'https://rubygems.org'
 gem 'rake'
 
 # Component requirements
+gem 'bcrypt'
 gem 'erubis', '~> 2.7.0'
 gem 'activerecord', '>= 3.1', :require => 'active_record'
 gem 'mysql2'
+gem 'redcarpet'
+gem 'composite_primary_keys'
 
 # Test requirements
 gem 'rr', :require => false, :group => 'test'
