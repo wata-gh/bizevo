@@ -15,27 +15,7 @@ module Bizevo
       def save_article params
         begin
           ActiveRecord::Base.transaction do
-            @article = Article.new params[:article]
-            @article.save!
-
-            save_new_tag params[:article_tag][:tag]
-
-            params[:article_tag][:tag].each do |v|
-              @article_tag = @article.article_tags.build
-              @article_tag.tag = v
-              @article_tag.save!
-            end
-          end
-        rescue => e
-          p e
-          halt 404
-        end
-      end
-
-      def update_article params
-        begin
-          ActiveRecord::Base.transaction do
-            @article = Article.find params[:article][:id]
+            @article = Article.where(:id => params[:article][:id]).first_or_initialize
             @article.assign_attributes params[:article]
             @article.save!
 

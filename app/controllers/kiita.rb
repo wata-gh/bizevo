@@ -16,7 +16,7 @@ Bizevo::App.controllers :kiita do
   end
 
   post :update do
-    update_article params
+    save_article params
     redirect '/kiita/'
   end
 
