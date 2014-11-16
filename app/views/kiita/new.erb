@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
+  <%= stylesheet_link_tag 'semantic', 'kiita' %>
+  <%= javascript_include_tag 'semantic' %>
+</head>
+<body>
+<div class="draftFormWrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <% form_for :article, url(:kiita, :create), :name => 'article_form' do |f| %>
+        <%= partial 'kiita/form_article', :locals => { :f => f } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+</html>
