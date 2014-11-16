@@ -55,6 +55,19 @@ ActiveRecord::Base.configurations[:test] = {
 
 }
 
+ActiveRecord::Base.configurations[:'travis-ci'] = {
+  :adapter   => 'mysql2',
+  :encoding  => 'utf8',
+  :reconnect => true,
+  :database  => 'bizevo_travis_ci',
+  :collation => 'utf8_general_ci',
+  :pool      => 5,
+  :username  => 'travis',
+  :password  => '',
+  :host      => 'localhost',
+
+}
+
 # Setup our logger
 ActiveRecord::Base.logger = logger
 

@@ -1,11 +1,16 @@
 language: ruby
+cache: bundler
 notifications:
   slack:
     secure: aRPu1JYsIfOK0xQ0ZAkAESzNZSzPKKBsW8pzOtoZidPR0vzIpicSLgKNq7dPfHb3hJ0puXWTMXBB91XCFAVp76/DuAgsDdn4gTfQSUbqiUwAcff1KFXOb1BsvYJ45Lmo8qoA5ltfTp2eoyhiWQAxCReI/NjoLw1/Pe3mWB2Prco=
 rvm:
-- 2.1.3
+- 2.1.4
 - 1.9.3
 script: bundle exec padrino rake spec
 before_install:
 - openssl aes-256-cbc -K $encrypted_8700587bcb93_key -iv $encrypted_8700587bcb93_iv
   -in platform.pem.enc -out platform.pem -d
+env:
+- RACK_ENV=travis-ci
+before_script:
+  - mysql -e 'create database bizevo_travis_ci;'
