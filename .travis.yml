@@ -5,7 +5,6 @@ notifications:
     secure: aRPu1JYsIfOK0xQ0ZAkAESzNZSzPKKBsW8pzOtoZidPR0vzIpicSLgKNq7dPfHb3hJ0puXWTMXBB91XCFAVp76/DuAgsDdn4gTfQSUbqiUwAcff1KFXOb1BsvYJ45Lmo8qoA5ltfTp2eoyhiWQAxCReI/NjoLw1/Pe3mWB2Prco=
 rvm:
 - 2.1.4
-- 1.9.3
 script:
 - bundle exec padrino rake ar:setup
 - bundle exec padrino rake spec
