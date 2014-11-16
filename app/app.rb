@@ -6,6 +6,10 @@ module Bizevo
 
     enable :sessions
 
+    get '/' do
+      "Hello bizevo"
+    end
+
     ##
     # Caching support.
     #
