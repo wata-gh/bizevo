@@ -1,4 +1,6 @@
-RACK_ENV = 'test' unless defined?(RACK_ENV)
+unless defined?(RACK_ENV)
+  RACK_ENV = ENV['RACK_ENV'] == 'development' ? 'test' : ENV['RACK_ENV']
+end
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 require 'rr'
 Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&method(:require))

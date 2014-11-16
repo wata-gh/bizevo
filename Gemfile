@@ -23,9 +23,11 @@ gem 'composite_primary_keys'
 gem 'database_cleaner'
 
 # Test requirements
-gem 'rr', :require => false, :group => 'test'
-gem 'rspec', :group => 'test'
-gem 'rack-test', :require => 'rack/test', :group => 'test'
+group :test, :'travis-ci' do
+  gem 'rr', :require => false
+  gem 'rspec'
+  gem 'rack-test', :require => 'rack/test'
+end
 
 # Padrino Stable Gem
 gem 'padrino', '0.12.3'

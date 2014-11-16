@@ -43,4 +43,8 @@ end
 Padrino.after_load do
 end
 
+Padrino::Logger::Config[:'travis-ci'] = {
+  log_level: :devel,
+  log_static: true,
+} if RACK_ENV == 'travis-ci'
 Padrino.load!
