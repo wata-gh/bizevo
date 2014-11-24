@@ -21,6 +21,7 @@ gem 'mysql2'
 gem 'redcarpet'
 gem 'composite_primary_keys'
 gem 'database_cleaner'
+gem 'unicorn'
 
 # Test requirements
 group :test, :'travis-ci' do
