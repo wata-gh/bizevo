@@ -12,9 +12,22 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
       end
     end
 
+    describe '#save_article' do
+      it 'データが登録されること' do
+        params = {:article => {
+            :title => 'titleです',
+            :article => 'articleの中身です',
+            },
+            :article_tag => { :tag => ['tag'], },
+          }
+        helpers.save_article params
+        article = Article.find(1)
+        expect(article.title).to eq 'titleです'
+        expect(article.article_tags.first.tag).to eq 'tag'
+      end
+    end
+
     describe '#save_new_tag' do
-      let(:params){ {:tag => 'Ruby'} }
-      let(:tag) {Tag.new(params)}
       context 'DBにタグデータなし' do
         it 'データが0件の状態で登録した場合に、データが登録されること' do
           helpers.save_new_tag ['Ruby']
@@ -40,14 +53,14 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
       end
     end
 
-    describe '#upadte_article' do
+    describe '#update_article' do
       context 'DBにデータなし' do
         it '新規登録ができること' do
           params = {:article => {
               :title => 'titleです',
               :article => 'articleの中身です',
             }}
-          expect(helpers.upadte_article params).to be_truthy
+          expect(helpers.update_article params).to be_truthy
         end
       end
 
@@ -57,7 +70,7 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
               :title => 'titleです',
               :article => 'articleの中身です',
             }}
-          helpers.upadte_article params
+          helpers.update_article params
         end
 
         it '更新ができること' do
@@ -66,7 +79,7 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
               :title => 'titleです。更新です。',
               :article => 'articleの中身です。更新です。',
             }}
-          helpers.upadte_article params
+          helpers.update_article params
           @article = Article.find(1)
           expect(@article.title).to eq 'titleです。更新です。'
           expect(@article.article).to eq 'articleの中身です。更新です。'
@@ -80,7 +93,7 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
             :title => 'titleです',
             :article => 'articleの中身です',
           }}
-        @article = helpers.upadte_article params
+        @article = helpers.update_article params
       end
 
       context '新規' do
