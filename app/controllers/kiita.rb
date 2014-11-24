@@ -32,14 +32,16 @@ Bizevo::App.controllers :kiita do
 
   post :update do
     begin
-      update_article params
-      # 新規タグのinsert、削除タグの delete を行う
-      save_new_tag params[:article_tag][:tag]
-      update_article_tag params
+      ActiveRecord::Base.transaction do
+        update_article params
+        # 新規タグのinsert、削除タグの delete を行う
+        save_new_tag params[:article_tag][:tag]
+        update_article_tag params
+      end
     rescue => e
       p e
       flash[:error] = e.message
-      return redirect "kiita/update/#{params[:article][:id]}"
+      redirect "kiita/update/#{params[:article][:id]}"
     end
     flash[:success] = 'Post was successfully update.'
     redirect url(:kiita, :index)
@@ -54,11 +56,13 @@ Bizevo::App.controllers :kiita do
   end
 
   delete :destroy, :with => :id do
-    @article = Article.find(params[:id])
+    @article = Article.find params[:id]
+    halt 404 unless @article
     begin
       destroy_article @article
     rescue => e
       p e
+      # そんなものは存在しない
       halt 404
     end
     redirect url(:kiita, :index)

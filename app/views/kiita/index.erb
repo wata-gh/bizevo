@@ -17,9 +17,17 @@
     <tbody>
       <% @articles.each do |value| %>
       <tr>
-        <td><a href="/kiita/view/<%= value.id %>"><%= value.title %></a></td>
+        <td>
+          <% link_to "/kiita/view/#{value.id}" do %>
+            <%= value.title %>
+          <% end %>
+        </td>
         <td><%= value.article_tags.collect {|v| v.tag }.join(' / ') %></td>
-        <td><a href="/kiita/update/<%= value.id %>"><i class="edit icon"></i></a></td>
+        <td>
+          <% link_to "/kiita/update/#{value.id}" do %>
+            <i class="edit icon"></i>
+          <% end %>
+        </td>
       </tr>
       <% end %>
     </tbody>

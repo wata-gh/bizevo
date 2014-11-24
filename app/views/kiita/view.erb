@@ -4,7 +4,7 @@
   </section>
 
   <section class="view_area">
-  <% if @article && !@article.article_tags.empty? %>
+  <% if @article && @article.article_tags.present? %>
     <% @article.article_tags.each do |tag| %>
       <a id="tag" class="ui black label">
         <%= tag.tag %>

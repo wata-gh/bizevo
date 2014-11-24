@@ -18,10 +18,10 @@ module Bizevo
 
       def save_article params
         ActiveRecord::Base.transaction do
-          @article = Article.create!(params[:article])
+          @article = Article.create! params[:article]
           save_new_tag params[:article_tag][:tag]
           params[:article_tag][:tag].each do |t|
-            @article.article_tags.create!(article_id: @article.id, tag: t)
+            @article.article_tags.create! article_id: @article.id, tag: t
           end
         end
       end
@@ -33,20 +33,20 @@ module Bizevo
       end
 
       def update_article_tag params
+        # DBからセレクトした値から変更なしのデータを引いて　削除対象を出す
+        select_article_tags = ArticleTag.where article_id: @article.id
         no_change_tags = []
         params[:article_tag][:tag].each do |tag|
-          articletag = ArticleTag.find_or_initialize_by({:article_id => @article.id, :tag => tag})
+          articletag = ArticleTag.find_or_initialize_by({article_id: @article.id, tag: tag})
           if articletag.new_record? then
             articletag.save!
           else
             no_change_tags << articletag
           end
         end
-        unless no_change_tags.empty?
-          # DBからセレクトした値から変更なしのデータを引いて　削除対象を出す
-          select_article_tags = ArticleTag.where('article_id=?', @article.id)
-          destroy_tags = select_article_tags - no_change_tags
-          destroy_tags.each {|tag| tag.destroy! }
+        destroy_tags = select_article_tags - no_change_tags
+        if destroy_tags.present?
+          destroy_tags.map &:destroy!
         end
       end
 
