@@ -6,6 +6,7 @@ module Bizevo
 
     enable :sessions
 
+    set :locale_path, Proc.new { Dir[Padrino.root('config', 'locales', '**/ja.yml')] }
     ##
     # Caching support.
     #
