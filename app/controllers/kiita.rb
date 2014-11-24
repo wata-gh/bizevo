@@ -14,7 +14,7 @@ Bizevo::App.controllers :kiita do
 
   post :create do
     begin
-      save_article
+      save_article params
     rescue => e
       flash.now[:error] = e.message
       return render 'kiita/new'
@@ -32,10 +32,10 @@ Bizevo::App.controllers :kiita do
 
   post :update do
     begin
-      update_article
+      update_article params
       # 新規タグのinsert、削除タグの delete を行う
       save_new_tag params[:article_tag][:tag]
-      update_article_tag
+      update_article_tag params
     rescue => e
       p e
       flash[:error] = e.message

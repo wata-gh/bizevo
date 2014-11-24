@@ -16,42 +16,23 @@ module Bizevo
         end
       end
 
-      # def save_article params
-      #   begin
-      #     ActiveRecord::Base.transaction do
-      #       upadte_article params
-      #
-      #       # 新規タグのinsert、削除タグの delete を行う
-      #       save_new_tag params[:article_tag][:tag]
-      #       update_article_tag params
-      #
-      #     end
-      #   rescue => e
-      #     p e
-      #     false
-      #   end
-      def save_article
-        begin
-          ActiveRecord::Base.transaction do
-            @article = Article.create!(params[:article])
-            save_new_tag params[:article_tag][:tag]
-            params[:article_tag][:tag].each do |t|
-              @article.article_tags.create!(article_id: @article.id, tag: t)
-            end
+      def save_article params
+        ActiveRecord::Base.transaction do
+          @article = Article.create!(params[:article])
+          save_new_tag params[:article_tag][:tag]
+          params[:article_tag][:tag].each do |t|
+            @article.article_tags.create!(article_id: @article.id, tag: t)
           end
-        rescue => e
-          p e
-          raise e.message
         end
       end
 
-      def update_article
+      def update_article params
         @article = Article.where(:id => params[:article][:id]).first_or_initialize
         @article.assign_attributes params[:article]
         @article.save!
       end
 
-      def update_article_tag
+      def update_article_tag params
         no_change_tags = []
         params[:article_tag][:tag].each do |tag|
           articletag = ArticleTag.find_or_initialize_by({:article_id => @article.id, :tag => tag})
