@@ -17,7 +17,7 @@
 <% else %>
   <% fields_for :article_tag do |tag| %>
     <div class="tag_area form_content">
-      <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
+      <%= tag.hidden_field :tag %>
     </div>
   <% end %>
 <% end %>
@@ -41,5 +41,15 @@ $(function() {
   $('.submit_section').on('click', function() {
     $('*[name=article_form]').submit();
   });
+
+  $.get('/kiita_api/tags',
+    {},
+    function(data) {
+      $("#article_tag_tag").select2({
+        tags:data,
+        maximumInputLength: 20
+      });
+    }
+  );
 });
 </script>

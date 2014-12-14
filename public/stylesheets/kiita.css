@@ -140,3 +140,11 @@ textarea {
   position: relative;
   left: 475px;
 }
+
+.pager {
+  margin-top: 1rem;
+}
+
+#s2id_article_tag_tag {
+  width: 300px;
+}
