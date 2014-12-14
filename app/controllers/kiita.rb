@@ -3,7 +3,7 @@ Bizevo::App.controllers :kiita do
 
   get :index do
     @title = 'kiita | top'
-    @articles = Article.joins(:article_tags).includes(:article_tags).all
+    @articles = Article.joins(:article_tags).includes(:article_tags).page params[:page]
     render 'kiita/index'
   end
 
