@@ -36,10 +36,11 @@ module Bizevo
         # DBからセレクトした値から変更なしのデータを引いて　削除対象を出す
         select_article_tags = ArticleTag.where article_id: @article.id
         no_change_tags = []
-        params[:article_tag][:tag].each do |tag|
+        params[:article_tag][:tag].split(',').each do |tag|
           articletag = ArticleTag.find_or_initialize_by({article_id: @article.id, tag: tag})
           if articletag.new_record? then
             articletag.save!
+            no_change_tags << articletag
           else
             no_change_tags << articletag
           end
