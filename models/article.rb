@@ -11,4 +11,6 @@ class Article < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :article
+
+  paginates_per 10
 end
