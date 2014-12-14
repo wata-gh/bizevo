@@ -11,7 +11,7 @@ module Bizevo
 
       def save_new_tag params
         #未登録タグの登録
-        params.each do |tag|
+        params.split(',').each do |tag|
           Tag.find_or_create_by(:tag => tag)
         end
       end
@@ -20,7 +20,7 @@ module Bizevo
         ActiveRecord::Base.transaction do
           @article = Article.create! params[:article]
           save_new_tag params[:article_tag][:tag]
-          params[:article_tag][:tag].each do |t|
+          params[:article_tag][:tag].split(',').each do |t|
             @article.article_tags.create! article_id: @article.id, tag: t
           end
         end
