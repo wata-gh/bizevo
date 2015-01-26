@@ -10,3 +10,4 @@ db/*.db
 vendor
 platform.pem
 .idea
+unicorn.pid

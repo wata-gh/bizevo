@@ -3,12 +3,11 @@ module Bizevo
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
     register Padrino::Mailer
     register Padrino::Helpers
-    use OmniAuth::Builder do
-      provider :github, Settings[:github][:client_id], Settings[:github][:client_secret]
-    end
+    register Kaminari::Helpers::SinatraHelpers
 
     enable :sessions
 
+    set :locale_path, Proc.new { Dir[Padrino.root('config', 'locales', '**/ja.yml')] }
     ##
     # Caching support.
     #

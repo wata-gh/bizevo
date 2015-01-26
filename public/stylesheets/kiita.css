@@ -1,3 +1,7 @@
+.background {
+  background-color: FloralWhite;
+}
+
 textarea {
  width: 100%;
  min-height: 440px;
@@ -25,13 +29,13 @@ textarea {
   width: 100%
 }
 
-.draft_title_area {
+.title_area {
   width: 100%;
   padding-left: 5px;
   padding-right: 5px;
 }
 
-.draft_title_input {
+.title_input {
   width: 100%;
   height: 45px;
   padding: 5px;
@@ -39,13 +43,13 @@ textarea {
   font-size: 1.5em;
 }
 
-.draft_tag_area {
+.tag_area {
   width: 50%;
   padding-left: 5px;
   padding-right: 5px;
 }
 
-.draft_tag_input {
+.tag_input {
   width: 100%;
   height: 30px;
   padding: 5px;
@@ -67,4 +71,72 @@ textarea {
 
 .submit_section {
   text-align: right;
+}
+
+.mark_down_area {
+}
+
+.view_area {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: 1px solid #bfbfbf;
+  background-color: white;
+  width: 600px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.errors {
+  padding-left: 5px;
+}
+
+.info {
+  margin-bottom: 10px;
+}
+
+.success {
+  margin-bottom: 10px;
+}
+
+#tag {
+  text-transform: none !important;
+}
+
+// layouts
+.table_ui {
+  display: table;
+  width: 700px;
+}
+
+.table_block_ui {
+  vertical-align: top;
+  display: table-cell;
+  padding: 5px;
+}
+
+.column2 {
+  width: 20%;
+}
+
+.column8 {
+  width: 80%;
+}
+
+.include {
+  margin-left: 20px;
+}
+
+.layout_column {
+  float: left;
+}
+
+.ui_position_parent {
+  position: relative;
+}
+
+.ui_delete_right {
+  position: relative;
+  left: 475px;
 }

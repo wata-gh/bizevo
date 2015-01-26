@@ -1,22 +1,25 @@
-<div class="draft_title_area form_content">
-  <%= f.text_field :title, :class => 'draft_title_input form_input_item', :placeholder => 'タイトル' %>
+<div class="errors">
+  <%= flash_tag :error, :class => "ui red message" %>
 </div>
 
-<% if @article then %>
+<div class="title_area form_content">
+  <%= f.text_field :title, :class => 'title_input form_input_item', :placeholder => 'タイトル' %>
+</div>
+
+<% if @article && !@article.article_tags.empty? %>
   <% @article.article_tags.each do |tag| %>
     <% fields_for tag do |tag| %>
-      <div class="draft_tag_area form_content">
-        <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'draft_tag_input form_input_item', :placeholder => 'タグ' %>
+      <div class="tag_area form_content">
+        <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
       </div>
     <% end %>
   <% end %>
 <% else %>
-  <div class="draft_tag_area form_content">
-    <%= text_field_tag :tag, :name => 'article_tag[tag][]', :class => 'draft_tag_input form_input_item', :placeholder => 'タグ' %>
-  </div>
-  <div class="draft_tag_area form_content">
-    <%= text_field_tag :tag, :name => 'article_tag[tag][]', :class => 'draft_tag_input form_input_item', :placeholder => 'タグ' %>
-  </div>
+  <% fields_for :article_tag do |tag| %>
+    <div class="tag_area form_content">
+      <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
+    </div>
+  <% end %>
 <% end %>
 
 <div class="form_table form_content">

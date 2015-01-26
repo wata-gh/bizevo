@@ -21,7 +21,10 @@ gem 'mysql2'
 gem 'redcarpet'
 gem 'composite_primary_keys'
 gem 'database_cleaner'
-gem 'omniauth-github'
+gem 'unicorn'
+gem 'actionview', '4.1.6'
+gem 'actionpack', '4.1.6'
+gem 'kaminari', '0.16.1', :require => 'kaminari/sinatra'
 
 # Test requirements
 group :test, :'travis-ci' do
