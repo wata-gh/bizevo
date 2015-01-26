@@ -21,12 +21,18 @@ gem 'mysql2'
 gem 'redcarpet'
 gem 'composite_primary_keys'
 gem 'database_cleaner'
+gem 'omniauth-github'
 
 # Test requirements
 group :test, :'travis-ci' do
   gem 'rr', :require => false
   gem 'rspec'
   gem 'rack-test', :require => 'rack/test'
+  gem 'factory_girl'
+  gem 'awesome_print'
+  gem 'simplecov'
+  gem 'simplecov-rcov'
+  gem 'ci_reporter'
 end
 
 # Padrino Stable Gem

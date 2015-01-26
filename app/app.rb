@@ -3,6 +3,9 @@ module Bizevo
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
     register Padrino::Mailer
     register Padrino::Helpers
+    use OmniAuth::Builder do
+      provider :github, Settings[:github][:client_id], Settings[:github][:client_secret]
+    end
 
     enable :sessions
 
