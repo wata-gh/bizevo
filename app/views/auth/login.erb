@@ -1,0 +1,26 @@
+<% form_for @account, url(:auth, :login), :class => 'ui form' do |f| %>
+  <h4 class="ui dividing header">bizevo login</h4>
+  <div class="two fields">
+    <div class="required field">
+      <label>Username</label>
+      <div class="ui icon input">
+        <input type="text" name="email" placeholder="email">
+        <i class="user icon"></i>
+      </div>
+    </div>
+    <div class="required field">
+      <label>Password</label>
+      <div class="ui icon input">
+        <input type="password" name="password">
+        <i class="lock icon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="inline field">
+    <div class="ui checkbox">
+      <input type="checkbox">
+      <label>次回からログインを省略</label>
+    </div>
+  </div>
+  <button type="submit" class="ui submit button">Submit</button>
+<% end %>

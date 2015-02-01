@@ -9,4 +9,5 @@ db/*.db
 .bundle
 vendor
 platform.pem
+.idea
 unicorn.pid
