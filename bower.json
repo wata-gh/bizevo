@@ -1,0 +1,26 @@
+{
+  "name": "bizevo",
+  "version": "0.0.0",
+  "homepage": "https://github.com/wata-gh/bizevo",
+  "authors": [
+    "wata <wata.gm@gmail.com>"
+  ],
+  "description": "bizevo",
+  "main": "bizevo.js",
+  "keywords": [
+    "bizevo"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2",
+    "semantic": "~1"
+  }
+}
