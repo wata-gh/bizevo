@@ -1,3 +1,6 @@
+# FIXME for kaminari error
+require 'action_dispatch/http/mime_type'
+
 module Bizevo
   class App < Padrino::Application
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
