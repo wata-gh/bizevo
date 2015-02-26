@@ -38,6 +38,13 @@ group :test, :'travis-ci' do
   gem 'ci_reporter'
 end
 
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn'
+end
+
 # Padrino Stable Gem
 gem 'padrino', '0.12.3'
 
