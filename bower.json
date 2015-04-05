@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "jquery": "2",
-    "semantic": "~1"
+    "semantic": "~1",
+    "highcharts": "~4.1.4"
   }
 }

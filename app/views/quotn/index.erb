@@ -13,50 +13,19 @@
 <h3 class="ui header">主管プロジェクト報告(<%= Date.strptime(params[:month], '%Y%m').strftime('%Y/%m') %>)</h3>
 <div class="ui six item teal menu">
     <div class="item"><%= link_to 'ALL', url(:quotn, :index, :month => params[:month]) %></div>
-    <% Belonging.where(:blg_layer => 2, :orgn_catgry_a => '02').where("orgn_catgry_b > '0001' and orgn_catgry_b < '0008'").each do |b| %>
+    <% Belonging.business_blg.each do |b| %>
         <div class="<%= 'active' if params[:blg_cd] == b.mst_blg_cd.strip %> item"><%= link_to b.blg_nm, url(:quotn, :index, :month => params[:month], :blg_cd => b.mst_blg_cd.strip) %></div>
     <% end %>
 </div>
 <table class="ui celled very compact table">
-    <!-- thead>
-    <tr>
-        <!-- th>PCU</th>
-        <th>見積もり番号</th>
-        <th>PJコード</th -->
-        <!-- th>開始/終了</th>
-        <th>売上</th>
-        <th>工数</th>
-        <th>アサイン</th>
-        <th>備考</th>
-    </tr>
-    </thead -->
     <tbody>
     <% @quotn.each do |q| %>
         <tr>
             <td colspan="5" class="collapsing">
-                <a class="ui mini ribbon <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp %></a>
+                <a class="ui mini ribbon <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp_i18n %></a>
                 <span class="ui mini teal label"><%= q.belonging.blg_nm %></span>
-                <%= q.quotn_title %>
-                <div style="float: right;">
-                    <div class="ui icon mini buttons">
-                        <div class="ui top left pointing dropdown button" tabindex="0">
-                            <i class="users icon"></i>
-                            <div class="menu" tabindex="-1">
-                                <div class="item"><i class="edit icon"></i>Edit Group</div>
-                                <div class="item"><i class="delete icon"></i>Remove Group</div>
-                                <div class="item"><i class="hide icon"></i>Hide from Group</div>
-                            </div>
-                        </div>
-                        <div class="ui top right pointing dropdown button" tabindex="0">
-                            <i class="settings icon"></i>
-                            <div class="menu" tabindex="-1">
-                                <div class="item"><i class="edit icon"></i> Edit</div>
-                                <div class="item"><i class="delete icon"></i> Remove</div>
-                                <div class="item"><i class="hide icon"></i> Hide</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <span class="ui mini <%= q.order_stat_color %> label"><%= q.order_stat_i18n %></span>
+                <%= link_to q.quotn_title, url(:quotn, :detail, :quotn_no => q.quotn_no, :quotn_ver_no => q.quotn_ver_no) %>
             </td>
         </tr>
         <tr>
@@ -65,12 +34,15 @@
             <td>PJ-<%= q.project.try :prj_cd %></td>
             <td rowspan="6" class="collapsing">
                 <div class="ui list">
-                    <% q.assign_pmbrs.each do |m| %>
-                        <% pmh = m.assign_pmh.find_by :setup_date_ym => params[:month]
+                    <% q.assign_pmbrs.references(:personal).includes(:personal).each do |m| %>
+                        <%
+                           pmh = m.assign_pmh.select {|a| a.setup_date_ym == params[:month] && a.man_hour_mm != 0}
+                           #pmh = m.assign_pmh.find_by :setup_date_ym => params[:month]
                            if pmh.present?
+                             pmh = pmh.first
                         %>
-                            <div class="item <%= 'other-blg' unless m.personal.mst_blg_cd.start_with? params[:blg_cd] %>">
-                                <% unless m.personal.mst_blg_cd.start_with? params[:blg_cd] %>
+                            <div class="item">
+                                <% if params[:blg_cd].present? && m.personal.mst_blg_cd.start_with?(params[:blg_cd]) == false %>
                                     <i class="empty star icon"></i>
                                 <% end %>
                                 <%= if m.personal.nm.encoding.to_s == 'UTF-8'
@@ -107,11 +79,7 @@
             <td class="table-header collapsing">見積もり</td>
             <td class="right aligned collapsing"><%= q.quotn_amt.try :jpy_comma %></td>
             <td class="right aligned collapsing">
-                <%= q.assign_pmbrs.inject(0) do |s, m|
-                  pmh = m.assign_pmh.find_by(:setup_date_ym => params[:month])
-                  s + (pmh ? pmh.man_hour_mm : 0)
-                end %>
-                mm
+                <%= q.man_hour_mm params[:month] %> mm
             </td>
         </tr>
         <tr>

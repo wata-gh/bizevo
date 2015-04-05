@@ -38,8 +38,8 @@ gulp.task 'css', ->
   .src 'bower_components/semantic/dist/semantic.min.css'
   .pipe gulp.dest './public/stylesheets'
   gulp
-  .src 'bower_components/semantic/dist/themes'
-  .pipe gulp.dest './public/stylesheets'
+  .src 'bower_components/semantic/dist/themes/**/*'
+  .pipe gulp.dest './public/stylesheets/themes'
 
 gulp.task 'watch', ['build'], ->
   gulp.watch 'app/**/*.coffee', ['js']

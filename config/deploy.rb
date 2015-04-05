@@ -1,11 +1,11 @@
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+lock '3.4.0'
 
 set :application, 'bizevo'
 set :repo_url, 'https://github.com/wata-gh/bizevo.git'
 set :deploy_to, "/opt/bizevo/#{fetch(:stage)}"
 set :keep_releases, 5
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets bundle public/system}
 set :unicorn_rack_env, fetch(:stage)
 set :bundle_jobs, 4
 
