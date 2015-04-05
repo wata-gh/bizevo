@@ -7,6 +7,7 @@ bowerFiles = require 'main-bower-files'
 source     = require 'vinyl-source-stream'
 browserify = require 'browserify'
 bower      = require 'gulp-bower'
+gulpFilter = require 'gulp-filter'
 
 gulp.task 'js', ->
   browserify
@@ -20,7 +21,9 @@ gulp.task 'js', ->
   .pipe gulp.dest 'public'
 
 gulp.task 'vendor', ->
+  jsFilter = gulpFilter '**/*.js'
   gulp.src(bowerFiles())
+  .pipe jsFilter
   .pipe plumber()
   .pipe concat('vendor.js')
   .pipe gulp.dest('./public/javascripts')
@@ -30,6 +33,12 @@ gulp.task 'css', ->
   .src './app/styles/*.scss'
   .pipe plumber()
   .pipe sass()
+  .pipe gulp.dest './public/stylesheets'
+  gulp
+  .src 'bower_components/semantic/dist/semantic.min.css'
+  .pipe gulp.dest './public/stylesheets'
+  gulp
+  .src 'bower_components/semantic/dist/themes'
   .pipe gulp.dest './public/stylesheets'
 
 gulp.task 'watch', ['build'], ->
