@@ -68,6 +68,16 @@ ActiveRecord::Base.configurations[:'travis-ci'] = {
 
 }
 
+ActiveRecord::Base.configurations[:lushun] = {
+  :adapter   => 'oracle_enhanced',
+  :reconnect => true,
+  :database  => '',
+  :pool      => 1,
+  :username  => '',
+  :password  => '',
+
+}
+
 # Setup our logger
 ActiveRecord::Base.logger = logger
 

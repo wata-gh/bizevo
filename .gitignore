@@ -12,3 +12,6 @@ platform.pem
 .idea
 unicorn.pid
 .capistrano
+node_modules
+bower_components
+coverage

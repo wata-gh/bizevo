@@ -131,6 +131,13 @@ ja:
       header:
         one: ! '%{model}にエラーが発生しました。'
         other: ! '%{model}に%{count}個のエラーが発生しました。'
+  enums:
+    quotation:
+      cntrct_tp:
+        lump_sum: 一括請負
+        mandate: 準委任
+        worker_dispatch: 派遣
+        maintenance: 保守
   helpers:
     select:
       prompt: 選択してください。

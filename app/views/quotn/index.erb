@@ -1,0 +1,157 @@
+<style>
+    .ui.ribbon.label {
+        left: calc(-0.6rem - 1.2em);
+    }
+    .container {
+        width: 100%;
+    }
+        td.table-header {
+            color: #2f6899;
+        }
+</style>
+<% sales = 0 %>
+<h3 class="ui header">主管プロジェクト報告(<%= Date.strptime(params[:month], '%Y%m').strftime('%Y/%m') %>)</h3>
+<div class="ui six item teal menu">
+    <div class="item"><%= link_to 'ALL', url(:quotn, :index, :month => params[:month]) %></div>
+    <% Belonging.where(:blg_layer => 2, :orgn_catgry_a => '02').where("orgn_catgry_b > '0001' and orgn_catgry_b < '0008'").each do |b| %>
+        <div class="<%= 'active' if params[:blg_cd] == b.mst_blg_cd.strip %> item"><%= link_to b.blg_nm, url(:quotn, :index, :month => params[:month], :blg_cd => b.mst_blg_cd.strip) %></div>
+    <% end %>
+</div>
+<table class="ui celled very compact table">
+    <!-- thead>
+    <tr>
+        <!-- th>PCU</th>
+        <th>見積もり番号</th>
+        <th>PJコード</th -->
+        <!-- th>開始/終了</th>
+        <th>売上</th>
+        <th>工数</th>
+        <th>アサイン</th>
+        <th>備考</th>
+    </tr>
+    </thead -->
+    <tbody>
+    <% @quotn.each do |q| %>
+        <tr>
+            <td colspan="5" class="collapsing">
+                <a class="ui mini ribbon <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp %></a>
+                <span class="ui mini teal label"><%= q.belonging.blg_nm %></span>
+                <%= q.quotn_title %>
+                <div style="float: right;">
+                    <div class="ui icon mini buttons">
+                        <div class="ui top left pointing dropdown button" tabindex="0">
+                            <i class="users icon"></i>
+                            <div class="menu" tabindex="-1">
+                                <div class="item"><i class="edit icon"></i>Edit Group</div>
+                                <div class="item"><i class="delete icon"></i>Remove Group</div>
+                                <div class="item"><i class="hide icon"></i>Hide from Group</div>
+                            </div>
+                        </div>
+                        <div class="ui top right pointing dropdown button" tabindex="0">
+                            <i class="settings icon"></i>
+                            <div class="menu" tabindex="-1">
+                                <div class="item"><i class="edit icon"></i> Edit</div>
+                                <div class="item"><i class="delete icon"></i> Remove</div>
+                                <div class="item"><i class="hide icon"></i> Hide</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>PCU-<%= q.pcu_cd %></td>
+            <td><%= q.quotn_no %></td>
+            <td>PJ-<%= q.project.try :prj_cd %></td>
+            <td rowspan="6" class="collapsing">
+                <div class="ui list">
+                    <% q.assign_pmbrs.each do |m| %>
+                        <% pmh = m.assign_pmh.find_by :setup_date_ym => params[:month]
+                           if pmh.present?
+                        %>
+                            <div class="item <%= 'other-blg' unless m.personal.mst_blg_cd.start_with? params[:blg_cd] %>">
+                                <% unless m.personal.mst_blg_cd.start_with? params[:blg_cd] %>
+                                    <i class="empty star icon"></i>
+                                <% end %>
+                                <%= if m.personal.nm.encoding.to_s == 'UTF-8'
+                                      m.personal.nm
+                                    else
+                                      m.personal.psnal_cd
+                                    end
+                                %>
+                                (<%= pmh.man_hour_mm %>)
+                            </div>
+                        <% end %>
+                    <% end %>
+                    <a class="ui blue basic mini button">
+                        <i class="users icon"></i>
+                        アサイン
+                    </a>
+                </div>
+            </td>
+            <td rowspan="6"><%= simple_format(h(q.remark)) %></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="collapsing"><%= q.csc_cust.fml_cust_nm %></td>
+        </tr>
+        <tr>
+            <td class="table-header collapsing">担当</td>
+            <td class="collapsing"><%= q.tech_assoc.try :nm %></td>
+            <td class="collapsing"><%= q.sales_assoc.nm %></td>
+        </tr>
+        <tr>
+            <td class="collapsing table-header">期間</td>
+            <td colspan="2" class="collapsing"><%= Date.strptime(q.start_date, '%Y%m%d').strftime('%Y/%m/%d') %> - <%= Date.strptime(q.end_date, '%Y%m%d').strftime('%Y/%m/%d') %></td>
+        </tr>
+        <tr>
+            <td class="table-header collapsing">見積もり</td>
+            <td class="right aligned collapsing"><%= q.quotn_amt.try :jpy_comma %></td>
+            <td class="right aligned collapsing">
+                <%= q.assign_pmbrs.inject(0) do |s, m|
+                  pmh = m.assign_pmh.find_by(:setup_date_ym => params[:month])
+                  s + (pmh ? pmh.man_hour_mm : 0)
+                end %>
+                mm
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing table-header">進行基準(当月)</td>
+            <td class="collapsing right aligned"><%
+               s = q.sales.find_by(:kind_data => 0, :term_this => (Date.strptime(params[:month], '%Y%m') << 3).year - 1989).try "progress_sales_#{Date.strptime(params[:month], '%Y%m').month}_this"
+               sales += s if s
+            %><%= s %></td>
+            <td class="collapsing right aligned">-%</td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+<div class="ui statistic">
+    <div class="label">売上予定</div>
+    <div class="value">
+        <i class="money icon"> <%= sales.jpy_comma %></i>
+    </div>
+</div>
+<div class="ui items">
+    <div class="item">
+        <div class="ui tiny image">
+            <img class="ui image" src="/images/noimage.png">
+        </div>
+        <div class="content">
+            <div class="header">xxx</div>
+            <div class="meta">
+                xxx
+            </div>
+            <div class="description">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.ui.dropdown').dropdown();
+        $('.ui.menu .dropdown').dropdown({
+            on: 'hover'
+        });
+    });
+</script>

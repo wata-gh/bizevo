@@ -22,9 +22,13 @@ gem 'redcarpet'
 gem 'composite_primary_keys'
 gem 'database_cleaner'
 gem 'unicorn'
-gem 'actionview', '4.1.6'
-gem 'actionpack', '4.1.6'
+gem 'actionview'
+gem 'actionpack'
 gem 'kaminari', '0.16.1', :require => 'kaminari/sinatra'
+gem 'ruby-oci8'
+gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
+gem 'composite_primary_keys'
+gem 'enum_help'
 
 # Test requirements
 group :test, :'travis-ci' do
@@ -46,7 +50,7 @@ group :deployment do
 end
 
 # Padrino Stable Gem
-gem 'padrino', '0.12.3'
+gem 'padrino', '0.12.5'
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'
