@@ -29,7 +29,7 @@ gem 'composite_primary_keys'
 gem 'enum_help'
 gem 'activeldap', :github => 'activeldap/activeldap'
 gem 'net-ldap'
-group :development, :staging, :production do
+group :oracle do
   gem 'ruby-oci8'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
 end
