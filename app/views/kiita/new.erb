@@ -1,0 +1,5 @@
+<div>
+  <% form_for :article, url(:kiita, :create), :name => 'article_form' do |f| %>
+    <%= partial 'kiita/form_article', :locals => { :f => f } %>
+  <% end %>
+</div>

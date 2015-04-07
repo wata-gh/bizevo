@@ -1,0 +1,12 @@
+:development:
+  :host: 172.16.1.130
+  :port: 389
+  :base: DC=active,DC=co,DC=jp
+  :bind_dn: ACTIVEWORK\study
+  :password: study
+:staging:
+  :host: 172.16.1.130
+  :port: 389
+  :base: DC=active,DC=co,DC=jp
+  :bind_dn: ACTIVEWORK\study
+  :password: study

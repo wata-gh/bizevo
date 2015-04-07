@@ -1,0 +1,38 @@
+<div class="info">
+  <%= flash_tag :info, :class => "ui blue message" %>
+</div>
+<div class="success">
+  <%= flash_tag :success, :class => "ui green message" %>
+</div>
+
+<div id="articles">
+  <table class="ui five column table segment">
+    <thead>
+      <tr>
+        <th>title</th>
+        <th>tags</th>
+        <th>etc</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each do |value| %>
+      <tr>
+        <td>
+          <% link_to "/kiita/view/#{value.id}" do %>
+            <%= value.title %>
+          <% end %>
+        </td>
+        <td><%= value.article_tags.collect {|v| v.tag }.join(' / ') %></td>
+        <td>
+          <% link_to "/kiita/update/#{value.id}" do %>
+            <i class="edit icon"></i>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<section class="pager">
+  <%= paginate @articles %>
+</section>

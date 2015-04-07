@@ -1,0 +1,92 @@
+<form accept-charset="UTF-8" action="/kiita/create" class="draftForm form" data-belong-to-team="false" data-type-int="1" id="article_form" method="post">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="draftFormTitle">
+        <input class="form-control" id="draft_item_title" name="draft_item[title]" placeholder="タイトル" type="text" value="">
+      </div>
+      <div class="alert alert-warning draftFormAlertMessages js-draftError" data-attribute="title"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="draftFormTagDataWrapper js-tagDataWrapper">
+        <div class="draftFormTagData js-tagData">
+          <div class="draftFormTagDatum js-tagDatum">
+            <span class="twitter-typeahead" style="position: relative; display: inline-block; direction: ltr; width: 148px; margin-top: 2px; margin-bottom: -2px;">
+              <input class="draftFormTagDatum_name js-tagName tt-input" id="draft_item_tag_data__name" name="draft_item[tag_data][][name]" placeholder="タグ" type="text" value="" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; width: 100%;">
+              <pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: 'Helvetica Neue', Helvetica, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN', メイリオ, Meiryo, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none; width: 100%;"></pre>
+              <span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none; right: auto; width: 100%;">
+                <div class="tt-dataset-tags"></div>
+              </span>
+            </span>
+            <input class="draftFormTagDatum_version" id="draft_item_tag_data__versions" name="draft_item[tag_data][][versions]" placeholder="バージョン" type="text" value="">
+            <div class="draftFormTagDatum_delete js-removeButton visible-js">
+              <i class="fa fa-times"></i>
+            </div>
+          </div>
+        </div>
+        <span class="draftFormTagData_add visible-js js-addButton">
+          <i class="fa fa-plus-circle"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-warning draftFormAlertMessages js-draftError" data-attribute="tag_data"></div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-warning draftFormAlertMessages js-draftError" data-attribute="raw_body"></div>
+      <div class="draftFormBody js-draftBodyWrapper halfPreviewing">
+        <div class="draftFormBody_markdown js-draftBody">
+          <div class="draftFormBody_header">
+            <span class="draftFormBody_tabBar js-tabs">
+              <a class="draftFormBody_tab active js-tab" href="#markdown" tabindex="-1">
+                <span class="translation_missing" title="translation missing: ja.draft_items.form.form_body.markdown">Markdown</span>
+                <span class="draftFormBody_help js-helpModal visible-js" data-target="help" data-toggle="modal">
+                  <i class="fa fa-question-circle"></i>
+                </span>
+              </a>
+            </span>
+            <div class="emojiPickerLauncher js-emojiPickerLauncher">
+              <i class="fa fa-smile-o"></i>
+            </div>
+          </div>
+          <div class="draftFormBody_panel active js-droptarget" id="markdown">
+            <textarea class="draftFormBody_textarea" id="draft_item_raw_body" name="draft_item[article]"></textarea>
+          </div>
+          <div class="draftFormBody_panel" id="diff"></div>
+        </div>
+        <div class="draftFormBody_preview visible-js">
+          <div class="draftFormBody_previewTitle">
+            <i class="fa draftFormBody_previewIcon-full js-fullPreview"></i>
+            <i class="fa draftFormBody_previewIcon-half js-halfPreview"></i>
+            <i class="fa draftFormBody_previewIcon-close js-closePreview"></i>
+            <span class="draftFormBody_previewTitleLabel">プレビュー</span>
+          </div>
+          <div class="draftFormBody_previewArticle markdownContent js-preview" id="item-e9ea55fc23f73e866b0d" style="height: 518px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-warning draftFormAlertMessages js-draftError" data-attribute="comment"></div>
+      <div class="draftFormFooter">
+        <div class="draftFormSubmit">
+          <div class="btn-group draftFormSubmit_submitBtnGroup js-submitButtonWrapper">
+            <button class="btn btn-primary js-submitButton draftFormSubmit_submitBtn">
+              <span class="draftFormSubmit_submitBtnLabel active" id="post">
+                <i class="fa fa-upload"></i>Kiita に投稿
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="_method" value="post">
+</form>
+<script>
+  $('#id').click(function() {
+    $('#article_form').submit();
+  });
+</script>

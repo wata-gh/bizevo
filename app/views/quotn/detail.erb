@@ -1,0 +1,223 @@
+<style>
+    .ui.dividing.header {
+        margin-bottom: 3px;
+    }
+        .ui.table {
+            margin-top: 3px;
+        }
+        body {
+            color: #111111;
+        }
+</style>
+<div class="ui large breadcrumb">
+    <%= link_to '案件一覧', url(:quotn, :index, :month => Date.today.strftime('%Y%m'), :blg_cd => @quotn.belonging.mst_blg_cd.strip), :class => 'section' %>
+    <div class="divider"> / </div>
+    <div class="active section"><%= @quotn.quotn_no %>-<%= @quotn.quotn_ver_no %></div>
+</div>
+<h3 class="ui header">
+    <i class="newspaper icon"></i>
+    <div class="content"><%= @quotn.quotn_title %>
+        <div class="sub header"><%= @quotn.belonging.blg_nm %></div>
+    </div>
+</h3>
+<div class="ui grid">
+    <div class="row">
+        <div class="fifteen wide column">
+            <div class="ui basic mini button"><i class="icon edit"></i>編集</div>
+            <div class="ui basic mini button js-comment-btn"><i class="icon comment outline"></i>コメント</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="eleven wide column">
+            <h4 class="ui dividing header">詳細<a class="anchor" id="states"></a></h4>
+            <table class="ui very basic very compact table">
+                <tbody>
+                <tr>
+                    <td>PCU</td>
+                    <td><%= @quotn.pcu_cd %></td>
+                    <td>見積番号</td>
+                    <td><%= @quotn.quotn_no %>-<%= @quotn.quotn_ver_no %></td>
+                </tr>
+                <tr>
+                    <td>プロジェクトコード</td>
+                    <td><%= @quotn.project.try :prj_cd %></td>
+                    <td>ステータス</td>
+                    <td><div class="ui <%= @quotn.order_stat_color %> mini label"><%= @quotn.order_stat_i18n %></div></td>
+                </tr>
+                <tr>
+                    <td>顧客</td>
+                    <td colspan="3"><%= @quotn.csc_cust.fml_cust_nm %></td>
+                </tr>
+                <tr>
+                    <td>見積</td>
+                    <td><i class="icon yen"></i><%= @quotn.quotn_amt.try :jpy_comma %></td>
+                    <td>工数</td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 class="ui dividing header">説明<a class="anchor"></a></h4>
+            <div class="ui segument">
+                <%= simple_format(h(@quotn.remark)) %>
+            </div>
+            <h4 class="ui dividing header">リンク<a class="anchor"></a></h4>
+            <table class="ui very basic very compact table">
+                <tbody>
+                <tr>
+                    <td>プロジェクト計画書</td>
+                    <td><a>計画書.pptx</a></td>
+                    <td><a class="ui blue mini label">レビュー済</a></td>
+                </tr>
+                <tr>
+                    <td>体制図</td>
+                    <td><a>体制図.pptx</a></td>
+                    <td><a class="ui yellow mini label">未レビュー</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 class="ui dividing header">データ<a class="anchor"></a></h4>
+            <div id="container"></div>
+            <h4 class="ui dividing header">アクティビティ<a class="anchor" name="activity"></a></h4>
+            <div class="ui pointing secondary menu" id="activity">
+                <a class="item active" data-tab="report" id="js-report-tab">週次報告</a>
+                <a class="item" data-tab="log">作業ログ</a>
+            </div>
+            <div class="ui tab segument active" data-tab="report">
+            </div>
+            <div class="ui tab segument" data-tab="log">
+            </div>
+            <% form_tag "/api/project/report/#{@quotn.quotn_no}", :class => 'ui form', :id => 'js-comment-form', :style => 'display: none;' do %>
+                <div class="field">
+                    <textarea id="js-report"></textarea>
+                </div>
+                <div class="inline field">
+                    <button class="ui submit basic mini button">追加</button>
+                    <a href="#" id="js-cancel-btn">キャンセル</a>
+                </div>
+            <% end %>
+            <div class="ui mini basic button js-comment-btn" id="js-comment-btn"><i class="icon comment outline"></i>コメント</div>
+        </div>
+        <div class="five wide column">
+            <h4 class="ui dividing header">ピープル<a class="anchor"></a></h4>
+            <table class="ui very basic very compact table">
+                <tbody>
+                <tr>
+                    <td>営業担当</td>
+                    <td><%= @quotn.sales_assoc.nm %></td>
+                </tr>
+                <tr>
+                    <td>技術担当</td>
+                    <td><%= @quotn.tech_assoc.try(:nm) || '未設定' %></td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 class="ui dividing header">日付<a class="anchor"></a></h4>
+            <table class="ui very basic very compact table">
+                <tbody>
+                <tr>
+                    <td>開始日</td>
+                    <td><%= @quotn.start_date.format_ymd %></td>
+                </tr>
+                <tr>
+                    <td>終了日</td>
+                    <td><%= @quotn.end_date.format_ymd %></td>
+                </tr>
+                <tr>
+                    <td>作成日</td>
+                    <td><%= @quotn.create_date.format_ymd %></td>
+                </tr>
+                <tr>
+                    <td>更新日</td>
+                    <td><%= @quotn.final_upd_date.format_ymd %></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('#js-comment-form').on('submit', function() {
+            $.post('/api/project/report/<%= @quotn.quotn_no %>', {
+                report: $('#js-report').val(),
+                authenticity_token: $('input', '#js-comment-form').val()
+            });
+            $('#js-cancel-btn').trigger('click');
+            return false;
+        });
+        $('.js-comment-btn').on('click', function() {
+            $('#js-comment-form').show();
+            $('#js-comment-btn').hide();
+            window.location.hash = 'activity';
+        });
+        $('#js-cancel-btn').on('click', function() {
+            $('#js-comment-form').hide();
+            $('#js-comment-btn').show();
+            history.back();
+            return false;
+        });
+        $('.item', '#activity').tab({
+            auto: true,
+            path: '/quotn/detail/<%= @quotn.quotn_no %>/<%= @quotn.quotn_ver_no %>'
+        });
+        $('#js-report-tab').trigger('click');
+        $.tab('change tab', 'report');
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '売上予実'
+            },
+            subtitle: {
+                text: '<%= @quotn.quotn_title %>'
+            },
+            xAxis: {
+                categories: [
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                    'Jan',
+                    'Feb',
+                    'Mar'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '売上 (円)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.0f} 円</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+                <% sales = @quotn.sales.order(:kind_data)
+                sales.each_with_index do |s, i|%>
+                {
+                    name: '<%= s.term_this %><%= s.kind_data == '0' ? '予定' : '実績' %>',
+                    data: <%= %w/4 5 6 7 8 9 10 11 12 1 2 3/.map {|m| s.try "progress_sales_#{m}_this"}.to_json %>
+                }<%= ',' if i != sales.count - 1 %>
+                <% end %>
+            ]
+        });
+    });
+</script>
