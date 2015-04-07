@@ -12,6 +12,9 @@ class Quotation < ActiveRecord::Base
   has_one :project, :foreign_key => [:latest_ver_quotn_no, :latest_ver_quotn_ver_no]
   has_one :sales_assoc, :class_name => :Personal, :foreign_key => :psnal_cd, :primary_key => :sales_assoc_psnal_cd
   has_one :tech_assoc, :class_name => :Personal, :foreign_key => :psnal_cd, :primary_key => :tech_assoc_psnal_cd
+  has_one :bulk_contract, :foreign_key => [:quotn_no, :quotn_ver_no]
+  has_one :maint_contract, :foreign_key => [:quotn_no, :quotn_ver_no]
+  has_one :pcdc_contract, :foreign_key => [:quotn_no, :quotn_ver_no]
 
   # enums
   enum cntrct_tp: {lump_sum: '1', mandate: '2', worker_dispatch: '3', maintenance: '4'}
@@ -41,6 +44,18 @@ class Quotation < ActiveRecord::Base
     .references(:project, :csc_cust, :assign_pmbrs)
     .order(:main_group_mst_blg_cd, :pcu_cd, :quotn_no)
   }
+
+  def contract_man_hour_mm
+    return self.contract.try :quotn_man_hour_mm if self.maintenance?
+    self.contract.try :man_hour_mm
+  end
+
+  def contract
+    return self.bulk_contract if self.lump_sum?
+    return self.maint_contract if self.maintenance?
+    return self.pcdc_contract if self.worker_dispatch? || self.mandate?
+    nil
+  end
 
   def cntrct_tp_color
     return 'blue' if self.lump_sum?

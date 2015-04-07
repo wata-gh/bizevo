@@ -10,14 +10,14 @@
         }
 </style>
 <div class="ui large breadcrumb">
-    <%= link_to '案件一覧', url(:quotn, :index, :month => Date.today.strftime('%Y%m'), :blg_cd => @quotn.belonging.mst_blg_cd.strip), :class => 'section' %>
+    <%= link_to '案件一覧', url(:quotn, :index, :month => Date.today.strftime('%Y%m'), :blg_cd => @quotn.belonging.try(:mst_blg_cd).try(:strip)), :class => 'section' %>
     <div class="divider"> / </div>
     <div class="active section"><%= @quotn.quotn_no %>-<%= @quotn.quotn_ver_no %></div>
 </div>
 <h3 class="ui header">
     <i class="newspaper icon"></i>
     <div class="content"><%= @quotn.quotn_title %>
-        <div class="sub header"><%= @quotn.belonging.blg_nm %></div>
+        <div class="sub header"><div class="ui mini <%= @quotn.cntrct_tp_color %> label"><%= @quotn.cntrct_tp_i18n %></div> <%= @quotn.belonging.try :blg_nm %></div>
     </div>
 </h3>
 <div class="ui grid">
@@ -52,7 +52,7 @@
                     <td>見積</td>
                     <td><i class="icon yen"></i><%= @quotn.quotn_amt.try :jpy_comma %></td>
                     <td>工数</td>
-                    <td></td>
+                    <td><%= @quotn.contract_man_hour_mm.blank? ? '' : (@quotn.contract_man_hour_mm.to_s + ' mm') %></td>
                 </tr>
                 </tbody>
             </table>
