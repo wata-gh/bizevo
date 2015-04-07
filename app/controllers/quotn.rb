@@ -16,7 +16,7 @@ Bizevo::App.controllers :quotn do
   end
 
   get :detail, :map => 'quotn/detail/:quotn_no/:quotn_ver_no' do
-    @quotn = Quotation.find_by :quotn_no => params[:quotn_no], :quotn_ver_no => params[:quotn_ver_no]
+    @quotn = Quotation.find_by(:quotn_no => params[:quotn_no], :quotn_ver_no => params[:quotn_ver_no])
     halt 404 unless @quotn
     @reports = ProjectReport.where(:quotn_no => @quotn.quotn_no).order(:created_at => :desc).page(params[:page]).per(5)
     render 'quotn/detail'

@@ -28,6 +28,10 @@
                     <div class="ui teal label"><i class="globe icon"></i> <%= q.belonging.blg_nm %></div>
                 </div>
                 <div class="extra">
+                    金額：<%= q.quotn_amt.try :jpy_comma %>
+                    工数：<%= q.contract_man_hour_mm.blank? ? '' : (q.contract_man_hour_mm.to_s + ' mm') %>
+                </div>
+                <div class="extra">
                     技術担当：<%= q.tech_assoc.try(:nm) || '未設定' %>
                     営業担当：<%= q.sales_assoc.nm %>
                 </div>
