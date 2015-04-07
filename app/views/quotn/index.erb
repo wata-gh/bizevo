@@ -7,6 +7,11 @@
     }
         td.table-header {
             color: #2f6899;
+            background-color: #fafafa;
+            font-weight: bold;
+        }
+        table.ui tbody tr td.title {
+            border-top: 2px solid lightblue!important;
         }
 </style>
 <% sales = 0 %>
@@ -17,11 +22,11 @@
         <div class="<%= 'active' if params[:blg_cd] == b.mst_blg_cd.strip %> item"><%= link_to b.blg_nm, url(:quotn, :index, :month => params[:month], :blg_cd => b.mst_blg_cd.strip) %></div>
     <% end %>
 </div>
-<table class="ui celled very compact table">
+<table class="ui celled very compact small table">
     <tbody>
     <% @quotn.each do |q| %>
         <tr>
-            <td colspan="5" class="collapsing">
+            <td colspan="8" class="collapsing title">
                 <a class="ui mini ribbon <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp_i18n %></a>
                 <span class="ui mini teal label"><%= q.belonging.blg_nm %></span>
                 <span class="ui mini <%= q.order_stat_color %> label"><%= q.order_stat_i18n %></span>
@@ -29,9 +34,13 @@
             </td>
         </tr>
         <tr>
-            <td>PCU-<%= q.pcu_cd %></td>
-            <td><%= q.quotn_no %></td>
-            <td>PJ-<%= q.project.try :prj_cd %></td>
+            <td class="table-header">コード</td>
+            <td class="collapsing">PCU-<%= q.pcu_cd %></td>
+            <td class="collapsing"><%= q.quotn_no %>-<%= q.quotn_ver_no %></td>
+            <!-- td class="collapsing"><% if q.project.present? %>PJ-<%= q.project.prj_cd %><% end %></td -->
+            <td class="table-header">担当</td>
+            <td class="collapsing"><%= q.tech_assoc.try :nm %></td>
+            <td class="collapsing"><%= q.sales_assoc.nm %></td>
             <td rowspan="6" class="collapsing">
                 <div class="ui list">
                     <% q.assign_pmbrs.references(:personal).includes(:personal).each do |m| %>
@@ -64,31 +73,53 @@
             <td rowspan="6"><%= simple_format(h(q.remark)) %></td>
         </tr>
         <tr>
-            <td colspan="3" class="collapsing"><%= q.csc_cust.fml_cust_nm %></td>
+            <td class="table-header">顧客</td>
+            <td colspan="5" class="collapsing"><%= q.csc_cust.fml_cust_nm %></td>
         </tr>
         <tr>
-            <td class="table-header collapsing">担当</td>
-            <td class="collapsing"><%= q.tech_assoc.try :nm %></td>
-            <td class="collapsing"><%= q.sales_assoc.nm %></td>
-        </tr>
-        <tr>
-            <td class="collapsing table-header">期間</td>
+            <td class="table-header">期間</td>
             <td colspan="2" class="collapsing"><%= Date.strptime(q.start_date, '%Y%m%d').strftime('%Y/%m/%d') %> - <%= Date.strptime(q.end_date, '%Y%m%d').strftime('%Y/%m/%d') %></td>
-        </tr>
-        <tr>
-            <td class="table-header collapsing">見積もり</td>
+            <td class="collapsing table-header">見積もり</td>
             <td class="right aligned collapsing"><%= q.quotn_amt.try :jpy_comma %></td>
             <td class="right aligned collapsing">
                 <%= q.contract_man_hour_mm.blank? ? '' : (q.contract_man_hour_mm.to_s + ' mm') %>
             </td>
         </tr>
         <tr>
-            <td class="collapsing table-header">進行基準(当月)</td>
-            <td class="collapsing right aligned"><%
-               s = q.sales.find_by(:kind_data => 0, :term_this => (Date.strptime(params[:month], '%Y%m') << 3).year - 1989).try "progress_sales_#{Date.strptime(params[:month], '%Y%m').month}_this"
+            <%
+               m = Date.strptime(params[:month], '%Y%m').month
+               sale = q.sales.find_by(:kind_data => 0, :term_this => (Date.strptime(params[:month], '%Y%m') << 3).year - 1989)
+               s = sale.try "progress_sales_#{m}_this"
                sales += s if s
-            %><%= s %></td>
-            <td class="collapsing right aligned">-%</td>
+            %>
+            <td class="table-header" rowspan="3">tools.db</td>
+            <td class="table-header"></td>
+            <td class="table-header">達成率</td>
+            <td class="table-header">仕掛り</td>
+            <td class="table-header">進行(当月)</td>
+            <td class="table-header"></td>
+        </tr>
+        <tr>
+            <td class="collapsing table-header">進行(予定)</td>
+            <% if sale %>
+                <td class="collapsing right aligned"><%= sale.try "completion_rate_#{m}" %> %</td>
+                <td class="collapsing right aligned"><%= s.try :jpy_comma %></td>
+                <td class="collapsing right aligned"><%= sale.try("completion_sales_#{m}").try :jpy_comma %></td>
+            <% else %>
+                <td class="negative" colspan="3"><i class="attention icon"></i>予定が未入力です</td>
+            <% end %>
+            <td></td>
+        </tr>
+        <tr>
+            <%
+               m = Date.strptime(params[:month], '%Y%m').month
+               sale = q.sales.find_by(:kind_data => 1, :term_this => (Date.strptime(params[:month], '%Y%m') << 3).year - 1989)
+            %>
+            <td class="collapsing table-header">進行(実績)</td>
+            <td class="collapsing right aligned"><%= sale.try "completion_rate_#{m}" %> %</td>
+            <td class="collapsing right aligned"><%= sale.try("progress_sales_#{m}_this").try :jpy_comma %></td>
+            <td class="collapsing right aligned"><%= sale.try("completion_sales_#{m}").try :jpy_comma %></td>
+            <td></td>
         </tr>
     <% end %>
     </tbody>
