@@ -8,16 +8,16 @@ Bizevo::App.controllers :auth do
   end
 
   post :login do
-    account = Account.authenticate params[:email], params[:password]
-    unless account
+    user = ActiveUser.authenticate params[:email], params[:password]
+    unless user
       redirect_to url(:auth, :login), :error => 'email or password invalid.'
     end
-    # TODO redirect to somewhere like dashboard...
-    redirect url(:kiita, :index)
+    set_current_user user
+    redirect '/'
   end
 
   get :logout do
-    # TODO session invalidate
+    session.clear
     redirect url(:auth, :login)
   end
 end
