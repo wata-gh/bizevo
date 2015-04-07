@@ -14,25 +14,25 @@ source 'https://rubygems.org'
 gem 'rake'
 
 # Component requirements
-group :component do
-  gem 'bcrypt'
-  gem 'erubis', '~> 2.7.0'
-  gem 'activerecord', '>= 3.1', :require => 'active_record'
-  gem 'mysql2'
-  gem 'redcarpet'
-  gem 'composite_primary_keys'
-  gem 'database_cleaner'
-  gem 'unicorn'
-  gem 'actionview'
-  gem 'actionpack'
-  gem 'kaminari', '0.16.1', :require => 'kaminari/sinatra'
-  gem 'ruby-oci8'
-  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
-  gem 'composite_primary_keys'
-  gem 'enum_help'
-end
+gem 'bcrypt'
+gem 'erubis', '~> 2.7.0'
+gem 'activerecord', '>= 3.1', :require => 'active_record'
+gem 'mysql2'
+gem 'redcarpet'
+gem 'composite_primary_keys'
+gem 'database_cleaner'
+gem 'unicorn'
+gem 'actionview'
+gem 'actionpack'
+gem 'kaminari', '0.16.1', :require => 'kaminari/sinatra'
+gem 'composite_primary_keys'
+gem 'enum_help'
 gem 'activeldap', :github => 'activeldap/activeldap'
 gem 'net-ldap'
+group :development, :staging, :production do
+  gem 'ruby-oci8'
+  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
+end
 
 # Test requirements
 group :test, :'travis-ci' do
