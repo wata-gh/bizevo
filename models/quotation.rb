@@ -35,14 +35,13 @@ class Quotation < ActiveRecord::Base
   # scopes
   scope :current_month, ->(m) {
    where(<<-"EOS"
-    (quotation.start_date < '#{m}' and quotation.end_date > '#{m}99')
+    (quotation.start_date < '#{m}' and quotation.end_date > '#{m}')
     or (quotation.start_date > '#{m}' and quotation.end_date < '#{m}99')
-    or (quotation.start_date > '#{m}' and quotation.end_date > '#{m}99')
-    or (quotation.start_date < '#{m}' and quotation.end_date > '#{m}99')
+    or (quotation.start_date > '#{m}' and quotation.start_date < '#{m}99')
    EOS
    ).includes(:project, :csc_cust, :assign_pmbrs)
     .references(:project, :csc_cust, :assign_pmbrs)
-    .order(:main_group_mst_blg_cd, :pcu_cd, :quotn_no)
+    .order(:main_group_mst_blg_cd, :pcu_cd, :quotn_no, :quotn_ver_no => :desc)
   }
 
   def contract_man_hour_mm
