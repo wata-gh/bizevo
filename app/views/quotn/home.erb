@@ -1,0 +1,50 @@
+<h2 class="ui dividing header">
+    <i class="newspaper icon"></i>
+    <div class="content">
+        見積もり情報
+    </div>
+</h2>
+<!--
+<div class="ui search focus">
+    <div class="ui icon input">
+        <input class="prompt" type="text" placeholder="フリーワード検索" autocomplete="off">
+        <i class="search icon"></i>
+    </div>
+</div>
+-->
+<div class="ui divided items">
+    <% @quotn.each do |q| %>
+        <div class="item">
+            <div class="image">
+                <img src="/images/noimage.png">
+            </div>
+            <div class="content">
+                <%= link_to q.quotn_title, url(:quotn, :detail, :quotn_no => q.quotn_no, :quotn_ver_no => q.quotn_ver_no), :class => 'header' %>
+                <div class="meta">
+                    <span class="cinema"><%= q.csc_cust.fml_cust_nm %></span>
+                </div>
+                <div class="extra">
+                    <div class="ui <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp_i18n %></div>
+                    <div class="ui teal label"><i class="globe icon"></i> <%= q.belonging.blg_nm %></div>
+                </div>
+                <div class="extra">
+                    技術担当：<%= q.tech_assoc.try(:nm) || '未設定' %>
+                    営業担当：<%= q.sales_assoc.nm %>
+                </div>
+                <div class="extra">
+                    最終更新日：<%= q.final_upd_date.format_ymd %>
+                    最終更新者：<%= q.updater.nm %>
+                </div>
+                <% if q.remark.present? %>
+                    <div class="description">
+                        <div class="ui segment">
+                            <div class="ui top left attached label">備考</div>
+                            <%= simple_format(h(q.remark)) %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>
+<%= paginate @quotn %>
