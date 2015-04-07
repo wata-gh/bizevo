@@ -79,7 +79,7 @@
             <td class="table-header collapsing">見積もり</td>
             <td class="right aligned collapsing"><%= q.quotn_amt.try :jpy_comma %></td>
             <td class="right aligned collapsing">
-                <%= q.man_hour_mm params[:month] %> mm
+                <%= q.contract_man_hour_mm.blank? ? '' : (q.contract_man_hour_mm.to_s + ' mm') %>
             </td>
         </tr>
         <tr>
