@@ -6,6 +6,7 @@ class Quotation < ActiveRecord::Base
   # relations
   belongs_to :belonging, :foreign_key => :main_group_mst_blg_cd
   belongs_to :csc_cust, :class_name => :Cust, :foreign_key => :csc_cust_cd, :primary_key => :cust_cd
+  belongs_to :updater, :class_name => :Personal, :foreign_key => :final_psnal_cd
   has_many :assign_pmbrs, :foreign_key => [:quotn_no, :quotn_ver_no]
   has_many :sales, :foreign_key => :quotn_no, :primary_key => :quotn_no
   has_one :project, :foreign_key => [:latest_ver_quotn_no, :latest_ver_quotn_ver_no]

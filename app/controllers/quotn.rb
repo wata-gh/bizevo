@@ -1,5 +1,10 @@
 Bizevo::App.controllers :quotn do
 
+  get :index do
+    @quotn = Quotation.order(:final_upd_date => :desc, :quotn_no => :desc, :quotn_ver_no => :desc).page(params[:page]).per(10)
+    render 'quotn/home'
+  end
+
   get :index, :with => :month do
     @quotn = Quotation.current_month(params[:month]).where :main_group_mst_blg_cd => Belonging.business_blg.pluck(:mst_blg_cd)
     render 'quotn/index'
