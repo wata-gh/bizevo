@@ -30,9 +30,9 @@ group :development do
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
   gem 'composite_primary_keys'
   gem 'enum_help'
-  gem 'activeldap', :github => 'activeldap/activeldap'
-  gem 'net-ldap'
 end
+gem 'activeldap', :github => 'activeldap/activeldap'
+gem 'net-ldap'
 
 # Test requirements
 group :test, :'travis-ci' do
