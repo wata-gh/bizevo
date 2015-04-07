@@ -16,6 +16,9 @@
             <a class="icon item" data-content="" href="<%= url(:quotn, :index) %>">
                 <i class="browser icon"></i>
             </a>
+            <a class="icon item" data-content="" href="<%= url(:kiita, :index) %>">
+                <i class="book icon"></i>
+            </a>
         </div>
         <div class="right menu">
             <div class="vertically fitted borderless item">
@@ -24,12 +27,9 @@
             <a class="popup icon github item" data-content="View project on GitHub" href="https://github.com/wata-gh/bizevo">
                 <i class="alternate github icon"></i>
             </a>
-            <div class="ui language dropdown item" id="languages" data-content="Select Language">
-                <i class="world icon"></i>
-                <div class="menu transition hidden">
-                    <div class="item">ログアウト</div>
-                </div>
-            </div>
+            <a class="popup icon github item" data-content="logout" href="<%= url(:auth, :logout) %>">
+                <i class="sign out icon"></i>
+            </a>
         </div>
     </div>
 </div>

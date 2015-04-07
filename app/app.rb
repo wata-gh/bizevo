@@ -7,6 +7,7 @@ module Bizevo
     register Padrino::Mailer
     register Padrino::Helpers
     register Kaminari::Helpers::SinatraHelpers
+    register Bizevo::Auth::AccessControl
 
     enable :sessions
 
@@ -55,6 +56,10 @@ module Bizevo
     #     disable :asset_stamp # no asset timestamping for dev
     #   end
     #
+
+    get :index do
+      render :index
+    end
 
     ##
     # You can manage errors like:

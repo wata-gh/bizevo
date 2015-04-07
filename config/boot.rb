@@ -36,6 +36,7 @@ I18n.enforce_available_locales = true
 # Add your before (RE)load hooks here
 #
 Padrino.before_load do
+  Padrino.require_dependencies File.join(Padrino.root, 'config/ldap.rb')
 end
 
 ##
