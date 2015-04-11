@@ -39,7 +39,6 @@ Bizevo::App.controllers :kiita do
         update_article_tag params
       end
     rescue => e
-      p e
       flash[:error] = e.message
       redirect "kiita/update/#{params[:article][:id]}"
     end

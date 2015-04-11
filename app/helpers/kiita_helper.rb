@@ -11,6 +11,7 @@ module Bizevo
 
       def save_new_tag params
         #未登録タグの登録
+        raise 'タグを入力してください。' if params.empty?
         params.split(',').each do |tag|
           Tag.find_or_create_by(:tag => tag)
         end
@@ -40,10 +41,8 @@ module Bizevo
           articletag = ArticleTag.find_or_initialize_by({article_id: @article.id, tag: tag})
           if articletag.new_record? then
             articletag.save!
-            no_change_tags << articletag
-          else
-            no_change_tags << articletag
           end
+          no_change_tags << articletag
         end
         destroy_tags = select_article_tags - no_change_tags
         if destroy_tags.present?
