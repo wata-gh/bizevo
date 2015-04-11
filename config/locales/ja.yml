@@ -131,6 +131,25 @@ ja:
       header:
         one: ! '%{model}にエラーが発生しました。'
         other: ! '%{model}に%{count}個のエラーが発生しました。'
+  enums:
+    quotation:
+      cntrct_tp:
+        lump_sum: 一括請負
+        mandate: 準委任
+        worker_dispatch: 派遣
+        maintenance: 保守
+      order_stat:
+        not_yet_started:                 '未着手'
+        lost_before_start:               '着手前Lost'
+        expected_start:                  '見込着手'
+        preceding_start:                 '先行着手依頼書受領済'
+        purchase_order_received:         '注文書受領済'
+        completion_certificate_received: '検収完了書受領済'
+        invoices_issued:                 '請求書発行済'
+        payment_confirmed:               '入金確認済'
+        lost:                            'Lost'
+        refuse:                          '断り'
+        exit_on_the_way:                 '途中終了'
   helpers:
     select:
       prompt: 選択してください。

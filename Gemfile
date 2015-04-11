@@ -22,19 +22,39 @@ gem 'redcarpet'
 gem 'composite_primary_keys'
 gem 'database_cleaner'
 gem 'unicorn'
-gem 'actionview', '4.1.6'
-gem 'actionpack', '4.1.6'
+gem 'actionview'
+gem 'actionpack'
 gem 'kaminari', '0.16.1', :require => 'kaminari/sinatra'
+gem 'composite_primary_keys'
+gem 'enum_help'
+gem 'activeldap', :github => 'activeldap/activeldap'
+gem 'net-ldap'
+group :oracle do
+  gem 'ruby-oci8'
+  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
+end
 
 # Test requirements
 group :test, :'travis-ci' do
   gem 'rr', :require => false
   gem 'rspec'
   gem 'rack-test', :require => 'rack/test'
+  gem 'factory_girl'
+  gem 'awesome_print'
+  gem 'simplecov'
+  gem 'simplecov-rcov'
+  gem 'ci_reporter'
+end
+
+group :deployment do
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn'
 end
 
 # Padrino Stable Gem
-gem 'padrino', '0.12.3'
+gem 'padrino', '0.12.5'
 
 # Or Padrino Edge
 # gem 'padrino', :github => 'padrino/padrino-framework'

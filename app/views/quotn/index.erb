@@ -1,0 +1,156 @@
+<style>
+    .ui.ribbon.label {
+        left: calc(-0.6rem - 1.2em);
+    }
+    .container {
+        width: 100%;
+    }
+        td.table-header {
+            color: #2f6899;
+            background-color: #fafafa;
+            font-weight: bold;
+        }
+        table.ui tbody tr td.title {
+            border-top: 2px solid lightblue!important;
+        }
+</style>
+<% sales = 0 %>
+<h3 class="ui header">主管プロジェクト報告(<%= Date.strptime(params[:month], '%Y%m').strftime('%Y/%m') %>)</h3>
+<div class="ui six item teal menu">
+    <div class="item"><%= link_to 'ALL', url(:quotn, :index, :month => params[:month]) %></div>
+    <% Belonging.business_blg.each do |b| %>
+        <div class="<%= 'active' if params[:blg_cd] == b.mst_blg_cd.strip %> item"><%= link_to b.blg_nm, url(:quotn, :index, :month => params[:month], :blg_cd => b.mst_blg_cd.strip) %></div>
+    <% end %>
+</div>
+<table class="ui celled very compact small table">
+    <tbody>
+    <% @quotn.each do |q| %>
+        <tr>
+            <td colspan="8" class="collapsing title">
+                <a class="ui mini ribbon <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp_i18n %></a>
+                <span class="ui mini teal label"><%= q.belonging.blg_nm %></span>
+                <span class="ui mini <%= q.order_stat_color %> label"><%= q.order_stat_i18n %></span>
+                <%= link_to q.quotn_title, url(:quotn, :detail, :quotn_no => q.quotn_no, :quotn_ver_no => q.quotn_ver_no) %>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-header">コード</td>
+            <td class="collapsing">PCU-<%= q.pcu_cd %></td>
+            <td class="collapsing"><%= q.quotn_no %>-<%= q.quotn_ver_no %></td>
+            <!-- td class="collapsing"><% if q.project.present? %>PJ-<%= q.project.prj_cd %><% end %></td -->
+            <td class="table-header">担当</td>
+            <td class="collapsing"><%= q.tech_assoc.try :nm %></td>
+            <td class="collapsing"><%= q.sales_assoc.nm %></td>
+            <td rowspan="6" class="collapsing">
+                <div class="ui list">
+                    <% q.assign_pmbrs.references(:personal).includes(:personal).each do |m| %>
+                        <%
+                           pmh = m.assign_pmh.select {|a| a.setup_date_ym == params[:month] && a.man_hour_mm != 0}
+                           #pmh = m.assign_pmh.find_by :setup_date_ym => params[:month]
+                           if pmh.present?
+                             pmh = pmh.first
+                        %>
+                            <div class="item">
+                                <% if params[:blg_cd].present? && m.personal.mst_blg_cd.start_with?(params[:blg_cd]) == false %>
+                                    <i class="empty star icon"></i>
+                                <% end %>
+                                <%= if m.personal.nm.encoding.to_s == 'UTF-8'
+                                      m.personal.nm
+                                    else
+                                      m.personal.psnal_cd
+                                    end
+                                %>
+                                (<%= pmh.man_hour_mm %>)
+                            </div>
+                        <% end %>
+                    <% end %>
+                    <a class="ui blue basic mini button">
+                        <i class="users icon"></i>
+                        アサイン
+                    </a>
+                </div>
+            </td>
+            <td rowspan="6"><%= simple_format(h(q.remark)) %></td>
+        </tr>
+        <tr>
+            <td class="table-header">顧客</td>
+            <td colspan="5" class="collapsing"><%= q.csc_cust.fml_cust_nm %></td>
+        </tr>
+        <tr>
+            <td class="table-header">期間</td>
+            <td colspan="2" class="collapsing"><%= Date.strptime(q.start_date, '%Y%m%d').strftime('%Y/%m/%d') %> - <%= Date.strptime(q.end_date, '%Y%m%d').strftime('%Y/%m/%d') %></td>
+            <td class="collapsing table-header">見積もり</td>
+            <td class="right aligned collapsing"><%= q.quotn_amt.try :jpy_comma %></td>
+            <td class="right aligned collapsing">
+                <%= q.contract_man_hour_mm.blank? ? '' : (q.contract_man_hour_mm.to_s + ' mm') %>
+            </td>
+        </tr>
+        <tr>
+            <%
+               m = Date.strptime(params[:month], '%Y%m').month
+               sale = q.sales.find_by(:kind_data => 0, :term_this => (Date.strptime(params[:month], '%Y%m') << 3).year - 1989)
+               s = sale.try "progress_sales_#{m}_this"
+               sales += s if s
+            %>
+            <td class="table-header" rowspan="3">tools.db</td>
+            <td class="table-header"></td>
+            <td class="table-header">達成率</td>
+            <td class="table-header">仕掛り</td>
+            <td class="table-header">進行(当月)</td>
+            <td class="table-header"></td>
+        </tr>
+        <tr>
+            <td class="collapsing table-header">進行(予定)</td>
+            <% if sale %>
+                <td class="collapsing right aligned"><%= sale.try "completion_rate_#{m}" %> %</td>
+                <td class="collapsing right aligned"><%= s.try :jpy_comma %></td>
+                <td class="collapsing right aligned"><%= sale.try("completion_sales_#{m}").try :jpy_comma %></td>
+            <% else %>
+                <td class="negative" colspan="3"><i class="attention icon"></i>予定が未入力です</td>
+            <% end %>
+            <td></td>
+        </tr>
+        <tr>
+            <%
+               m = Date.strptime(params[:month], '%Y%m').month
+               sale = q.sales.find_by(:kind_data => 1, :term_this => (Date.strptime(params[:month], '%Y%m') << 3).year - 1989)
+            %>
+            <td class="collapsing table-header">進行(実績)</td>
+            <td class="collapsing right aligned"><%= sale.try "completion_rate_#{m}" %> %</td>
+            <td class="collapsing right aligned"><%= sale.try("progress_sales_#{m}_this").try :jpy_comma %></td>
+            <td class="collapsing right aligned"><%= sale.try("completion_sales_#{m}").try :jpy_comma %></td>
+            <td></td>
+        </tr>
+    <% end %>
+    </tbody>
+</table>
+<div class="ui statistic">
+    <div class="label">売上予定</div>
+    <div class="value">
+        <i class="money icon"> <%= sales.jpy_comma %></i>
+    </div>
+</div>
+<div class="ui items">
+    <div class="item">
+        <div class="ui tiny image">
+            <img class="ui image" src="/images/noimage.png">
+        </div>
+        <div class="content">
+            <div class="header">xxx</div>
+            <div class="meta">
+                xxx
+            </div>
+            <div class="description">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.ui.dropdown').dropdown();
+        $('.ui.menu .dropdown').dropdown({
+            on: 'hover'
+        });
+    });
+</script>
