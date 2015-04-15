@@ -138,6 +138,7 @@ ja:
         mandate: 準委任
         worker_dispatch: 派遣
         maintenance: 保守
+        product_sale: 物品販売
       order_stat:
         not_yet_started:                 '未着手'
         lost_before_start:               '着手前Lost'

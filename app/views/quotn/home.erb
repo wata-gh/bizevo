@@ -19,13 +19,24 @@
                 <img src="/images/noimage.png">
             </div>
             <div class="content">
-                <%= link_to q.quotn_title, url(:quotn, :detail, :quotn_no => q.quotn_no, :quotn_ver_no => q.quotn_ver_no), :class => 'header' %>
+                <% link_to url(:quotn, :detail, :quotn_no => q.quotn_no, :quotn_ver_no => q.quotn_ver_no), :class => 'header' do %>
+                    <%= q.quotn_title %>
+                    <% if q.final_upd_date == Date.today.strftime('%Y%m%d') %>
+                        <div class="ui blue mini tag label">today</div>
+                    <% elsif q.final_upd_date >= (Date.today - 3).strftime('%Y%m%d') %>
+                        <div class="ui red mini tag label">update</div>
+                    <% end %>
+                    <% if q.create_date == Date.today.strftime('%Y%m%d') %>
+                        <div class="ui green mini tag label">new!</div>
+                    <% end %>
+                <% end %>
                 <div class="meta">
                     <span class="cinema"><%= q.csc_cust.fml_cust_nm %></span>
                 </div>
                 <div class="extra">
                     <div class="ui <%= q.cntrct_tp_color %> label"><%= q.cntrct_tp_i18n %></div>
                     <div class="ui teal label"><i class="globe icon"></i> <%= q.belonging.blg_nm %></div>
+                    <div class="ui <%= q.order_stat_color %> label"><%= q.order_stat_i18n %></div>
                 </div>
                 <div class="extra">
                     金額：<%= q.quotn_amt.try :jpy_comma %>
