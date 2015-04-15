@@ -1,0 +1,39 @@
+{
+  "name": "bizevo",
+  "version": "0.0.0",
+  "description": "bizevo ======",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "~3.8.10",
+    "browserify": "~8.0.3",
+    "gulp-concat": "~2.4.3",
+    "gulp-filter": "~2.0.2",
+    "gulp-plumber": "~0.6.6",
+    "gulp-rename": "~1.2.0",
+    "coffeeify": "~1.0.0",
+    "gulp-sass": "~1.2.4",
+    "gulp-util": "~3.0.1",
+    "jadeify": "~4.0.0",
+    "main-bower-files": "~2.4.1",
+    "vinyl-source-stream": "~1.0.0",
+    "gulp-bower": "~0.0.10",
+    "gulp-bower-files": "~0.2.7",
+    "jade": "~1.8.2"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://wata-gh@github.com/wata-gh/bizevo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wata-gh/bizevo/issues"
+  },
+  "homepage": "https://github.com/wata-gh/bizevo"
+}
