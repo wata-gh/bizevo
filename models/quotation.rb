@@ -17,7 +17,7 @@ class Quotation < ActiveRecord::Base
   has_one :pcdc_contract, :foreign_key => [:quotn_no, :quotn_ver_no]
 
   # enums
-  enum cntrct_tp: {lump_sum: '1', mandate: '2', worker_dispatch: '3', maintenance: '4'}
+  enum cntrct_tp: {lump_sum: '1', mandate: '2', worker_dispatch: '3', maintenance: '4', product_sale: '5'}
   enum order_stat: {
     not_yet_started:                 '20',
     lost_before_start:               '29',
@@ -61,6 +61,7 @@ class Quotation < ActiveRecord::Base
     return 'green' if self.mandate?
     return 'yellow' if self.worker_dispatch?
     return 'orange' if self.maintenance?
+    return 'purple' if self.product_sale?
     'black'
   end
 

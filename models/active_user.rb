@@ -6,8 +6,6 @@ class ActiveUser < ActiveLdap::Base
     ldap.host = LDAP_CONFIG[:host]
     ldap.port = LDAP_CONFIG[:port]
     ldap.auth "ACTIVEWORK\\#{email}", pass
-    puts email
-    puts pass
     return self.find_user email if ldap.bind
     nil
   end
