@@ -54,12 +54,7 @@
                                 <% if params[:blg_cd].present? && m.personal.mst_blg_cd.start_with?(params[:blg_cd]) == false %>
                                     <i class="empty star icon"></i>
                                 <% end %>
-                                <%= if m.personal.nm.encoding.to_s == 'UTF-8'
-                                      m.personal.nm
-                                    else
-                                      m.personal.psnal_cd
-                                    end
-                                %>
+                                <%= m.personal.nm.encode(:invalid => :replace) %>
                                 (<%= pmh.man_hour_mm %>)
                             </div>
                         <% end %>

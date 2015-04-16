@@ -8,6 +8,16 @@
         body {
             color: #111111;
         }
+        .ui.accordion div.title {
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            font-weight: bold;;
+        }
+        .ui.accordion .content {
+            margin: 0 10px !important;
+        }
+        .table tr td.title {
+            color: #707070 !important;
+        }
 </style>
 <div class="ui large breadcrumb">
     <%= link_to '案件一覧', url(:quotn, :index, :month => Date.today.strftime('%Y%m'), :blg_cd => @quotn.belonging.try(:mst_blg_cd).try(:strip)), :class => 'section' %>
@@ -23,120 +33,481 @@
 <div class="ui grid">
     <div class="row">
         <div class="fifteen wide column">
-            <div class="ui basic mini button"><i class="icon edit"></i>編集</div>
-            <div class="ui basic mini button js-comment-btn"><i class="icon comment outline"></i>コメント</div>
+            <div class="ui basic disabled button"><i class="icon edit"></i>編集</div>
+            <div class="ui basic button js-comment-btn"><i class="icon comment outline"></i>コメント</div>
+            <div class="ui basic buttons">
+                <div class="ui basic button js-quotn-assign-btn"><i class="icon users"></i>アサイン（見積もり）</div>
+                <% if @quotn.project.present? %>
+                    <div class="ui basic button js-project-assign-btn"><i class="icon users"></i>アサイン（プロジェクト）</div>
+                <% else %>
+                    <div class="ui basic disabled button js-create-project-btn"><i class="icon checkmark"></i>見込み着手</div>
+                <% end %>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="eleven wide column">
-            <h4 class="ui dividing header">詳細<a class="anchor" id="states"></a></h4>
-            <table class="ui very basic very compact table">
-                <tbody>
-                <tr>
-                    <td>PCU</td>
-                    <td><%= @quotn.pcu_cd %></td>
-                    <td>見積番号</td>
-                    <td><%= @quotn.quotn_no %>-<%= @quotn.quotn_ver_no %></td>
-                </tr>
-                <tr>
-                    <td>プロジェクトコード</td>
-                    <td><%= @quotn.project.try :prj_cd %></td>
-                    <td>ステータス</td>
-                    <td><div class="ui <%= @quotn.order_stat_color %> mini label"><%= @quotn.order_stat_i18n %></div></td>
-                </tr>
-                <tr>
-                    <td>顧客</td>
-                    <td colspan="3"><%= @quotn.csc_cust.fml_cust_nm %></td>
-                </tr>
-                <tr>
-                    <td>見積</td>
-                    <td><i class="icon yen"></i><%= @quotn.quotn_amt.try :jpy_comma %></td>
-                    <td>工数</td>
-                    <td><%= @quotn.contract_man_hour_mm.blank? ? '' : (@quotn.contract_man_hour_mm.to_s + ' mm') %></td>
-                </tr>
-                </tbody>
-            </table>
-            <h4 class="ui dividing header">説明<a class="anchor"></a></h4>
-            <div class="ui segument">
-                <%= simple_format(h(@quotn.remark)) %>
-            </div>
-            <h4 class="ui dividing header">リンク<a class="anchor"></a></h4>
-            <table class="ui very basic very compact table">
-                <tbody>
-                <tr>
-                    <td>プロジェクト計画書</td>
-                    <td><a>計画書.pptx</a></td>
-                    <td><a class="ui blue mini label">レビュー済</a></td>
-                </tr>
-                <tr>
-                    <td>体制図</td>
-                    <td><a>体制図.pptx</a></td>
-                    <td><a class="ui yellow mini label">未レビュー</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <h4 class="ui dividing header">データ<a class="anchor"></a></h4>
-            <div id="container"></div>
-            <h4 class="ui dividing header">アクティビティ<a class="anchor" name="activity"></a></h4>
-            <div class="ui pointing secondary menu" id="activity">
-                <a class="item active" data-tab="report" id="js-report-tab">週次報告</a>
-                <a class="item" data-tab="log">作業ログ</a>
-            </div>
-            <div class="ui tab segument active" data-tab="report">
-            </div>
-            <div class="ui tab segument" data-tab="log">
-            </div>
-            <% form_tag "/api/project/report/#{@quotn.quotn_no}", :class => 'ui form', :id => 'js-comment-form', :style => 'display: none;' do %>
-                <div class="field">
-                    <textarea id="js-report"></textarea>
+            <div class="ui accordion">
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    詳細
                 </div>
-                <div class="inline field">
-                    <button class="ui submit basic mini button">追加</button>
-                    <a href="#" id="js-cancel-btn">キャンセル</a>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">PCU</td>
+                            <td><%= @quotn.pcu_cd %></td>
+                            <td class="title">見積番号</td>
+                            <td><%= @quotn.quotn_no %>-<%= @quotn.quotn_ver_no %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">プロジェクトコード</td>
+                            <td><%= @quotn.project.try :prj_cd %></td>
+                            <td class="title">ステータス</td>
+                            <td><div class="ui <%= @quotn.order_stat_color %> mini label"><%= @quotn.order_stat_i18n %></div></td>
+                        </tr>
+                        <tr>
+                            <td class="title">顧客</td>
+                            <td colspan="3"><%= @quotn.csc_cust.fml_cust_nm %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">見積</td>
+                            <td><i class="icon yen"></i><%= @quotn.quotn_amt.try :jpy_comma %></td>
+                            <td class="title">工数</td>
+                            <td><%= @quotn.contract_man_hour_mm.blank? ? '' : (@quotn.contract_man_hour_mm.to_s + ' mm') %></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            <% end %>
-            <div class="ui mini basic button js-comment-btn" id="js-comment-btn"><i class="icon comment outline"></i>コメント</div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    説明
+                </div>
+                <div class="active content">
+                    <div class="ui segment">
+                        <%= simple_format(h(@quotn.remark)) %>
+                    </div>
+                </div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    リンク
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">プロジェクト計画書</td>
+                            <td><a>計画書.pptx</a></td>
+                            <td><a class="ui blue mini label">レビュー済</a></td>
+                        </tr>
+                        <tr>
+                            <td class="title">体制図</td>
+                            <td><a>体制図.pptx</a></td>
+                            <td><a class="ui yellow mini label">未レビュー</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    データ
+                </div>
+                <div class="active content">
+                    <div id="container"></div>
+                </div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    アクティビティ
+                </div>
+                <div class="active content">
+                    <div class="ui pointing secondary menu" id="activity">
+                        <a class="item active" data-tab="report" id="js-report-tab">週次報告</a>
+                        <a class="item" data-tab="log">作業ログ</a>
+                    </div>
+                    <div class="ui tab segument active" data-tab="report">
+                    </div>
+                    <div class="ui tab segument" data-tab="log">
+                    </div>
+                    <% form_tag "/api/project/report/#{@quotn.quotn_no}", :class => 'ui form', :id => 'js-comment-form', :style => 'display: none;' do %>
+                        <div class="field">
+                            <textarea id="js-report"></textarea>
+                        </div>
+                        <div class="inline field">
+                            <button class="ui submit basic button">追加</button>
+                            <a href="#" id="js-cancel-btn">キャンセル</a>
+                        </div>
+                    <% end %>
+                    <div class="ui mini basic button js-comment-btn" id="js-comment-btn"><i class="icon comment outline"></i>コメント</div>
+                </div>
+            </div>
         </div>
         <div class="five wide column">
-            <h4 class="ui dividing header">ピープル<a class="anchor"></a></h4>
-            <table class="ui very basic very compact table">
-                <tbody>
-                <tr>
-                    <td>営業担当</td>
-                    <td><%= @quotn.sales_assoc.nm %></td>
-                </tr>
-                <tr>
-                    <td>技術担当</td>
-                    <td><%= @quotn.tech_assoc.try(:nm) || '未設定' %></td>
-                </tr>
-                </tbody>
-            </table>
-            <h4 class="ui dividing header">日付<a class="anchor"></a></h4>
-            <table class="ui very basic very compact table">
-                <tbody>
-                <tr>
-                    <td>開始日</td>
-                    <td><%= @quotn.start_date.format_ymd %></td>
-                </tr>
-                <tr>
-                    <td>終了日</td>
-                    <td><%= @quotn.end_date.format_ymd %></td>
-                </tr>
-                <tr>
-                    <td>作成日</td>
-                    <td><%= @quotn.create_date.format_ymd %></td>
-                </tr>
-                <tr>
-                    <td>更新日</td>
-                    <td><%= @quotn.final_upd_date.format_ymd %></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="ui accordion">
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    ピープル
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">営業担当</td>
+                            <td><%= @quotn.sales_assoc.nm %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">技術担当</td>
+                            <td><%= @quotn.tech_assoc.try(:nm) || '未設定' %></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    日付
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">開始日</td>
+                            <td><%= @quotn.start_date.format_ymd %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">終了日</td>
+                            <td><%= @quotn.end_date.format_ymd %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">作成日</td>
+                            <td><%= @quotn.create_date.format_ymd %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">更新日</td>
+                            <td><%= @quotn.final_upd_date.format_ymd %></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
         </div>
+    </div>
+</div>
+<div class="ui quotn fullscreen modal">
+    <i class="close icon"></i>
+    <div class="header">
+        <%= @quotn.quotn_title %> アサイン（見積もり）
+    </div>
+    <div class="content">
+        <div class="ui accordion">
+            <div class="active title">
+                <i class="dropdown icon"></i>
+                アサイン一覧
+            </div>
+            <div class="active content">
+                <div id="quotn-assign-table"></div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                アサイン
+            </div>
+            <div class="assign content">
+                <div class="ui form quotn">
+                    <input type="hidden" name="quotn_no" value="<%= @quotn.quotn_no %>">
+                    <input type="hidden" name="quotn_ver_no" value="<%= @quotn.quotn_ver_no %>">
+                    <div class="two fields">
+                        <div class="required field">
+                            <label>名前</label>
+                            <select class="ui search dropdown" name="psnal_cd">
+                                <% Personal.where(:resign_fin_flg => 0).order(:psnal_cd).each do |p| %>
+                                    <option value="<%= p.psnal_cd %>"><%= p.nm.encode(:invalid => :replace) %></option>
+                                <% end %>
+                            </select>
+                        </div>
+                        <div class="required field">
+                            <label>役割</label>
+                            <select class="ui search dropdown" name="role_cd">
+                                <% Role.all.order(:role_cd).each do |r| %>
+                                    <option value="<%= r.role_cd %>"<% if r.role_cd == '40' %> selected<% end %>><%= r.role_nm %></option>
+                                <% end %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="four fields">
+                        <div class="required field">
+                            <label>開始</label>
+                            <div class="ui icon input">
+                                <input type="date" name="start_date" value="<%= @quotn.start_date.format_ymd '-' %>" max="<%= @quotn.end_date.format_ymd '-' %>" min="<%= @quotn.start_date.format_ymd '-' %>">
+                                <i class="calendar icon"></i>
+                            </div>
+                        </div>
+                        <div class="required field">
+                            <label>終了</label>
+                            <div class="ui icon input">
+                                <input type="date" name="end_date" value="<%= @quotn.end_date.format_ymd '-' %>" max="<%= @quotn.end_date.format_ymd '-' %>" min="<%= @quotn.start_date.format_ymd '-' %>">
+                                <i class="calendar icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui submit button assign">追加</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui button">閉じる</div>
+    </div>
+</div>
+<div class="ui project fullscreen modal">
+    <i class="close icon"></i>
+    <div class="header">
+        <%= @quotn.quotn_title %> アサイン（プロジェクト）
+    </div>
+    <div class="content">
+        <div class="ui form project">
+            <div class="ui accordion">
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    アサイン一覧
+                </div>
+                <div class="active content">
+                    <div id="project-assign-table"></div>
+                </div>
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    アサイン
+                </div>
+                <div class="assign content">
+                    <input type="hidden" name="prj_cd" value="<%= @quotn.project.try :prj_cd %>">
+                    <div class="two fields">
+                        <div class="required field">
+                            <label>名前</label>
+                            <select class="ui search dropdown" name="psnal_cd">
+                                <% Personal.where(:resign_fin_flg => 0).order(:psnal_cd).each do |p| %>
+                                    <option value="<%= p.psnal_cd %>"><%= p.nm.encode(:invalid => :replace) %></option>
+                                <% end %>
+                            </select>
+                        </div>
+                        <div class="required field">
+                            <label>役割</label>
+                            <select class="ui search dropdown" name="role_cd">
+                                <% Role.all.order(:role_cd).each do |r| %>
+                                    <option value="<%= r.role_cd %>"<% if r.role_cd == '40' %> selected<% end %>><%= r.role_nm %></option>
+                                <% end %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="four fields">
+                        <div class="required field">
+                            <label>開始</label>
+                            <div class="ui icon input">
+                                <input type="date" name="start_date" value="<%= @quotn.start_date.format_ymd '-' %>" max="<%= @quotn.end_date.format_ymd '-' %>" min="<%= @quotn.start_date.format_ymd '-' %>">
+                                <i class="calendar icon"></i>
+                            </div>
+                        </div>
+                        <div class="required field">
+                            <label>終了</label>
+                            <div class="ui icon input">
+                                <input type="date" name="end_date" value="<%= @quotn.end_date.format_ymd '-' %>" max="<%= @quotn.end_date.format_ymd '-' %>" min="<%= @quotn.start_date.format_ymd '-' %>">
+                                <i class="calendar icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui submit button assign">追加</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui button">閉じる</div>
     </div>
 </div>
 <script>
     $(function() {
+        $('select.dropdown').dropdown();
+        $('.ui.accordion').accordion({
+            exclusive: false
+        });
+        var assign_func = function() {
+            var $form = $(this);
+            var par = $form.form('get values');
+            if (par.hasOwnProperty('quotn_no')) {
+                $.post('/api/quotn/assign/<%= @quotn.quotn_no %>/<%= @quotn.quotn_ver_no %>', par, function(r) {
+                    $form.form('reset');
+                    reload_quotn_assign();
+                });
+            } else {
+                $.post('/api/project/assign/<%= @quotn.project.try :prj_cd %>', par, function(r) {
+                    $form.form('reset');
+                    reload_project_assign();
+                });
+            }
+        }
+        var validation = {
+            psnal_cd: {
+                identifier: 'psnal_cd',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '対象者を選択してください'
+                    }
+                ]
+            },
+            role_cd: {
+                identifier: 'role_cd',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: '役割を選択してください'
+                    }
+                ]
+            },
+            start_date: {
+                identifier: 'start_date',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'アサイン開始日を選択してください'
+                    }
+                ]
+            },
+            end_date: {
+                identifier: 'end_date',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'アサイン終了日を選択してください'
+                    }
+                ]
+            }
+        };
+        $('.ui.form.quotn,.ui.form.project').form(validation, { onSuccess: assign_func });
+        var reload_quotn_assign = function() {
+            $('#quotn-assign-table').addClass('loading');
+            $.get('/api/quotn/assign/<%= params[:quotn_no] %>/<%= params[:quotn_ver_no] %>', function(r) {
+                quotnHot.loadData(assign = r.results);
+            });
+        };
+        var reload_project_assign = function() {
+            $('#project-assign-table').addClass('loading');
+            $.get('/api/project/assign/<%= @quotn.project.try :prj_cd %>', function(r) {
+                projectHot.loadData(assign = r.results);
+            });
+        }
+        var assign;
+        $('.js-quotn-assign-btn').on('click', function(e) {
+            $('.quotn.fullscreen.modal').modal('show').modal({
+                onHide: function() {
+                    $('.ui.accordion .assign.content').removeClass('active');
+                }
+            });
+            reload_quotn_assign();
+        });
+        $('.js-project-assign-btn').on('click', function(e) {
+            $('.project.fullscreen.modal').modal('show').modal({
+                onHide: function() {
+                    $('.ui.accordion .assign.content').removeClass('active');
+                }
+            });
+            reload_project_assign();
+        });
+        var container = $('#assign-table')[0];
+        var basicOpt = {
+            startRows: 1,
+            startCols: 6,
+            rowHeaders: true,
+            colHeaders: ['no', '名前', '役割', '総工数', 'アサイン開始', 'アサイン終了', <%= @quotn.terms_ym.map { |ym| "'#{ym}'" }.join(',').html_safe %>],
+            columns: [
+                {data: 'asgn_no', readOnly: true, type: 'numeric'},
+                {data: 'personal.nm', type: 'autocomplete', source: function (query, process) {
+                    $.ajax({
+                        url: '/api/personal/search',
+                        dataType: 'json',
+                        data: {
+                            query: query
+                        },
+                        success: function (response) {
+                            console.log("response", response);
+                            //process(JSON.parse(response.data)); // JSON.parse takes string as a argument
+                            process(response.results);
+                        }
+                    });
+                },
+                    strict: true},
+                {
+                    data: 'role_nm',
+                    type: 'autocomplete',
+                    source: <%= Role.all.order(:role_cd).pluck(:role_nm).to_json.html_safe %>,
+                    strict: false
+                },
+                {data: 'total_man_hour_mm', type: 'numeric', format: '0.00', readOnly: true},
+                {data: 'assign_start', type: 'date', dateFormat: 'YYYY/MM/DD', correctFormat: true, defaultDate: '<%= @quotn.start_date.format_ymd.html_safe %>'},
+                {data: 'assign_end', type: 'date', dateFormat: 'YYYY/MM/DD', correctFormat: true, defaultDate: '<%= @quotn.end_date.format_ymd.html_safe %>'},
+                <%= @quotn.terms_ym.map { |ym| "{data: '#{ym}', type: 'numeric', format: '0.00'}" }.join(',').html_safe %>
+            ],
+            fixedColumnsLeft: 6,
+            minSpareRows: 1,
+            contextMenu: true
+        };
+        var quotnHot = new Handsontable($('#quotn-assign-table')[0], basicOpt);
+        var projectHot = new Handsontable($('#project-assign-table')[0], $.extend({}, basicOpt));
+
+        quotnHot.updateSettings({
+            afterChange: function (change, source) {
+                if (source === 'loadData') {
+                    $('#quotn-assign-table').removeClass('loading');
+                    return; //don't save this change
+                }
+                $.each(change, function (i, d) {
+                    console.debug(assign[d[0]])
+                    var a = assign[d[0]];
+                    if (d[1].match(/^20[0-9]{4}$/)) {
+                        var par = {};
+                        par.asgn_no = a.asgn_no;
+                        par.setup_date_ym = d[1]; // updated key
+                        par.man_hour_mm = d[3]; // updated value
+                        $.post('/api/quotn/assign_mh/<%= params[:quotn_no] %>/<%= params[:quotn_ver_no] %>', par, function(r) {
+                            console.debug(r);
+                        });
+                    }
+                })
+            }
+        });
+        projectHot.updateSettings({
+            afterChange: function (change, source) {
+                if (source === 'loadData') {
+                    $('#project-assign-table').removeClass('loading');
+                    return; //don't save this change
+                }
+                $.each(change, function (i, d) {
+                    var a = assign[d[0]];
+                    if (d[1].match(/^20[0-9]{4}$/)) {
+                        var par = {};
+                        par.asgn_no = a.asgn_no;
+                        par.setup_date_ym = d[1]; // updated key
+                        par.man_hour_mm = d[3]; // updated value
+                        $.post('/api/project/assign_mh/<%= @quotn.project.try :prj_cd %>', par, function (r) {
+                            console.debug(r);
+                        });
+                    }
+                })
+            }, beforeRemoveRow: function(idx, amt) {
+                console.debug(idx);
+                console.debug(amt);
+                for (var i = 0; i < amt; i++) {
+                    var a = assign[idx];
+                    var par = {
+                        asgn_no: a.asgn_no,
+                        psnal_cd: a.personal.psnal_cd
+                    };
+                    $.ajax('/api/project/assign/<%= @quotn.project.try :prj_cd %>', {
+                        method: 'DELETE',
+                        data: par
+                    }).done(function(r) {
+                       console.debug(r);
+                    });
+                }
+            }
+        });
+
         $('#js-comment-form').on('submit', function() {
             $.post('/api/project/report/<%= @quotn.quotn_no %>', {
                 report: $('#js-report').val(),

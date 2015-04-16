@@ -5,20 +5,20 @@ concat     = require 'gulp-concat'
 sass       = require 'gulp-sass'
 bowerFiles = require 'main-bower-files'
 source     = require 'vinyl-source-stream'
-browserify = require 'browserify'
+browserify = require 'gulp-browserify'
 bower      = require 'gulp-bower'
 gulpFilter = require 'gulp-filter'
 
 gulp.task 'js', ->
-  browserify
-    entries: ['./public/javascripts/initialize.coffee']
-    extensions: ['.coffee','.jade', '.js']
-  .transform 'coffeeify'
-  .transform 'jadeify'
-  .bundle()
-  .pipe plumber()
-  .pipe source 'app.js'
-  .pipe gulp.dest 'public'
+  gulp
+    .src './assets/javascripts/app.coffee', read: false
+    .pipe plumber()
+    .pipe browserify
+      transform: ['coffeeify']
+      extensions: ['.coffee']
+      debug: true
+  .pipe rename 'app.js'
+  .pipe gulp.dest 'public/javascripts'
 
 gulp.task 'vendor', ->
   jsFilter = gulpFilter '**/*.js'
@@ -40,6 +40,9 @@ gulp.task 'css', ->
   gulp
   .src 'bower_components/semantic/dist/themes/**/*'
   .pipe gulp.dest './public/stylesheets/themes'
+  gulp
+  .src 'bower_components/handsontable/dist/handsontable.full.css'
+  .pipe gulp.dest './public/stylesheets'
 
 gulp.task 'watch', ['build'], ->
   gulp.watch 'app/**/*.coffee', ['js']

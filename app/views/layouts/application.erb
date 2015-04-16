@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <%= csrf_meta_tags.html_safe %>
 <title>bizevo</title>
-<%= stylesheet_link_tag 'semantic.min', 'bizevo' %>
-<%= javascript_include_tag 'vendor.js' %>
+<%= stylesheet_link_tag 'semantic.min', 'handsontable.full', 'bizevo' %>
+<%= javascript_include_tag 'vendor.js', 'app.js' %>
 </head>
 <body>
 <div class="ui fixed main menu">

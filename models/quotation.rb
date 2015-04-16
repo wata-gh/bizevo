@@ -88,6 +88,16 @@ class Quotation < ActiveRecord::Base
     Quotation.translate_enum_label self.class, 'cntrct_tp', self.cntrct_tp
   end
 
+  def terms_ym
+    ym = []
+    s = Date.strptime(self.start_date, '%Y%m%d').at_beginning_of_month
+    m = Date.strptime(self.end_date, '%Y%m%d').at_beginning_of_month
+    while s <= m
+      ym << s.strftime('%Y%m')
+      s = s >> 1
+    end
+    ym
+  end
   def self.translate_enum_label(klass, attr_name, enum_label)
     ::I18n.t("enums.#{klass.to_s.underscore}.#{attr_name}.#{enum_label}", default: enum_label)
   end
