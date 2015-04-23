@@ -58,7 +58,6 @@ GEM
     database_cleaner (1.4.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    enum_help (0.0.14)
     erubis (2.7.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -90,6 +89,8 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     padrino (0.12.5)
       padrino-admin (= 0.12.5)
       padrino-cache (= 0.12.5)
@@ -125,6 +126,7 @@ GEM
       padrino-core (= 0.12.5)
     padrino-support (0.12.5)
       activesupport (>= 3.1)
+    pg (0.18.1)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-protection (1.5.3)
@@ -198,13 +200,14 @@ DEPENDENCIES
   ci_reporter
   composite_primary_keys
   database_cleaner
-  enum_help
   erubis (~> 2.7.0)
   factory_girl
   kaminari (= 0.16.1)
   mysql2
   net-ldap
+  net-ssh-gateway
   padrino (= 0.12.5)
+  pg
   rack-test
   rake
   redcarpet

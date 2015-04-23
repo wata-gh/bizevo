@@ -23,6 +23,7 @@
     "jquery": "2",
     "semantic": "~1",
     "highcharts": "~4.1.4",
-    "handsontable": "~0.14.1"
+    "handsontable": "~0.14.1",
+    "handlebars": "~3.0.2"
   }
 }

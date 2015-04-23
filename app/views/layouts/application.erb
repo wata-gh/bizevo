@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <%= csrf_meta_tags.html_safe %>
 <title>bizevo</title>
-<%= stylesheet_link_tag 'semantic.min', 'handsontable.full', 'bizevo' %>
+<%= stylesheet_link_tag 'vendor', 'bizevo' %>
 <%= javascript_include_tag 'vendor.js', 'app.js' %>
 </head>
 <body>
@@ -20,6 +20,9 @@
             </a>
             <a class="icon item" data-content="" href="<%= url(:kiita, :index) %>">
                 <i class="book icon"></i>
+            </a>
+            <a class="icon item" data-content="" href="<%= url(:feeling, :index) %>">
+                <i class="smile icon"></i>
             </a>
         </div>
         <div class="right menu">

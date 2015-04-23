@@ -8,8 +8,13 @@ source     = require 'vinyl-source-stream'
 browserify = require 'gulp-browserify'
 bower      = require 'gulp-bower'
 gulpFilter = require 'gulp-filter'
+compiler   = require 'gulp-hogan-compile'
 
 gulp.task 'js', ->
+  gulp
+  .src './assets/javascripts/views/**/*.html'
+  .pipe compiler('templates.js')
+  .pipe gulp.dest('public/javascripts')
   gulp
     .src './assets/javascripts/app.coffee', read: false
     .pipe plumber()
@@ -19,14 +24,29 @@ gulp.task 'js', ->
       debug: true
   .pipe rename 'app.js'
   .pipe gulp.dest 'public/javascripts'
+  gulp
+  .src './assets/javascripts/feeling/app.coffee', read: false
+  .pipe plumber()
+  .pipe browserify
+    transform: ['coffeeify']
+    extensions: ['.coffee']
+    debug: true
+  .pipe rename 'feeling.js'
+  .pipe gulp.dest 'public/javascripts'
 
 gulp.task 'vendor', ->
   jsFilter = gulpFilter '**/*.js'
+  cssFilter = gulpFilter '**/*.css'
   gulp.src(bowerFiles())
   .pipe jsFilter
   .pipe plumber()
   .pipe concat('vendor.js')
   .pipe gulp.dest('./public/javascripts')
+  gulp.src(bowerFiles())
+  .pipe cssFilter
+  .pipe plumber()
+  .pipe concat('vendor.css')
+  .pipe gulp.dest('./public/stylesheets')
 
 gulp.task 'css', ->
   gulp
@@ -35,14 +55,8 @@ gulp.task 'css', ->
   .pipe sass()
   .pipe gulp.dest './public/stylesheets'
   gulp
-  .src 'bower_components/semantic/dist/semantic.min.css'
-  .pipe gulp.dest './public/stylesheets'
-  gulp
   .src 'bower_components/semantic/dist/themes/**/*'
   .pipe gulp.dest './public/stylesheets/themes'
-  gulp
-  .src 'bower_components/handsontable/dist/handsontable.full.css'
-  .pipe gulp.dest './public/stylesheets'
 
 gulp.task 'watch', ['build'], ->
   gulp.watch 'app/**/*.coffee', ['js']

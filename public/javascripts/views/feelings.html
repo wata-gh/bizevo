@@ -1,0 +1,52 @@
+<div class="ui divided items">
+    {{#results}}
+    <div class="item">
+        <div class="ui very tiny image">
+            <img src="{{level_pict}}" style="width: 48px;">
+        </div>
+        <div class="content">
+            <a class="header">{{at}} {{user.lastname}} {{user.firstname}}</a>
+            <div class="meta">
+                <span></span>
+            </div>
+            <div class="middle aligned content">{{{description}}}</div>
+            <div class="extra">
+                <a class="ui right floated primary basic tiny button" href="/feeling?user_id={{user.id}}">
+                    気分一覧（{{user.lastname}} {{user.firstname}}）
+                    <i class="right chevron icon"></i>
+                </a>
+                <!-- div class="ui label">Limited</div -->
+            </div>
+            <div class="ui comments">
+                {{#if comments}}
+                <h3 class="ui dividing header">Comments</h3>
+                {{/if}}
+                {{#comments}}
+                <div class="comment">
+                    <a class="avatar">
+                        <img src="/images/noimage.png">
+                    </a>
+                    <div class="content">
+                        <a class="author">{{user.lastname}} {{user.firstname}}</a>
+                        <div class="metadata">
+                            <span class="date">{{created_on}}</span>
+                        </div>
+                        <div class="text">
+                            {{{comments}}}
+                        </div>
+                    </div>
+                </div>
+                {{/comments}}
+                <!-- form class="ui reply form">
+                    <div class="field">
+                        <textarea rows="3"></textarea>
+                    </div>
+                    <div class="ui blue labeled submit icon tiny button">
+                        <i class="icon edit"></i> Add Reply
+                    </div>
+                </form-->
+            </div>
+        </div>
+    </div>
+    {{/results}}
+</div>
