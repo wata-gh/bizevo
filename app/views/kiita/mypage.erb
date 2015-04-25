@@ -1,0 +1,55 @@
+<div class="ui items">
+  <div class="item">
+    <div class="image">
+      <img src="">
+    </div>
+    <div class="content">
+      <a class="header"><%= @user.name %></a>
+      <div class="meta">
+        <span>Description</span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+      <div class="extra">
+        Additional Details
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% unless @articles.empty? %>
+<% @articles.each do |at| %>
+<div class="ui feed">
+  <div class="event">
+    <div class="label">
+      <i class="pencil icon"></i>
+    </div>
+    <div class="content">
+      <div class="summary">
+        <%= at.title %> を投稿しました。
+        <div class="date">
+          <%= at.get_created_at_ago %> days ago
+        </div>
+      </div>
+      <div class="extra text">
+        <i class="tags icon"></i>
+        <% if at.article_tags.present? %>
+          <% at.article_tags.each do |tag| %>
+            <a id="tag" class="ui  label">
+              <%= tag.tag %>
+            </a>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="meta">
+        <a class="like">
+          <i class="like icon"></i> 4 Likes
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<% end %>

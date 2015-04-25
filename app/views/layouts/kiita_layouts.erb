@@ -7,6 +7,8 @@
   <%= javascript_include_tag 'semantic' %>
 </head>
 <body class="background">
+  <%= current_user[:name] %>
+  <%= current_user[:id] %>
   <div>
     <section class="layout_column">
       <div class="ui vertical labeled icon menu">
@@ -17,6 +19,10 @@
         <a class="teal item" href="/kiita/new">
           <i class="add icon"></i>
           new post
+        </a>
+        <a class="teal item" href="/kiita/mypage">
+          <i class="child icon"></i>
+          my page
         </a>
       </div>
     </section>

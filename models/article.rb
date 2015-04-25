@@ -1,5 +1,14 @@
 class Article < ActiveRecord::Base
   after_save :save_article_tags
+
+  def get_created_at
+    self.created_at.strftime '%Y/%m/%d'
+  end
+
+  def get_created_at_ago
+    (Date.today - self.created_at.to_date).to_i
+  end
+
   private
   def save_article_tags
     p self
