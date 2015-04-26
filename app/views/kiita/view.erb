@@ -1,13 +1,24 @@
 <section class="background">
   <section class="view_area">
     <h1><%= @article.title %></h1>
-    <h5><%= @user.name %>が<%= @article.get_created_at %>に投稿しました。
+    <h5><%= @user.name %> が <%= @article.get_created_at %> に投稿しました。
+    <% if @article.mine? current_user.id %>
+      <% link_to url(:kiita,:update, @article.id) do  %>
+        <div class="small ui blue button">
+          edit
+      </div>
+      <% end %>
+      <% form_tag "/kiita/destroy/#{@article.id}", :method => :delete, :style => "display: inline" do %>
+        <%= submit_tag "delete", :class => 'tiny ui red button'%>
+      <% end %>
+    <% end %>
   </section>
 
   <section class="view_area">
   <% if @article && @article.article_tags.present? %>
+    <i class="tags icon"></i>
     <% @article.article_tags.each do |tag| %>
-      <a id="tag" class="ui black label">
+      <a id="tag" class="ui label">
         <%= tag.tag %>
       </a>
     <% end %>
@@ -17,12 +28,4 @@
   <section class="view_area">
     <%= @md_text.html_safe %>
   </section>
-</section>
-<section class="controll ui_position_parent">
-  <div class="small ui blue button">
-    edit
-  </div>
-  <% form_tag "/kiita/destroy/#{@article.id}", :method => :delete, :style => "display: inline" do %>
-    <%= submit_tag "delete", :class => 'tiny ui red button ui_delete_right delete_button'%>
-  <% end %>
 </section>

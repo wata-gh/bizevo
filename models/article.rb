@@ -1,6 +1,10 @@
 class Article < ActiveRecord::Base
   after_save :save_article_tags
 
+  def mine? id
+    self.user_id == id
+  end
+
   def get_created_at
     self.created_at.strftime '%Y/%m/%d'
   end
@@ -21,5 +25,5 @@ class Article < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :article
 
-  paginates_per 10
+  paginates_per 5 
 end

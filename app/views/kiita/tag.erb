@@ -1,24 +1,3 @@
-<div class="ui items">
-  <div class="item">
-    <div class="image">
-      <img src="">
-    </div>
-    <div class="content">
-      <a class="header"><%= @user.name %></a>
-      <div class="meta">
-        <span>Description</span>
-      </div>
-      <div class="description">
-        <p></p>
-      </div>
-      <div class="extra">
-        Additional Details
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <% unless @articles.empty? %>
 <% @articles.each do |at| %>
 <div class="ui feed">
@@ -28,7 +7,9 @@
     </div>
     <div class="content">
       <div class="summary">
-        <%= at.title %> を投稿しました。
+        <% link_to url(:kiita, :view, at.id) do %>
+          <%= at.title %>
+        <% end %>
         <div class="date">
           <%= at.get_created_at_ago %> days ago
         </div>
@@ -37,11 +18,9 @@
         <i class="tags icon"></i>
         <% if at.article_tags.present? %>
           <% at.article_tags.each do |tag| %>
-            <% link_to url(:kiita, :tag, tag.tag) do %>
-              <div id="tag" class="ui label">
-                <%= tag.tag %>
-              </div>
-            <% end %>
+            <a id="tag" class="ui  label">
+              <%= tag.tag %>
+            </a>
           <% end %>
         <% end %>
       </div>

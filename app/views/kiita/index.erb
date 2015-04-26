@@ -5,34 +5,45 @@
   <%= flash_tag :success, :class => "ui green message" %>
 </div>
 
-<div id="articles">
-  <table class="ui five column table segment">
-    <thead>
-      <tr>
-        <th>title</th>
-        <th>tags</th>
-        <th>etc</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @articles.each do |value| %>
-      <tr>
-        <td>
-          <% link_to "/kiita/view/#{value.id}" do %>
-            <%= value.title %>
+<% unless @articles.empty? %>
+<% @articles.each do |at| %>
+<div class="ui feed">
+  <div class="event">
+    <div class="label">
+      <i class="pencil icon"></i>
+    </div>
+    <div class="content">
+      <div class="summary">
+        <% link_to url(:kiita, :view, at.id) do %>
+          <%= at.title %>
+        <% end %>
+        <div class="date">
+          <%= at.get_created_at_ago %> days ago
+        </div>
+      </div>
+      <div class="extra text">
+        <i class="tags icon"></i>
+        <% if at.article_tags.present? %>
+          <% at.article_tags.each do |tag| %>
+            <% link_to url(:kiita, :tag, tag.tag) do %>
+              <div id="tag" class="ui label">
+                <%= tag.tag %>
+              </div>
+            <% end %>
           <% end %>
-        </td>
-        <td><%= value.article_tags.collect {|v| v.tag }.join(' / ') %></td>
-        <td>
-          <% link_to "/kiita/update/#{value.id}" do %>
-            <i class="edit icon"></i>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+        <% end %>
+      </div>
+      <div class="meta">
+        <a class="like">
+          <i class="like icon"></i> 4 Likes
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
+<% end %>
+<% end %>
+
 <section class="pager">
   <%= paginate @articles %>
 </section>
