@@ -3,7 +3,7 @@ Bizevo::App.controllers :kiita do
 
   get :index do
     @title = 'kiita | top'
-    @articles = Article.joins(:article_tags).includes(:article_tags).page params[:page]
+    @articles = Article.eager_load(:article_tags).includes(:article_tags).page params[:page]
     render 'kiita/index'
   end
 
@@ -25,7 +25,7 @@ Bizevo::App.controllers :kiita do
 
   get :update, :with => :id do
     @title = 'kiita | edit'
-    @article = Article.joins(:article_tags).includes(:article_tags).find_by_id(params[:id])
+    @article = Article.eager_load(:article_tags).includes(:article_tags).find_by_id(params[:id])
     halt 404 unless @article
     render 'kiita/update'
   end
@@ -50,6 +50,7 @@ Bizevo::App.controllers :kiita do
   get :view, :with => :id do
     @title = 'kiita | view'
     @article = Article.find_by_id params[:id]
+    @user = Account.find @article.user_id
     halt 404 unless @article
     @md_text = mark_down_parse @article.article
     render 'kiita/view'
@@ -66,5 +67,19 @@ Bizevo::App.controllers :kiita do
       halt 404
     end
     redirect url(:kiita, :index)
+  end
+
+  get :mypage do
+    @title = 'my page'
+    @user = current_user
+    @articles = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ?", @user.id)
+                  .order 'articles.created_at DESC'
+    render 'kiita/mypage'
+  end
+
+  get :tag, :with => :tag do
+    @title = "#{params[:tag]}ページ"
+    @articles = Article.eager_load(:article_tags).includes(:article_tags).where("tag = ?", params[:tag]).page params[:page]
+    render 'kiita/tag'
   end
 end

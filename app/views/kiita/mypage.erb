@@ -1,9 +1,23 @@
-<div class="info">
-  <%= flash_tag :info, :class => "ui blue message" %>
+<div class="ui items">
+  <div class="item">
+    <div class="image">
+      <img src="">
+    </div>
+    <div class="content">
+      <a class="header"><%= @user.name %></a>
+      <div class="meta">
+        <span>Description</span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+      <div class="extra">
+        Additional Details
+      </div>
+    </div>
+  </div>
 </div>
-<div class="success">
-  <%= flash_tag :success, :class => "ui green message" %>
-</div>
+
 
 <% unless @articles.empty? %>
 <% @articles.each do |at| %>
@@ -14,9 +28,7 @@
     </div>
     <div class="content">
       <div class="summary">
-        <% link_to url(:kiita, :view, at.id) do %>
-          <%= at.title %>
-        <% end %>
+        <%= at.title %> を投稿しました。
         <div class="date">
           <%= at.get_created_at_ago %> days ago
         </div>
@@ -43,7 +55,3 @@
 </div>
 <% end %>
 <% end %>
-
-<section class="pager">
-  <%= paginate @articles %>
-</section>
