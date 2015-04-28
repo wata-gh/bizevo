@@ -78,6 +78,18 @@ ActiveRecord::Base.configurations[:lushun] = {
 
 }
 
+ActiveRecord::Base.configurations[:redmine] = {
+  :adapter   => 'postgresql',
+  :reconnect => true,
+  :database  => 'redmine',
+  :collation => 'utf8_general_ci',
+  :pool      => 5,
+  :username  => 'webservice',
+  :password  => '',
+  :host      => '127.0.0.1',
+  :port      => 5432,
+}
+
 # Setup our logger
 ActiveRecord::Base.logger = logger
 
