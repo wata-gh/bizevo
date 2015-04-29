@@ -24,6 +24,11 @@ class Article < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :article
+  validate :tag_check
+
+  def tag_check
+    p self
+  end
 
   paginates_per 5 
 end
