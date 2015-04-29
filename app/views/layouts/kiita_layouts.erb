@@ -10,18 +10,22 @@
   <div>
     <section class="layout_column">
       <div class="ui vertical labeled icon menu">
-        <a class="teal item" href="/kiita/">
+        <% link_to url(:index), {class: "teal item"} do %>
+          <i class="dashboard icon"></i>
+          dashboard
+        <% end %>
+        <% link_to url(:kiita, :index), {class: "teal item"} do %>
           <i class="home icon"></i>
-          home
-        </a>
-        <a class="teal item" href="/kiita/new">
+          kiita top
+        <% end %>
+        <% link_to url(:kiita, :new), {class: "teal item"} do %>
           <i class="add icon"></i>
           new post
-        </a>
-        <a class="teal item" href="/kiita/mypage">
+        <% end %>
+        <% link_to url(:kiita, :mypage), {class: "teal item"} do %>
           <i class="child icon"></i>
           my page
-        </a>
+        <% end %>
       </div>
     </section>
     <section class="include layout_column column8">

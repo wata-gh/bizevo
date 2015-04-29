@@ -3,7 +3,8 @@ Bizevo::App.controllers :kiita do
 
   get :index do
     @title = 'kiita | top'
-    @articles = Article.eager_load(:article_tags).includes(:article_tags).page params[:page]
+    @articles = Article.eager_load(:article_tags).includes(:article_tags)
+                  .order('articles.created_at DESC').page params[:page]
     render 'kiita/index'
   end
 
