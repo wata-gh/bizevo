@@ -1,1 +1,1 @@
-create role webservice;
+create role webservice with login;
