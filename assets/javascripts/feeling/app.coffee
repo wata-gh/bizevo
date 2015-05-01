@@ -33,9 +33,20 @@ $ ->
   loading = 0
   more = ->
     return if loading
+    params = window
+    .location
+    .search
+    .substring 1
+    .split '&'
+
     par = {
       last_id: lid,
     }
+    for eles in params
+      ele = eles.split '='
+      n = decodeURIComponent ele[0]
+      v = decodeURIComponent ele[1]
+      par[n] = v
     loading = 1
     $.get '/api/feeling/more', par
     .success((r) ->

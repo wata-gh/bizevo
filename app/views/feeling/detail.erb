@@ -1,0 +1,72 @@
+
+<style>
+    .ui.very.tiny.image {
+        width: 48px;
+    }
+    .ui.items > .item > .content p {
+        margin: 0em 0em 1em;
+    }
+    .ui.comments .reply.form textarea {
+        min-height: 3em;
+        height: 3em;;
+    }
+        .ui.items > .item > div.content .description {
+            max-width: none;
+            line-height: 1.5;
+        }
+</style>
+<h2 class="ui dividing header"><i class="smile icon"></i><div class="content">気分</div></h2>
+<div class="content" id="feelings">
+    <div class="ui divided items">
+        <div class="item">
+            <div class="ui very tiny image">
+                <img src="<%= @feeling.level_pict %>" style="width: 48px;">
+            </div>
+            <div class="content">
+                <a class="ui right floated primary basic tiny button" href="/feeling?user_id=<%= @feeling.user.id %>">
+                    気分一覧（<%= @feeling.user.full_name %>）
+                    <i class="right chevron icon"></i>
+                </a>
+                <a class="header" href="http://172.23.0.100/redmine/users/<%= @feeling.user.id %>" target="_blank"><%= @feeling.at %> <%= @feeling.user.full_name %></a>
+                <div class="meta">
+                    <span>コメント数 <%= @feeling.comments_count %></span>
+                </div>
+                <div class="middle aligned description">
+                    <%= @feeling.description_disp_html %>
+                </div>
+                <div class="extra">
+                    <!-- div class="ui label">Limited</div -->
+                </div>
+                <div class="ui comments">
+                    <% if @feeling.comments.present? %>
+                    <h3 class="ui dividing header">Comments</h3>
+                    <% end %>
+                    <% @feeling.comments.each do |c| %>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="/images/noimage.png">
+                        </a>
+                        <div class="content">
+                            <a class="author"><%= c.user.full_name %></a>
+                            <div class="metadata">
+                                <span class="date" title="<%= c.created_on %>"><%= time_ago_in_words c.created_on %></span>
+                            </div>
+                            <div class="text">
+                                <%= c.content_to_html c.comments %>
+                            </div>
+                        </div>
+                    </div>
+                    <% end %>
+                    <!-- form class="ui reply form">
+                        <div class="field">
+                            <textarea rows="3"></textarea>
+                        </div>
+                        <div class="ui blue labeled submit icon tiny button">
+                            <i class="icon edit"></i> Add Reply
+                        </div>
+                    </form-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
