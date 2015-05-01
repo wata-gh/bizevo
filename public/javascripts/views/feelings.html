@@ -2,19 +2,19 @@
     {{#results}}
     <div class="item">
         <div class="ui very tiny image">
-            <img src="{{level_pict}}" style="width: 48px;">
+            <a href="/feeling/{{id}}"><img src="{{level_pict}}" style="width: 48px;"></a>
         </div>
         <div class="content">
+            <a class="ui right floated primary basic tiny button" href="/feeling?user_id={{user.id}}">
+                気分一覧（{{user.lastname}} {{user.firstname}}）
+                <i class="right chevron icon"></i>
+            </a>
             <a class="header">{{at}} {{user.lastname}} {{user.firstname}}</a>
             <div class="meta">
-                <span></span>
+                <span>コメント数 {{comments_count}}</span>
             </div>
-            <div class="middle aligned content">{{{description}}}</div>
+            <div class="middle aligned description">{{{description}}}</div>
             <div class="extra">
-                <a class="ui right floated primary basic tiny button" href="/feeling?user_id={{user.id}}">
-                    気分一覧（{{user.lastname}} {{user.firstname}}）
-                    <i class="right chevron icon"></i>
-                </a>
                 <!-- div class="ui label">Limited</div -->
             </div>
             <div class="ui comments">

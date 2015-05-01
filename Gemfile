@@ -30,6 +30,7 @@ gem 'composite_primary_keys'
 gem 'net-ssh-gateway'
 gem 'activeldap', :github => 'activeldap/activeldap'
 gem 'net-ldap'
+gem 'racc'
 group :oracle do
   gem 'ruby-oci8'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'
