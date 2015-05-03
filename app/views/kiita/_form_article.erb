@@ -7,17 +7,18 @@
 </div>
 
 <% if @article && !@article.article_tags.empty? %>
-  <% @article.article_tags.each do |tag| %>
-    <% fields_for tag do |tag| %>
-      <div class="tag_area form_content">
-        <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
-      </div>
+  <div class="tag_area form_content">
+    <% @article.article_tags.each do |tag| %>
+      <div class="tags" style="display: none;"><%= tag.tag %></div>
     <% end %>
-  <% end %>
+    <% fields_for :article_tag do |ftag| %>
+      <%= ftag.hidden_field :tag %>
+    <% end %>
+  </div>
 <% else %>
-  <% fields_for :article_tag do |tag| %>
+  <% fields_for :article_tag do |ftag| %>
     <div class="tag_area form_content">
-      <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
+      <%= ftag.hidden_field :tag %>
     </div>
   <% end %>
 <% end %>
@@ -42,5 +43,22 @@ $(function() {
   $('.submit_section').on('click', function() {
     $('*[name=article_form]').submit();
   });
+
+  $.get('/kiita_api/tags',
+    {},
+    function(data) {
+      $tt = $(".tag_area .tags");
+      tagData = [];
+      $tt.each(function() {
+        tagData.push($(this).text());
+      });
+      $at = $("#article_tag_tag");
+      $at.val(tagData).select2({
+        tags:data,
+        width: 300,
+        maximumInputLength: 20
+      });
+    }
+  );
 });
 </script>
