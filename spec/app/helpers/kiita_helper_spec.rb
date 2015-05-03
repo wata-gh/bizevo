@@ -14,12 +14,13 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
 
     describe '#save_article' do
       it 'データが登録されること' do
-        params = {:article => {
+        params = {
+          :article => {
             :title => 'titleです',
             :article => 'articleの中身です',
-            },
-            :article_tag => { :tag => 'tag', },
-          }
+          },
+          :article_tag => { :tag => ['tag'], },
+        }
         helpers.save_article params
         article = Article.find(1)
         expect(article.title).to eq 'titleです'
@@ -30,7 +31,7 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
     describe '#save_new_tag' do
       context 'DBにタグデータなし' do
         it 'データが0件の状態で登録した場合に、データが登録されること' do
-          helpers.save_new_tag 'Ruby'
+          helpers.save_new_tag ['Ruby']
           expect(Tag.find('Ruby')).to be_truthy
         end
       end
@@ -38,17 +39,17 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
       context 'DBにタグデータあり' do
         before do
           # タグデータを登録
-          helpers.save_new_tag 'Ruby'
+          helpers.save_new_tag ['Ruby']
         end
 
         it '同じタグを登録しようとした場合' do
           # 普通に insert したときも truthy だし微妙
-          expect(helpers.save_new_tag 'Ruby').to be_truthy
+          expect(helpers.save_new_tag ['Ruby']).to be_truthy
         end
 
         it '同じタグと違うタグの2つを登録しようとした場合' do
           # 2個登録しても戻り値は最後の結果だな。。
-          expect(helpers.save_new_tag 'Ruby,activerecord').to be_truthy
+          expect(helpers.save_new_tag ['Ruby','activerecord']).to be_truthy
         end
       end
     end
@@ -98,7 +99,7 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
 
       context '新規' do
         params = {:article_tag => {
-          :tag => 'Ruby',
+          :tag => ['Ruby'],
         }}
         it '新規登録ができること' do
           helpers.update_article_tag params
@@ -109,14 +110,14 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
       context '削除' do
         before do
           params = {:article_tag => {
-            :tag => 'Ruby,activerecord',
+            :tag => ['Ruby','activerecord'],
           }}
           helpers.update_article_tag params
         end
 
         it '差分が削除されること' do
           params = {:article_tag => {
-            :tag => 'Ruby',
+            :tag => ['Ruby'],
           }}
           helpers.update_article_tag params
           expect{ArticleTag.find(2)}.to raise_error ActiveRecord::RecordNotFound
