@@ -14,8 +14,24 @@
         max-width: none;
         line-height: 1.5;
     }
+    ul.ui.list li, ol.ui.list li, .ui.list > .item, .ui.list .list > .item {
+        padding: 0.1em 0em !important;
+    }
 </style>
 <h2 class="ui dividing header"><i class="smile icon"></i><div class="content">気分一覧</div></h2>
-<div class="content" id="feelings"></div>
+<div class="ui form segment">
+    <div class="field">
+        <label>プロジェクト</label>
+        <select class="ui search dropdown" name="project_id" id="js-project">
+            <option value="">すべて</option>
+            <% Redmine::Project.order(:id).each do |p| %>
+            <option value="<%= p.id %>"<% if params[:project_id].present? && p.id == params[:project_id].to_i %> selected<% end %>><%= p.name %> - <%= p.identifier %></option>
+            <% end %>
+        </select>
+    </div>
+</div>
+<div class="content">
+    <div class="ui divided items" id="feelings"></div>
+</div>
 <%= javascript_include_tag 'jquery.bottom-1.0.js' %>
 <%= javascript_include_tag 'feeling.js' %>

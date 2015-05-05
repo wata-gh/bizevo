@@ -1,6 +1,6 @@
 class WikiParser
 
-token ITEM_1 ITEM_2 STRING NEWLINE TABLE DL HEADER_1 HEADER_2 HEADER_3 URL
+token ITEM_1 ITEM_2 ITEM_3 STRING NEWLINE TABLE DL HEADER_1 HEADER_2 HEADER_3 URL
 options no_result_var
 rule
 bodys : body {[val[0]]}
@@ -8,6 +8,7 @@ bodys : body {[val[0]]}
 
 body : item1_list
      | item2_list
+     | item3_list
      | STRING {[:text,val[0]]}
      | tablediv
      | dl_list
@@ -34,7 +35,14 @@ item1 : ITEM_1 {[:item_1,val[0]]}
 
 item2_list : item2 {[:item2_list,[val[0]]]}
            | item2_list item2 {val[0][1].push(val[1]);val[0]}
+
 item2 : ITEM_2 {[:item_2,val[0]]}
+      | ITEM_2 item3_list {[:item2,val[0],val[1]]}
+
+item3_list : item3 {[:item3_list,[val[0]]]}
+           | item3_list item3 {val[0][1].push(val[1]);val[0]}
+
+item3 : ITEM_3 {[:item_3,val[0]]}
 
 header1 : HEADER_1 {[:header_1,val[0]]}
 header2 : HEADER_2 {[:header_2,val[0]]}
@@ -63,6 +71,12 @@ def parse(line)
       @q.push([:ITEM_1,$1])
     when /\A\r?\n--([^-].*)/
       @q.push([:ITEM_2,$1])
+    when /\A\*([^\*].*)\n/
+      @q.push([:ITEM_1,$1])
+    when /\A\*\*([^\*].*)\n/
+      @q.push([:ITEM_2,$1])
+    when /\A\*\*\*([^\*].*)\n/
+      @q.push([:ITEM_3,$1])
     when /\A\|(.*)/
       @q.push([:TABLE,$1])
     when /\A\r?\n\:(.*)/
@@ -73,7 +87,7 @@ def parse(line)
       @q.push([:HEADER_2,$1])
     when /\Ah3. (.*)/
       @q.push([:HEADER_3,$1])
-    when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)/
+    when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)\s\r/
       @q.push([:URL,$1])
     when /\A(\r?\n)\r\n/
      @q.push([:NEWLINE,$1])
