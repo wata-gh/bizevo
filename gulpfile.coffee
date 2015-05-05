@@ -8,13 +8,8 @@ source     = require 'vinyl-source-stream'
 browserify = require 'gulp-browserify'
 bower      = require 'gulp-bower'
 gulpFilter = require 'gulp-filter'
-compiler   = require 'gulp-hogan-compile'
 
 gulp.task 'js', ->
-  gulp
-  .src './assets/javascripts/views/**/*.html'
-  .pipe compiler('templates.js')
-  .pipe gulp.dest('public/javascripts')
   gulp
     .src './assets/javascripts/app.coffee', read: false
     .pipe plumber()
