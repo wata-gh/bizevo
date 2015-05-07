@@ -2,7 +2,7 @@ class ActiveUser < ActiveLdap::Base
   ldap_mapping :dn_attribute => "cn", :prefix => ''
 
   def self.authenticate email, pass
-    if Padrino.env == :development
+    if Padrino.env == :development || Padrino.env == :test
       a = Account.find_by :name => email
       return nil unless a
       au = MockActiveUser.new
@@ -20,7 +20,7 @@ class ActiveUser < ActiveLdap::Base
 
   def self.find_user name
     return nil if name.blank?
-    if Padrino.env != :development
+    if Padrino.env != :development && Padrino.env != :test
       self.find(:first, filter: {:sAMAccountName => name})
     else
       au = MockActiveUser.new
