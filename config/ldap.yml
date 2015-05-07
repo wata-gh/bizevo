@@ -10,3 +10,9 @@
   :base: DC=active,DC=co,DC=jp
   :bind_dn: ACTIVEWORK\study
   :password: study
+:test:
+  :host: test.bizevo.co.jp
+  :port: 389
+  :base: DC=bizevo,DC=co,DC=jp
+  :bind_dn: ACTIVEWORK\study
+  :password: study

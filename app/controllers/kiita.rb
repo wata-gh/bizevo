@@ -72,9 +72,25 @@ Bizevo::App.controllers :kiita do
   get :mypage do
     @title = 'my page'
     @user = current_user
+#    @user = User.find_by_name current_user.name
     @articles = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ?", @user.id)
                   .order 'articles.created_at DESC'
     render 'kiita/mypage'
+  end
+
+  get :edit_profile do
+    @tile = 'edit profile'
+    render 'kiita/edit_profile'
+  end
+
+  post :edit_profile do
+    user = User.find_by_name current_user.name
+    user.s3_upload params['user']['profile_icon'][:tempfile] if params['user']['profile_icon']
+    #"user"=>{"profile_icon"=>{:filename=>"abS87.jpeg", :type=>"image/jpeg", :name=>"user[profile_icon]", :tempfile=>#<Tempfile:/tmp/RackMultipart20150504-29872-1mkffvi>
+    user.icon_path = user.upload_file_name
+    user.save!
+    @tile = 'my page'
+    redirect url(:kiita, :mypage)
   end
 
   get :tag, :with => :tag do
@@ -82,4 +98,5 @@ Bizevo::App.controllers :kiita do
     @articles = Article.eager_load(:article_tags).includes(:article_tags).where("tag = ?", params[:tag]).page params[:page]
     render 'kiita/tag'
   end
+
 end

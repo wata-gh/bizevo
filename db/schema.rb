@@ -13,34 +13,17 @@
 
 ActiveRecord::Schema.define(version: 9) do
 
-  create_table "accounts", force: true do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.string   "email"
-    t.string   "crypted_password"
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "accounts" because of following NoMethodError
+#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007f1e41091ee0>
 
-  create_table "article_tags", id: false, force: true do |t|
-    t.integer  "article_id"
-    t.string   "tag"
-    t.integer  "delete_flg"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "article_tags" because of following NoMethodError
+#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007f1e410b1cb8>
 
-  add_index "article_tags", ["article_id", "tag"], name: "index_article_tags_on_article_id_and_tag", unique: true, using: :btree
+# Could not dump table "articles" because of following NoMethodError
+#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007f1e410f3f78>
 
-  create_table "articles", force: true do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.text     "article"
-    t.integer  "delete_flg"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "project_reports" because of following NoMethodError
+#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007f1e4110b920>
 
   create_table "project_reports", force: true do |t|
     t.integer  "quotn_no",        limit: 8,  null: false
@@ -60,5 +43,4 @@ ActiveRecord::Schema.define(version: 9) do
   end
 
   add_index "tags", ["tag"], name: "index_tags_on_tag", unique: true, using: :btree
-
 end

@@ -1,7 +1,8 @@
 <div class="ui items">
   <div class="item">
     <div class="image">
-      <img src="">
+    <img src="<%= 'http://' + S3_CONFIG['host'] + '/' + @user.icon_path + '.png' %>">
+    <%= @user.get_image_path1 %>
     </div>
     <div class="content">
       <a class="header"><%= @user.name %></a>
@@ -14,6 +15,7 @@
       <div class="extra">
         Additional Details
       </div>
+      <%= link_to 'edit profile', url(:kiita, :edit_profile) %>
     </div>
   </div>
 </div>

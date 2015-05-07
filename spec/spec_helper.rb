@@ -2,16 +2,18 @@ unless defined?(RACK_ENV)
   RACK_ENV = ENV['RACK_ENV'] == 'development' ? 'test' : ENV['RACK_ENV']
 end
 
-require 'simplecov'
-require 'simplecov-rcov'
-require 'simplecov_custom_profile'
-SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-SimpleCov.start 'padrino'
+#require 'simplecov'
+#require 'simplecov-rcov'
+#require 'simplecov_custom_profile'
+#SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+#SimpleCov.start 'padrino'
 
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 require 'rr'
 Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&method(:require))
 Dir[File.expand_path(File.dirname(__FILE__) + '/factories/**/*.rb')].each(&method(:require))
+Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/*.rb")].each(&method(:require))
+Dir[File.expand_path(File.dirname(__FILE__) + '/../lib/**/*.rb')].each(&method(:require))
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
