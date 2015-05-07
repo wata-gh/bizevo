@@ -14,12 +14,13 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
 
     describe '#save_article' do
       it 'データが登録されること' do
-        params = {:article => {
+        params = {
+          :article => {
             :title => 'titleです',
             :article => 'articleの中身です',
-            },
-            :article_tag => { :tag => ['tag'], },
-          }
+          },
+          :article_tag => { :tag => ['tag'], },
+        }
         helpers.save_article params
         article = Article.find(1)
         expect(article.title).to eq 'titleです'
@@ -48,7 +49,7 @@ RSpec.describe "Bizevo::App::KiitaHelper" do
 
         it '同じタグと違うタグの2つを登録しようとした場合' do
           # 2個登録しても戻り値は最後の結果だな。。
-          expect(helpers.save_new_tag ['Ruby', 'activerecord']).to be_truthy
+          expect(helpers.save_new_tag ['Ruby','activerecord']).to be_truthy
         end
       end
     end

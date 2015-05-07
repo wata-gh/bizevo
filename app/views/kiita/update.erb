@@ -1,3 +1,4 @@
+<%= javascript_include_tag 'select2.4.0.0/select2.js' %>
 <section class="form_section">
   <% form_for @article, url(:kiita, :update), :name => 'article_form' do |f| %>
     <%= partial 'kiita/form_article', :locals => { :f => f } %>

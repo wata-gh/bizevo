@@ -9,7 +9,7 @@ require 'racc/parser.rb'
 
 class WikiParser < Racc::Parser
 
-module_eval(<<'...end redmine_wiki.y/module_eval...', 'redmine_wiki.y', 49)
+module_eval(<<'...end redmine_wiki.y/module_eval...', 'redmine_wiki.y', 57)
 def table_parse(line)
   line.split('|')
 end
@@ -27,6 +27,12 @@ def parse(line)
       @q.push([:ITEM_1,$1])
     when /\A\r?\n--([^-].*)/
       @q.push([:ITEM_2,$1])
+    when /\A\*([^\*].*)\n/
+      @q.push([:ITEM_1,$1])
+    when /\A\*\*([^\*].*)\n/
+      @q.push([:ITEM_2,$1])
+    when /\A\*\*\*([^\*].*)\n/
+      @q.push([:ITEM_3,$1])
     when /\A\|(.*)/
       @q.push([:TABLE,$1])
     when /\A\r?\n\:(.*)/
@@ -37,7 +43,7 @@ def parse(line)
       @q.push([:HEADER_2,$1])
     when /\Ah3. (.*)/
       @q.push([:HEADER_3,$1])
-    when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)/
+    when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)\s\r/
       @q.push([:URL,$1])
     when /\A(\r?\n)\r\n/
      @q.push([:NEWLINE,$1])
@@ -63,97 +69,107 @@ end
 ##### State transition tables begin ###
 
 racc_action_table = [
-    26,    18,    18,    20,     5,    25,    16,    14,    21,    22,
-    23,    24,    18,    20,     5,    25,    16,    14,    21,    22,
-    23,    24,    20,    16,    14,    20,    33,    20 ]
+    29,    19,    19,    21,    23,     6,    28,    17,    15,    24,
+    25,    26,    27,    19,    21,    23,     6,    28,    17,    15,
+    24,    25,    26,    27,    21,    23,    17,    15,    21,    23,
+    38,    21,    23 ]
 
 racc_action_check = [
      1,     3,     1,     1,     1,     1,     1,     1,     1,     1,
-     1,     1,     0,     0,     0,     0,     0,     0,     0,     0,
-     0,     0,     4,     6,     7,    18,    26,    32 ]
+     1,     1,     1,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     4,     5,     7,     8,    19,    21,
+    29,    36,    37 ]
 
 racc_action_pointer = [
-    10,     0,   nil,    -1,    19,   nil,    17,    17,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    22,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,    26,   nil,   nil,   nil,
-   nil,   nil,    24,   nil ]
+    11,     0,   nil,    -1,    21,    21,   nil,    19,    19,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    25,
+   nil,    25,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    30,
+   nil,   nil,   nil,   nil,   nil,   nil,    28,    28,   nil ]
 
 racc_action_default = [
-   -31,   -31,    -1,    -3,    -4,    -5,    -6,    -7,    -8,    -9,
-   -10,   -11,   -12,   -13,   -15,   -16,   -18,   -19,   -21,   -23,
-   -25,   -26,   -27,   -28,   -29,   -30,   -31,    -2,   -20,   -24,
-   -17,   -14,   -22,    34 ]
+   -36,   -36,    -1,    -3,    -4,    -5,    -6,    -7,    -8,    -9,
+   -10,   -11,   -12,   -13,   -14,   -16,   -17,   -19,   -20,   -22,
+   -24,   -26,   -28,   -30,   -31,   -32,   -33,   -34,   -35,   -36,
+    -2,   -21,   -25,   -29,   -18,   -15,   -23,   -27,    39 ]
 
 racc_goto_table = [
-    29,     2,    27,     1,    32,    31,    30,    28,   nil,   nil,
+    32,    33,     2,    30,     1,    36,    37,    35,    34,    31,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    29 ]
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,    32,    33 ]
 
 racc_goto_check = [
-    15,     2,     2,     1,     4,    12,    13,    14,   nil,   nil,
+    16,    17,     2,     2,     1,     4,     5,    13,    14,    15,
    nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,    15 ]
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,    16,    17 ]
 
 racc_goto_pointer = [
-   nil,     3,     1,   nil,   -14,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,    -2,     0,     4,    -4 ]
+   nil,     4,     2,   nil,   -14,   -15,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,    -1,     1,     6,    -4,    -4 ]
 
 racc_goto_default = [
-   nil,   nil,   nil,     3,     4,     6,     7,     8,     9,    10,
-    11,    12,    13,    15,    17,    19 ]
+   nil,   nil,   nil,     3,     4,     5,     7,     8,     9,    10,
+    11,    12,    13,    14,    16,    18,    20,    22 ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  1, 13, :_reduce_1,
-  2, 13, :_reduce_2,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_5,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 14, :_reduce_none,
-  1, 18, :_reduce_13,
-  2, 18, :_reduce_14,
-  1, 24, :_reduce_15,
-  1, 17, :_reduce_16,
-  2, 17, :_reduce_17,
-  1, 25, :_reduce_18,
-  1, 15, :_reduce_19,
-  2, 15, :_reduce_20,
-  1, 26, :_reduce_21,
-  2, 26, :_reduce_22,
-  1, 16, :_reduce_23,
-  2, 16, :_reduce_24,
-  1, 27, :_reduce_25,
-  1, 19, :_reduce_26,
-  1, 20, :_reduce_27,
-  1, 21, :_reduce_28,
-  1, 22, :_reduce_29,
-  1, 23, :_reduce_30 ]
+  1, 14, :_reduce_1,
+  2, 14, :_reduce_2,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_6,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 15, :_reduce_none,
+  1, 20, :_reduce_14,
+  2, 20, :_reduce_15,
+  1, 26, :_reduce_16,
+  1, 19, :_reduce_17,
+  2, 19, :_reduce_18,
+  1, 27, :_reduce_19,
+  1, 16, :_reduce_20,
+  2, 16, :_reduce_21,
+  1, 28, :_reduce_22,
+  2, 28, :_reduce_23,
+  1, 17, :_reduce_24,
+  2, 17, :_reduce_25,
+  1, 29, :_reduce_26,
+  2, 29, :_reduce_27,
+  1, 18, :_reduce_28,
+  2, 18, :_reduce_29,
+  1, 30, :_reduce_30,
+  1, 21, :_reduce_31,
+  1, 22, :_reduce_32,
+  1, 23, :_reduce_33,
+  1, 24, :_reduce_34,
+  1, 25, :_reduce_35 ]
 
-racc_reduce_n = 31
+racc_reduce_n = 36
 
-racc_shift_n = 34
+racc_shift_n = 39
 
 racc_token_table = {
   false => 0,
   :error => 1,
   :ITEM_1 => 2,
   :ITEM_2 => 3,
-  :STRING => 4,
-  :NEWLINE => 5,
-  :TABLE => 6,
-  :DL => 7,
-  :HEADER_1 => 8,
-  :HEADER_2 => 9,
-  :HEADER_3 => 10,
-  :URL => 11 }
+  :ITEM_3 => 4,
+  :STRING => 5,
+  :NEWLINE => 6,
+  :TABLE => 7,
+  :DL => 8,
+  :HEADER_1 => 9,
+  :HEADER_2 => 10,
+  :HEADER_3 => 11,
+  :URL => 12 }
 
-racc_nt_base = 12
+racc_nt_base = 13
 
 racc_use_result_var = false
 
@@ -178,6 +194,7 @@ Racc_token_to_s_table = [
   "error",
   "ITEM_1",
   "ITEM_2",
+  "ITEM_3",
   "STRING",
   "NEWLINE",
   "TABLE",
@@ -191,6 +208,7 @@ Racc_token_to_s_table = [
   "body",
   "item1_list",
   "item2_list",
+  "item3_list",
   "tablediv",
   "dl_list",
   "header1",
@@ -201,7 +219,8 @@ Racc_token_to_s_table = [
   "dl",
   "table",
   "item1",
-  "item2" ]
+  "item2",
+  "item3" ]
 
 Racc_debug_parser = true
 
@@ -225,13 +244,13 @@ module_eval(<<'.,.,', 'redmine_wiki.y', 6)
 
 # reduce 4 omitted
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 10)
-  def _reduce_5(val, _values)
+# reduce 5 omitted
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 11)
+  def _reduce_6(val, _values)
     [:text,val[0]]
   end
 .,.,
-
-# reduce 6 omitted
 
 # reduce 7 omitted
 
@@ -245,110 +264,136 @@ module_eval(<<'.,.,', 'redmine_wiki.y', 10)
 
 # reduce 12 omitted
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 19)
-  def _reduce_13(val, _values)
-    [:dl_list,[val[0]]]
-  end
-.,.,
+# reduce 13 omitted
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 20)
   def _reduce_14(val, _values)
-    val[0][1].push(val[1]);val[0]
+    [:dl_list,[val[0]]]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 21)
   def _reduce_15(val, _values)
-    [:dl,dl_parse(val[0])]
+    val[0][1].push(val[1]);val[0]
   end
 .,.,
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 23)
+module_eval(<<'.,.,', 'redmine_wiki.y', 22)
   def _reduce_16(val, _values)
-    [:table,[val[0]]]
+    [:dl,dl_parse(val[0])]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 24)
   def _reduce_17(val, _values)
+    [:table,[val[0]]]
+  end
+.,.,
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 25)
+  def _reduce_18(val, _values)
     val[0][1].push(val[1]);val[0]
   end
 .,.,
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 26)
-  def _reduce_18(val, _values)
-    [:row,table_parse(val[0])]
-  end
-.,.,
-
-module_eval(<<'.,.,', 'redmine_wiki.y', 28)
+module_eval(<<'.,.,', 'redmine_wiki.y', 27)
   def _reduce_19(val, _values)
-    [:item1_list,[val[0]]]
+    [:row,table_parse(val[0])]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 29)
   def _reduce_20(val, _values)
-    val[0][1].push(val[1]);val[0]
+    [:item1_list,[val[0]]]
   end
 .,.,
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 31)
+module_eval(<<'.,.,', 'redmine_wiki.y', 30)
   def _reduce_21(val, _values)
-    [:item_1,val[0]]
+    val[0][1].push(val[1]);val[0]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 32)
   def _reduce_22(val, _values)
-    [:item1,val[0],val[1]]
+    [:item_1,val[0]]
   end
 .,.,
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 34)
+module_eval(<<'.,.,', 'redmine_wiki.y', 33)
   def _reduce_23(val, _values)
-    [:item2_list,[val[0]]]
+    [:item1,val[0],val[1]]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 35)
   def _reduce_24(val, _values)
-    val[0][1].push(val[1]);val[0]
+    [:item2_list,[val[0]]]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 36)
   def _reduce_25(val, _values)
-    [:item_2,val[0]]
+    val[0][1].push(val[1]);val[0]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 38)
   def _reduce_26(val, _values)
-    [:header_1,val[0]]
+    [:item_2,val[0]]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 39)
   def _reduce_27(val, _values)
-    [:header_2,val[0]]
+    [:item2,val[0],val[1]]
   end
 .,.,
 
-module_eval(<<'.,.,', 'redmine_wiki.y', 40)
+module_eval(<<'.,.,', 'redmine_wiki.y', 41)
   def _reduce_28(val, _values)
-    [:header_3,val[0]]
+    [:item3_list,[val[0]]]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 42)
   def _reduce_29(val, _values)
-    [:url,val[0]]
+    val[0][1].push(val[1]);val[0]
   end
 .,.,
 
 module_eval(<<'.,.,', 'redmine_wiki.y', 44)
   def _reduce_30(val, _values)
+    [:item_3,val[0]]
+  end
+.,.,
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 46)
+  def _reduce_31(val, _values)
+    [:header_1,val[0]]
+  end
+.,.,
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 47)
+  def _reduce_32(val, _values)
+    [:header_2,val[0]]
+  end
+.,.,
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 48)
+  def _reduce_33(val, _values)
+    [:header_3,val[0]]
+  end
+.,.,
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 50)
+  def _reduce_34(val, _values)
+    [:url,val[0]]
+  end
+.,.,
+
+module_eval(<<'.,.,', 'redmine_wiki.y', 52)
+  def _reduce_35(val, _values)
     [:newline,val[0]]
   end
 .,.,

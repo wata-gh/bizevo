@@ -64,6 +64,20 @@ $ ->
     .on('bottom', more)
 
 
+  $ 'select.dropdown'
+  .dropdown()
+
+  $ '#js-project'
+  .on 'change', ->
+    pid = $(this).val()
+    $ '#feelings'
+    .empty()
+    eid = null
+    lid = null
+    history
+    .pushState '', null, '/feeling?project_id=' + pid
+    bind()
+
   $.ajax '/javascripts/views/feelings.html'
   .success((r) ->
     tmpls = Handlebars.compile r

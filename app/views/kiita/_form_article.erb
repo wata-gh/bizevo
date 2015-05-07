@@ -7,19 +7,14 @@
 </div>
 
 <% if @article && !@article.article_tags.empty? %>
-  <% @article.article_tags.each do |tag| %>
-    <% fields_for tag do |tag| %>
-      <div class="tag_area form_content">
-        <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
-      </div>
+    <% @article.article_tags.each do |tag| %>
+      <div class="tags" style="display: none;"><%= tag.tag %></div>
     <% end %>
-  <% end %>
-<% else %>
-  <% fields_for :article_tag do |tag| %>
-    <div class="tag_area form_content">
-      <%= tag.text_field :tag, :name => 'article_tag[tag][]', :class => 'tag_input form_input_item', :placeholder => 'タグ' %>
-    </div>
-  <% end %>
+<% end %>
+<% fields_for :article_tag do |ftag| %>
+  <div class="tag_area form_content">
+    <%= ftag.select :tag, multiple: "multiple" %>
+  </div>
 <% end %>
 
 <div class="form_table form_content">
@@ -37,10 +32,30 @@
 <section class="submit_section">
   <div class="ui secondary button">Save</div>
 </section>
+<style>
+  li {
+    margin: 0px;
+  }
+</style>
 <script>
 $(function() {
   $('.submit_section').on('click', function() {
     $('*[name=article_form]').submit();
+  });
+
+  $data = [];
+  $.each($('.tags'), function() {
+    $data.push({
+      id: this.innerText,
+      text: this.innerText,
+      selected: true
+    })
+  });
+  $at = $("#article_tag_tag");
+  $at.select2({
+    tags: $data,
+    width: 300,
+    maximumInputLength: 20
   });
 });
 </script>
