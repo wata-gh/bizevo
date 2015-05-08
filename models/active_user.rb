@@ -29,8 +29,13 @@ class ActiveUser < ActiveLdap::Base
       au
     end
   end
+
   def post
     memberOf[0].rdns[0]['CN']
+  end
+
+  def redmine_user
+    @remine_user ||= Redmine::User.find_by :mail => "#{self.sAMAccountName}@active.co.jp"
   end
 
   class MockActiveUser
@@ -46,6 +51,9 @@ class ActiveUser < ActiveLdap::Base
     end
     def account
       Account.find_by :name => self.sAMAccountName
+    end
+    def redmine_user
+      @remine_user ||= Redmine::User.find_by :mail => "#{self.sAMAccountName}@active.co.jp"
     end
   end
 end

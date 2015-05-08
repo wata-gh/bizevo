@@ -16,7 +16,7 @@
         <div class="extra">
             <!-- div class="ui label">Limited</div -->
         </div>
-        <div class="ui comments">
+        <div class="ui comments" id="js-feeling-{{id}}-comments">
             {{#if comments}}
             <h3 class="ui dividing header">Comments</h3>
             {{/if}}
@@ -30,20 +30,34 @@
                     <div class="metadata">
                         <span class="date">{{created_on}}</span>
                     </div>
+                    {{#if is_mine}}
+                    <a class="ui right floated primary basic tiny button">
+                        <i class="remove icon"></i>削除
+                    </a>
+                    {{/if}}
                     <div class="text">
                         {{{comments}}}
                     </div>
                 </div>
             </div>
             {{/comments}}
-            <!-- form class="ui reply form">
-                <div class="field">
-                    <textarea rows="3"></textarea>
-                </div>
-                <div class="ui blue labeled submit icon tiny button">
-                    <i class="icon edit"></i> Add Reply
-                </div>
-            </form-->
+        </div>
+        <div class="ui accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                コメント追加
+            </div>
+            <div class="content">
+                <form class="ui reply form" id="js-feeling-{{id}}">
+                    <div class="field">
+                        <textarea name="comments" rows="1"></textarea>
+                    </div>
+                    <div class="ui blue labeled submit icon tiny button">
+                        <i class="icon edit"></i> コメント
+                    </div>
+                    <input type="hidden" name="id" value="{{id}}">
+                </form>
+            </div>
         </div>
     </div>
 </div>

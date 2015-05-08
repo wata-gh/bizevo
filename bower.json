@@ -24,6 +24,12 @@
     "semantic": "~1",
     "highcharts": "~4.1.4",
     "handsontable": "~0.14.1",
-    "handlebars": "~3.0.2"
+    "handlebars": "~3.0.2",
+    "jquery-throttle-debounce": "cowboy/jquery-throttle-debounce"
+  },
+  "overrides": {
+    "jquery-throttle-debounce": {
+      "main": "jquery.ba-throttle-debounce.min.js"
+    }
   }
 }

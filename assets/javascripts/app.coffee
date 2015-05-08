@@ -5,3 +5,7 @@ $ ->
       if token
         xhr.setRequestHeader 'X-CSRF-Token', token
   )
+  $.fn.api.settings.api = {
+    'update feeling': '/api/feeling/{at}',
+    'update comment': '/api/feeling/{id}/comment',
+  }

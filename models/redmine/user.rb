@@ -9,5 +9,9 @@ module Redmine
     def full_name
       "#{self.lastname} #{self.firstname}"
     end
+
+    def comments_disp_html
+      self.content_to_html self.comments
+    end
   end
 end

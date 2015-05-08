@@ -5,7 +5,8 @@ module Redmine
     establish_connection configurations[:redmine]
     belongs_to :user, :foreign_key => :user_id
     has_many :members, :through => :user
-    has_many :comments, -> { where :commented_type => 'Feeling'}, :foreign_key => :commented_id
+    has_many :comments, -> { where :commented_type => 'Feeling'}, :foreign_key => :commented_id, :dependent => :destroy
+    attr_accessor :me
 
     def description_disp_html
       (self.description.present? ? content_to_html(self.description) : '').html_safe
@@ -28,7 +29,8 @@ module Redmine
           :firstname => self.user.firstname,
           :lastname  => self.user.lastname,
         },
-        :comments => self.comments_count == 0 ? [] : self.comments.map {|c|
+        :comments => self.comments_count == 0 ? [] : self.comments.order(:created_on).map {|c|
+          c.me = self.me
           comment = ''
           comment = c.comments_disp_html
           {
@@ -40,6 +42,7 @@ module Redmine
             :comments => comment,
             :created_on => time_ago_in_words(c.created_on),
             :updated_on => time_ago_in_words(c.updated_on),
+            :is_mine => c.is_mine,
           }
         }
       }

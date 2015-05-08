@@ -2,21 +2,44 @@ module Bizevo
   module Helpers
     module WikiHelper
       def content_to_html content
+        return '' unless content
         res = WikiParser.new.parse content
         html = ''
         res.each do |f|
           if f[0] == :text
-            html += f[1].chomp + '<br>'
+            html += f[1].gsub /\r/, '<br>'
+          elsif f[0] == :bold
+            html += "<strong>#{f[1].chomp}</strong>"
+          elsif f[0] == :italic
+            html += "<span style=\"font-style: italic;\">#{f[1].chomp}</span>"
+          elsif f[0] == :underline
+            html += "<u>#{f[1].chomp}</u>"
+          elsif f[0] == :line_through
+            html += "<span style=\"text-decoration: line-through;\">#{f[1].chomp}</span>"
           elsif f[0] == :header_1
             html += "<h1 class=\"ui header\">#{f[1].chomp}</h1>"
+          elsif f[0] == :header_2
+            html += "<h2 class=\"ui header\">#{f[1].chomp}</h2>"
+          elsif f[0] == :header_3
+            html += "<h3 class=\"ui header\">#{f[1].chomp}</h3>"
           elsif f[0] == :url
             url = f[1].chomp
-            html += "<a class=\"ui\" href=\"#{url}\" target=\"_blank\">#{url}</a><br>"
+            html += "<a class=\"ui\" href=\"#{url}\" target=\"_blank\">#{url}</a>"
           elsif f[0] == :table
-            html += '<table class="ui very compact collapsing table"><tbody>'
+            html += '<table class="ui super compact collapsing table"><tbody>'
             f[1].each do |d|
               html += '<tr>'
-              html += '<td>' + d[1].join('</td><td>') + '</td>'
+              d[1].each do |td|
+                html += '<td>'
+                td.each do |fd|
+                  if fd[0] == :BOLD
+                    html += "<strong>#{fd[1]}</strong>"
+                  else
+                    html += fd[1]
+                  end
+                end
+                html += '</td>'
+              end
               html += '</tr>'
             end
             html += '</tbody></table>'

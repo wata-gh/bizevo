@@ -28,6 +28,15 @@ gulp.task 'js', ->
     debug: true
   .pipe rename 'feeling.js'
   .pipe gulp.dest 'public/javascripts'
+  gulp
+  .src './assets/javascripts/feeling/detail/app.coffee', read: false
+  .pipe plumber()
+  .pipe browserify
+    transform: ['coffeeify']
+    extensions: ['.coffee']
+    debug: true
+  .pipe rename 'feeling_detail.js'
+  .pipe gulp.dest 'public/javascripts'
 
 gulp.task 'vendor', ->
   jsFilter = gulpFilter '**/*.js'
@@ -54,7 +63,7 @@ gulp.task 'css', ->
   .pipe gulp.dest './public/stylesheets/themes'
 
 gulp.task 'watch', ['build'], ->
-  gulp.watch 'app/**/*.coffee', ['js']
+  gulp.watch 'assets/**/*.coffee', ['js']
   gulp.watch 'app/**/*.jade', ['js']
   gulp.watch 'app/styles/**/*.scss', ['css']
   gulp.watch 'bower_components/**/*.js', ['vendor']
