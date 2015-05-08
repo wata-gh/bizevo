@@ -1,0 +1,19 @@
+<div class="comment">
+    <a class="avatar">
+        <img src="/images/noimage.png">
+    </a>
+    <div class="content">
+        <a class="author">{{user.full_name}}</a>
+        <div class="metadata">
+            <span class="date" title="{{created_on}}">{{created_on_words}}</span>
+        </div>
+        {{#if is_mine}}
+        <a class="ui right floated primary basic tiny button">
+            <i class="remove icon"></i>削除
+        </a>
+        {{/if}}
+        <div class="text">
+            {{{comments_disp_html}}}
+        </div>
+    </div>
+</div>

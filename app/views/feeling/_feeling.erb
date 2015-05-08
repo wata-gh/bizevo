@@ -1,0 +1,91 @@
+<h4 class="ui dividing header">気分は？</h4>
+<form class="ui form feeling">
+    <div class="field">
+        <input type="hidden" name="level" value="<%= @feeling.level %>">
+        <div class="ui special three cards">
+            <div class="card js-value-2">
+                <div class="dimmable image">
+                    <div class="ui inverted dimmer">
+                        <div class="content">
+                            <div class="center">
+                                <div class="ui primary button select" data-value="2">選択</div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="<%= Redmine::Feeling.new({:level => 2}).level_pict %>" class="<% if @feeling.level != 2 %>disabled <% end %>ui image js-value-2">
+                </div>
+                <div class="extra content">
+                    <a data-value="2">
+                        <i class="smile icon"></i>
+                        良い
+                    </a>
+                </div>
+            </div>
+            <div class="card js-value-1">
+                <div class="dimmable image">
+                    <div class="ui inverted dimmer">
+                        <div class="content">
+                            <div class="center">
+                                <div class="ui primary button select" data-value="1">選択</div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="<%= Redmine::Feeling.new({:level => 1}).level_pict %>" class="<% if @feeling.level != 1 %>disabled <% end %> ui image js-value-1">
+                </div>
+                <div class="extra content">
+                    <a data-value="1">
+                        <i class="meh icon"></i>
+                        普通
+                    </a>
+                </div>
+            </div>
+            <div class="card js-value-0">
+                <div class="dimmable image">
+                    <div class="ui inverted dimmer transition hidden" style="display: none;">
+                        <div class="content">
+                            <div class="center">
+                                <div class="ui primary button select" data-value="0">選択</div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="<%= Redmine::Feeling.new({:level => 0}).level_pict %>" class="<% if @feeling.level != 0 %>disabled <% end %> ui image js-value-0">
+                </div>
+                <div class="extra content">
+                    <a data-value="0">
+                        <i class="frown icon"></i>
+                        悪い
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="feeling description">
+        <div class="two fields">
+            <div class="field">
+                <div class="ui icon tiny basic buttons">
+                    <div class="ui button"><i class="bold icon"></i></div>
+                    <div class="ui button"><i class="underline icon"></i></div>
+                    <div class="ui button"><i class="text width icon"></i></div>
+                </div>
+                <textarea name="description" placeholder="ここに進捗をかいてください..."><%= @feeling.description %></textarea>
+                <input type="hidden" name="at" value="<%= @feeling.at %>">
+            </div>
+            <div class="field">
+                <div class="ui stacked segment">
+                    <div class="ui top left attached label">preview</div>
+                    <div class="preview">
+                        <img class="ui wireframe image" src="/images/short-paragraph.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <a class="ui primary basic tiny button">前回の進捗をコピー</a>
+                <div class="ui submit basic blue button right floated"><i class="write icon"></i>保存</div>
+            </div>
+            <div class="field">
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,4 +1,3 @@
-
 <style>
     .ui.very.tiny.image {
         width: 48px;
@@ -17,6 +16,21 @@
     ul.ui.list li, ol.ui.list li, .ui.list > .item, .ui.list .list > .item {
         padding: 0.1em 0em !important;
     }
+        .preview {
+            min-height: 142px;
+            font-size: x-small;
+        }
+    .ui[class*="super compact"].table td {
+        padding: 0.1em 0.5em;
+    }
+    .feeling.description {
+        margin-top: 16px;
+    }
+    .item .content .description pre {
+        background-color: transparent;
+        margin: 0em;
+        padding: 0em;
+    }
 </style>
 <h2 class="ui dividing header"><i class="smile icon"></i><div class="content">気分一覧</div></h2>
 <div class="ui form segment">
@@ -28,6 +42,25 @@
             <option value="<%= p.id %>"<% if params[:project_id].present? && p.id == params[:project_id].to_i %> selected<% end %>><%= p.name %> - <%= p.identifier %></option>
             <% end %>
         </select>
+    </div>
+</div>
+<div class="ui segment js-feeling">
+    <h4>気分投稿</h4>
+    <div class="ui pointing secondary menu">
+        <%
+           0.upto(6) do |i|
+           t = Date.today - i
+        %>
+            <a class="item" data-tab="<%= t.strftime '%Y%m%d' %>"><% if @feelings.include? t %><i class="checkmark icon"></i><% end %><%= t.strftime "%Y-%m-%d(#{%w(日 月 火 水 木 金 土)[t.wday]})" %></a>
+        <% end %>
+    </div>
+    <div class="feeling">
+        <%
+           0.upto(6) do |i|
+             t = Date.today - i
+        %>
+            <div class="ui tab js-<%= t.strftime '%Y%m%d' %>" data-tab="<%= t.strftime '%Y%m%d' %>"></div>
+        <% end %>
     </div>
 </div>
 <div class="content">

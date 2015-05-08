@@ -1,6 +1,6 @@
 class WikiParser
 
-token ITEM_1 ITEM_2 ITEM_3 STRING NEWLINE TABLE DL HEADER_1 HEADER_2 HEADER_3 URL
+token ITEM_1 ITEM_2 ITEM_3 STRING NEWLINE TABLE DL HEADER_1 HEADER_2 HEADER_3 URL BOLD ITALIC UNDERLINE LINE_THROUGH
 options no_result_var
 rule
 bodys : body {[val[0]]}
@@ -17,6 +17,10 @@ body : item1_list
      | header3
      | url
      | newline
+     | bold
+     | italic
+     | underline
+     | line_through
 
 dl_list  : dl {[:dl_list,[val[0]]]}
          | dl_list dl {val[0][1].push(val[1]);val[0]}
@@ -50,12 +54,38 @@ header3 : HEADER_3 {[:header_3,val[0]]}
 
 url : URL {[:url,val[0]]}
 
+bold : BOLD {[:bold,val[0]]}
+italic : ITALIC {[:italic,val[0]]}
+underline : UNDERLINE {[:underline,val[0]]}
+line_through : LINE_THROUGH {[:line_through,val[0]]}
+
 newline : NEWLINE {[:newline,val[0]]}
 
 ---- header
 ---- inner
 def table_parse(line)
-  line.split('|')
+  tr = []
+  line.split('|').each do |d|
+    q = []
+      until d.empty? do
+        case d
+        when /\A\*([^\*]+)\*/
+          q.push([:BOLD,$1])
+        when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)\s*\r/
+          q.push([:URL,$1])
+        when /\A\s+/
+          ;
+        when /\A[^\n\*]+/
+          word = $&
+          q.push [:STRING,word]
+        else
+          raise RuntimeError, 'must not happen'
+        end
+        d = $' #'
+      end
+     tr << q
+  end
+  tr
 end
 
 def dl_parse(line)
@@ -67,19 +97,29 @@ def parse(line)
   @q = []
   until line.empty? do
     case line
-    when /\A\r?\n-([^-].*)/
+    when /\A-([^-\r\n]+)-/
+      @q.push([:LINE_THROUGH,$1])
+    when /\A-([^-].*)$/
       @q.push([:ITEM_1,$1])
-    when /\A\r?\n--([^-].*)/
+    when /\A--([^-].*)$/
       @q.push([:ITEM_2,$1])
-    when /\A\*([^\*].*)\n/
+    when /\A---([^-].*)$/
+      @q.push([:ITEM_3,$1])
+    when /\A\*([^\*\r\n]+)\*/
+      @q.push([:BOLD,$1])
+    when /\A_([^_\r\n]+)_/
+      @q.push([:ITALIC,$1])
+    when /\A\+([^\+\r\n]+)\+/
+      @q.push([:UNDERLINE,$1])
+    when /\A\*([^\*].*)$/
       @q.push([:ITEM_1,$1])
-    when /\A\*\*([^\*].*)\n/
+    when /\A\*\*([^\*].*)$/
       @q.push([:ITEM_2,$1])
-    when /\A\*\*\*([^\*].*)\n/
+    when /\A\*\*\*([^\*].*)$/
       @q.push([:ITEM_3,$1])
     when /\A\|(.*)/
       @q.push([:TABLE,$1])
-    when /\A\r?\n\:(.*)/
+    when /\A\\n\:(.*)/
       @q.push([:DL,$1])
     when /\Ah1. (.*)/
       @q.push([:HEADER_1,$1])
@@ -87,17 +127,17 @@ def parse(line)
       @q.push([:HEADER_2,$1])
     when /\Ah3. (.*)/
       @q.push([:HEADER_3,$1])
-    when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)\s\r/
+    when /\A(https?:\/\/[a-zA-Z0-9\/:%#\$&\?\(\)~\.=\+\-]+)/
       @q.push([:URL,$1])
-    when /\A(\r?\n)\r\n/
+    when /\A(\r?\n)\r?\n/
      @q.push([:NEWLINE,$1])
     when /\A\s+/
       ;
-    when /\A[^\n]+/
+    when /\A[^\n\*]+/
       word = $&
       @q.push [:STRING,word]
     else
-      raise RuntimeError, 'must not happen'
+      raise RuntimeError, "must not happen #{line}"
     end
     line = $' #'
   end
