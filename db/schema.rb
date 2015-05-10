@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 9) do
+ActiveRecord::Schema.define(version: 10) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -60,5 +60,13 @@ ActiveRecord::Schema.define(version: 9) do
   end
 
   add_index "tags", ["tag"], name: "index_tags_on_tag", unique: true, using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "psnal_cd"
+    t.string   "icon_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

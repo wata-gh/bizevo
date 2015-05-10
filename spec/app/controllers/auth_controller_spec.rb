@@ -2,11 +2,11 @@ require 'spec_helper'
 
 RSpec.describe "AuthController" do
   before :all do
-    @account = FactoryGirl.create :account
+    @user = FactoryGirl.create :user
   end
 
   after :all do
-    @account.destroy rescue nil
+    @user.destroy rescue nil
   end
 
   describe 'ログイン画面表示 正常系' do
@@ -19,7 +19,7 @@ RSpec.describe "AuthController" do
   describe 'ログイン 正常系' do
     it 'ログイン ステータスコード302が返ってくること' do
       post 'auth/login', {
-          :email       => @account.email,
+          :email       => @user.name,
           :password    => 'abcd1234',
           :authenticity_token => 'a'
         }, 'rack.session' => { :_csrf_token => 'a' }
@@ -28,7 +28,7 @@ RSpec.describe "AuthController" do
 
     it 'ログイン失敗 ステータスコード302が返ってくること' do
       post 'auth/login', {
-          :email       => @account.email,
+          :email       => @user.name,
           :password    => 'abcd',
           :authenticity_token => 'a'
         }, 'rack.session' => { :_csrf_token => 'a' }

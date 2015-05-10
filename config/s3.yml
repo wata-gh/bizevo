@@ -1,0 +1,14 @@
+:development:
+  bucket: 'biezvo-contens-test'
+  host: 'd715cecfo4htx.cloudfront.net'
+:staging:
+  bucket: 'biezvo-contents-staging'
+  host: ''
+:production:
+  bucket: 'bizevo-contents'
+  host: ''
+:test:
+  access_key: ''
+  seacret_key: ''
+  bucket: 'biezvo-contents-test'
+  host: ''

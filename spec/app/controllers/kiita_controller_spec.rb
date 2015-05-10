@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe "KiitaController" do
   before :all do
-    @user = FactoryGirl.create :account
+    @user = FactoryGirl.create :user
     @articles = FactoryGirl.build :article
     @article_tags = FactoryGirl.create :article_tag
   end
