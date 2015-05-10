@@ -12,6 +12,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 require 'rr'
 Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/**/*.rb")].each(&method(:require))
 Dir[File.expand_path(File.dirname(__FILE__) + '/factories/**/*.rb')].each(&method(:require))
+Dir[File.expand_path(File.dirname(__FILE__) + "/../app/helpers/*.rb")].each(&method(:require))
+Dir[File.expand_path(File.dirname(__FILE__) + '/../lib/**/*.rb')].each(&method(:require))
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods

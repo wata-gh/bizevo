@@ -14,7 +14,6 @@ Bizevo::App.controllers :kiita do
   end
 
   post :create do
-    p params
     begin
       save_article params
     rescue => e
@@ -52,7 +51,7 @@ Bizevo::App.controllers :kiita do
   get :view, :with => :id do
     @title = 'kiita | view'
     @article = Article.find_by_id params[:id]
-    @user = Account.find @article.user_id
+    @user = User.find @article.user_id
     halt 404 unless @article
     @md_text = mark_down_parse @article.article
     render 'kiita/view'
@@ -79,9 +78,27 @@ Bizevo::App.controllers :kiita do
     render 'kiita/mypage'
   end
 
+  get :edit_profile do
+    @tile = 'edit profile'
+    render 'kiita/edit_profile'
+  end
+
+  post :edit_profile do
+    user = User.find_by_name current_user.name
+    user.s3_upload params['user']['profile_icon'][:tempfile] if params['user']['profile_icon']
+    user.icon_path = user.upload_file_name
+    if user.save!
+      @tile = 'my page'
+      redirect url(:kiita, :mypage)
+    end
+    @title = 'edit profile'
+    render 'kiita/edit_profile'
+  end
+
   get :tag, :with => :tag do
     @title = "#{params[:tag]}ページ"
     @articles = Article.eager_load(:article_tags).includes(:article_tags).where("tag = ?", params[:tag]).page params[:page]
     render 'kiita/tag'
   end
+
 end

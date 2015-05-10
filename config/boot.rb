@@ -38,6 +38,7 @@ I18n.enforce_available_locales = true
 Padrino.before_load do
   Padrino.require_dependencies File.join(Padrino.root, 'config/ldap.rb')
   Padrino.require_dependencies File.join(Padrino.root, 'racc/*.rb')
+  Padrino.require_dependencies File.join(Padrino.root, 'config/s3.rb')
 end
 
 ##

@@ -36,6 +36,14 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     awesome_print (1.6.1)
+    aws-sdk (2.0.41)
+      aws-sdk-resources (= 2.0.41)
+    aws-sdk-core (2.0.41)
+      builder (~> 3.0)
+      jmespath (~> 1.0)
+      multi_json (~> 1.0)
+    aws-sdk-resources (2.0.41)
+      aws-sdk-core (= 2.0.41)
     bcrypt (3.1.10)
     builder (3.2.2)
     capistrano (3.4.0)
@@ -71,6 +79,8 @@ GEM
       rack (>= 1.0.0)
       url_mount (~> 0.2.1)
     i18n (0.7.0)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
     json (1.8.2)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
@@ -83,6 +93,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.6.1)
     moneta (0.7.20)
+    multi_json (1.11.0)
     mysql2 (0.3.18)
     net-ldap (0.11)
     net-scp (1.2.1)
@@ -136,6 +147,7 @@ GEM
     raindrops (0.13.0)
     rake (10.4.2)
     redcarpet (3.2.3)
+    rmagick (2.15.0)
     rr (1.1.2)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
@@ -192,6 +204,7 @@ DEPENDENCIES
   activerecord (>= 3.1)
   activerecord-oracle_enhanced-adapter (~> 1.5.0)
   awesome_print
+  aws-sdk
   bcrypt
   capistrano
   capistrano-bundler
@@ -203,6 +216,7 @@ DEPENDENCIES
   erubis (~> 2.7.0)
   factory_girl
   kaminari (= 0.16.1)
+  multi_json
   mysql2
   net-ldap
   net-ssh-gateway
@@ -212,6 +226,7 @@ DEPENDENCIES
   rack-test
   rake
   redcarpet
+  rmagick
   rr
   rspec
   ruby-oci8

@@ -3,7 +3,7 @@ class ActiveUser < ActiveLdap::Base
 
   def self.authenticate email, pass
     if Padrino.env == :development || Padrino.env == :test
-      a = Account.find_by :name => email
+      a = User.find_by :name => email
       return nil unless a
       au = MockActiveUser.new
       au.description = '000000'
@@ -14,7 +14,11 @@ class ActiveUser < ActiveLdap::Base
     ldap.host = LDAP_CONFIG[:host]
     ldap.port = LDAP_CONFIG[:port]
     ldap.auth "ACTIVEWORK\\#{email}", pass
-    return self.find_user email if ldap.bind
+    if ldap.bind
+      u = self.find_user email
+      User.create name: u.sAMAccountName unless User.find_by :name => u.sAMAccountName
+      return u
+    end
     nil
   end
 
@@ -41,16 +45,16 @@ class ActiveUser < ActiveLdap::Base
   class MockActiveUser
     attr_accessor :description, :sAMAccountName
     def id
-      self.account.id
+      self.user.id
     end
     def name
       self.sAMAccountName
     end
     def post
-      self.account.role
+      self.user.role
     end
-    def account
-      Account.find_by :name => self.sAMAccountName
+    def user
+      User.find_by :name => self.sAMAccountName
     end
     def redmine_user
       @remine_user ||= Redmine::User.find_by :mail => "#{self.sAMAccountName}@active.co.jp"
