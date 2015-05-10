@@ -12,6 +12,11 @@
         <%= submit_tag "delete", :class => 'tiny ui red button'%>
       <% end %>
     <% end %>
+    <h6>
+      <a class="like">
+        <i class="like icon"></i> <%= @article.like %> Likes
+      </a>
+    </h6>
   </section>
 
   <section class="view_area">
@@ -29,3 +34,26 @@
     <%= @md_text.html_safe %>
   </section>
 </section>
+<script>
+$(function() {
+  $like = $("a.like");
+  $icon = $('<i class="like icon"></i>');
+
+  $like.click(function(){
+    $.ajax({
+      type: "get",
+      url: "/kiita_api/increment_like/<%= @article.id %>"
+    }).done(function(d) {
+      if(d.is_success == 1) {
+        $like.empty();
+        $like.append($icon).append(' ' + d.results.like + ' likes');
+      }
+    });
+  });
+});
+</script>
+<style type="text/css">
+.like {
+  cursor: pointer;
+}
+</style>
