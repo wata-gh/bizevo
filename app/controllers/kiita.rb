@@ -26,7 +26,7 @@ Bizevo::App.controllers :kiita do
 
   get :update, :with => :id do
     @title = 'kiita | edit'
-    @article = Article.eager_load(:article_tags).includes(:article_tags).find_by_id(params[:id])
+    @article = Article.eager_load(:article_tags).includes(:article_tags).find_by :id => params[:id]
     halt 404 unless @article
     render 'kiita/update'
   end
@@ -50,7 +50,7 @@ Bizevo::App.controllers :kiita do
 
   get :view, :with => :id do
     @title = 'kiita | view'
-    @article = Article.find_by_id params[:id]
+    @article = Article.find_by :id => params[:id]
     @user = User.find @article.user_id
     halt 404 unless @article
     @md_text = mark_down_parse @article.article
@@ -84,7 +84,7 @@ Bizevo::App.controllers :kiita do
   end
 
   post :edit_profile do
-    user = User.find_by_name current_user.name
+    user = User.find_by :name => current_user.name
     user.s3_upload params['user']['profile_icon'][:tempfile] if params['user']['profile_icon']
     user.icon_path = user.upload_file_name
     if user.save!
