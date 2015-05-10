@@ -2,11 +2,11 @@ unless defined?(RACK_ENV)
   RACK_ENV = ENV['RACK_ENV'] == 'development' ? 'test' : ENV['RACK_ENV']
 end
 
-#require 'simplecov'
-#require 'simplecov-rcov'
-#require 'simplecov_custom_profile'
-#SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-#SimpleCov.start 'padrino'
+require 'simplecov'
+require 'simplecov-rcov'
+require 'simplecov_custom_profile'
+SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+SimpleCov.start 'padrino'
 
 require File.expand_path(File.dirname(__FILE__) + "/../config/boot")
 require 'rr'
