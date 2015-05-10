@@ -3,7 +3,7 @@ Bizevo::App.controllers :auth do
   layout :no_auth
 
   get :login do
-    @account = Account.new
+    @user = User.new
     render :login
   end
 
