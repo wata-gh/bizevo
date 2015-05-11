@@ -2,13 +2,11 @@
   bucket: 'biezvo-contens-test'
   host: 'd715cecfo4htx.cloudfront.net'
 :staging:
-  bucket: 'biezvo-contents-staging'
-  host: ''
+  bucket: 'bizevo-contents-staging'
+  host: 'd34xwkrqkk4skr.cloudfront.net'
 :production:
   bucket: 'bizevo-contents'
   host: ''
 :test:
-  access_key: ''
-  seacret_key: ''
-  bucket: 'biezvo-contents-test'
+  bucket: 'bizevo-contents-test'
   host: ''
