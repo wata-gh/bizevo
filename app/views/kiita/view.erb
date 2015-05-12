@@ -19,7 +19,7 @@
     <% end %>
     <h6>
       <a class="like">
-        <i class="like icon"></i> <%= @article.like %> Likes
+        <i class="like icon"></i> <%= @article.likes %> Likes
       </a>
     </h6>
   </section>
@@ -51,7 +51,7 @@ $(function() {
     }).done(function(d) {
       if(d.is_success == 1) {
         $like.empty();
-        $like.append($icon).append(' ' + d.results.like + ' likes');
+        $like.append($icon).append(' ' + d.results.likes + ' likes');
       }
     });
   });

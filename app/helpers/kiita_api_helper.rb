@@ -6,7 +6,7 @@ module Bizevo
         article = Article.find_by :id => article_id
         return nil unless article
         article.lock!
-        article.like += 1
+        article.likes += 1
         article.save ? article : nil
       end
     end
