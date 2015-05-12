@@ -6,7 +6,7 @@ module Bizevo
         begin
           res = WikiParser.new.parse content
         rescue => e
-          return "<pre>content</pre>"
+          return "<pre>#{content}</pre>"
         end
         html = ''
         res.each do |f|
