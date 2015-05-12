@@ -3,7 +3,11 @@ module Bizevo
     module WikiHelper
       def content_to_html content
         return '' unless content
-        res = WikiParser.new.parse content
+        begin
+          res = WikiParser.new.parse content
+        rescue => e
+          return "<pre>content</pre>"
+        end
         html = ''
         res.each do |f|
           if f[0] == :text
