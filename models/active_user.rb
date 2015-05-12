@@ -38,6 +38,10 @@ class ActiveUser < ActiveLdap::Base
     memberOf[0].rdns[0]['CN']
   end
 
+  def user
+    User.find_by :name => self.sAMAccountName
+  end
+
   def redmine_user
     @remine_user ||= Redmine::User.find_by :mail => "#{self.sAMAccountName}@active.co.jp"
   end
