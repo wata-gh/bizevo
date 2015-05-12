@@ -51,8 +51,9 @@ Bizevo::App.controllers :kiita do
   get :view, :with => :id do
     @title = 'kiita | view'
     @article = Article.find_by :id => params[:id]
-    @user = User.find @article.user_id
     halt 404 unless @article
+    @user = User.find_by :id => @article.user_id
+    halt 404 unless @user
     @md_text = mark_down_parse @article.article
     render 'kiita/view'
   end
