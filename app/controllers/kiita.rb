@@ -84,7 +84,7 @@ Bizevo::App.controllers :kiita do
   end
 
   post :edit_profile do
-    user = User.find_by :name => current_user.name
+    user = User.find_by :name => current_user.sAMAccountName
     user.s3_upload params['user']['profile_icon'][:tempfile] if params['user']['profile_icon']
     user.icon_path = user.upload_file_name
     if user.save!
