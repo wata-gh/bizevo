@@ -10,8 +10,13 @@ class User < ActiveRecord::Base
     @filename
   end
 
-  def get_image_path1
-    return nil unless self.icon_path
-    "http://#{S3_CONFIG['host']}/#{self.icon_path}.png"
+  def get_image_path
+    self.icon_path ? "http://#{S3_CONFIG['host']}/#{self.icon_path}.png" : "/images/noimage.png"
   end
+
+  def get_thumbnail_path
+    self.icon_path ? "http://#{S3_CONFIG['host']}/thumbnail/#{self.icon_path}.png" : "/images/noimage.png"
+  end
+
+  has_many :articles
 end

@@ -6,17 +6,20 @@
 <section class="background">
   <section class="view_area">
     <h1><%= @article.title %></h1>
-    <h5><%= @user.name %> が <%= @article.get_created_at %> に投稿しました。
-    <% if @article.mine? current_user.id %>
-      <% link_to url(:kiita,:update, @article.id) do  %>
-        <div class="small ui blue button">
-          edit
-      </div>
+    <h5>
+      <img src="<%= @user.get_thumbnail_path %>" width="48" height="48" />
+      <%= @user.name %> が <%= @article.get_created_at %> に投稿しました。
+      <% if @article.mine? current_user.id %>
+        <% link_to url(:kiita,:update, @article.id) do  %>
+          <div class="small ui blue button">
+            edit
+        </div>
+        <% end %>
+        <% form_tag "/kiita/destroy/#{@article.id}", :method => :delete, :style => "display: inline" do %>
+          <%= submit_tag "delete", :class => 'tiny ui red button'%>
+        <% end %>
       <% end %>
-      <% form_tag "/kiita/destroy/#{@article.id}", :method => :delete, :style => "display: inline" do %>
-        <%= submit_tag "delete", :class => 'tiny ui red button'%>
-      <% end %>
-    <% end %>
+    </h5>
     <h6>
       <a class="like">
         <i class="like icon"></i> <%= @article.likes %> Likes

@@ -21,6 +21,7 @@ class Article < ActiveRecord::Base
 
   has_many :article_tags, dependent: :destroy
   has_many :tags, through: :article_tags
+  belongs_to :user
 
   validates_presence_of :title
   validates_presence_of :article
