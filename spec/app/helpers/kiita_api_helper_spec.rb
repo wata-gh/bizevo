@@ -16,7 +16,7 @@ RSpec.describe "Bizevo::App::KiitaApiHelper" do
 
     describe "increment_like のテスト" do
       it "like が増えること" do
-        expect(helpers.increment_like(1).like).to eq 1
+        expect(helpers.increment_like(1).likes).to eq 1
       end
     end
   end
