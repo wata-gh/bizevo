@@ -3,7 +3,7 @@ Bizevo::App.controllers :kiita do
 
   get :index do
     @title = 'kiita | top'
-    @articles = Article.eager_load(:article_tags).includes(:article_tags)
+    @articles = Article.joins(:user).eager_load(:article_tags).includes(:article_tags)
                   .order('articles.created_at DESC').page params[:page]
     render 'kiita/index'
   end
@@ -51,9 +51,8 @@ Bizevo::App.controllers :kiita do
   get :view, :with => :id do
     @title = 'kiita | view'
     @article = Article.find_by :id => params[:id]
+    @user = User.find @article.user_id
     halt 404 unless @article
-    @user = User.find_by :id => @article.user_id
-    halt 404 unless @user
     @md_text = mark_down_parse @article.article
     render 'kiita/view'
   end
