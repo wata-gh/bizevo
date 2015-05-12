@@ -1,6 +1,6 @@
 :development:
-  bucket: 'biezvo-contens-test'
-  host: 'd715cecfo4htx.cloudfront.net'
+  bucket: 'bizevo-contents-development'
+  host: 'd3q38qwpamobja.cloudfront.net'
 :staging:
   bucket: 'bizevo-contents-staging'
   host: 'd34xwkrqkk4skr.cloudfront.net'

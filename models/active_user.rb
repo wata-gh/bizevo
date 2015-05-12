@@ -16,7 +16,7 @@ class ActiveUser < ActiveLdap::Base
     ldap.auth "ACTIVEWORK\\#{email}", pass
     if ldap.bind
       u = self.find_user email
-      User.create name: u.sAMAccountName unless User.find_by :name => u.sAMAccountName
+      User.create name: u.sAMAccountName, psnal_cd: u.description unless User.find_by :name => u.sAMAccountName
       return u
     end
     nil

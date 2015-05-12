@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   end
 
   def get_image_path1
-    'http://' + S3_CONFIG['host'] + '/' + self.icon_path + '.png'
+    return nil unless self.icon_path
+    "http://#{S3_CONFIG['host']}/#{self.icon_path}.png"
   end
 end
