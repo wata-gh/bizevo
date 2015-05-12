@@ -7,7 +7,7 @@
   <section class="view_area">
     <h1><%= @article.title %></h1>
     <h5>
-      <img src="<%= @user.get_thumbnail_path %>" />
+      <img src="<%= @user.get_thumbnail_path %>" width="48" height="48" />
       <%= @user.name %> が <%= @article.get_created_at %> に投稿しました。
       <% if @article.mine? current_user.id %>
         <% link_to url(:kiita,:update, @article.id) do  %>
