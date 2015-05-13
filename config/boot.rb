@@ -7,8 +7,6 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
 
-ENV['S3_ACCESS_KEY'] = 'AKIAIF33PSVYV2ITLY2A'
-ENV['S3_SEACRET_KEY'] = '9Qkk2RH1fKpjyQ+YWk3tqaXosUgQgC7NHqp+QUO9'
 ##
 # ## Enable devel logging
 #
