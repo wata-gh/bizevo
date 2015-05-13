@@ -15,14 +15,20 @@
             <div class="title item">
                 <b>bizevo</b>
             </div>
-            <a class="icon item" data-content="" href="<%= url(:quotn, :index) %>">
+            <% link_to url(:quotn, :index), :class => 'icon item' do %>
                 <i class="browser icon"></i>
-            </a>
-            <a class="icon item" data-content="" href="<%= url(:kiita, :index) %>">
+            <% end %>
+            <% link_to url(:kiita, :index), :class => 'icon item' do %>
                 <i class="book icon"></i>
-            </a>
-            <a class="icon item" data-content="" href="<%= url(:feeling, :index) %>">
+            <% end %>
+            <% link_to url(:feeling, :index), :class => 'icon item' do %>
                 <i class="smile icon"></i>
+            <% end %>
+            <% link_to url(:slack, :index), :class => 'icon item' do %>
+                <i class="slack icon"></i>
+            <% end %>
+            <a class="icon item" data-content="" href="">
+                <i class="wait icon"></i>
             </a>
         </div>
         <div class="right menu">
@@ -40,10 +46,24 @@
 </div>
 <div class="main container">
     <% if flash[:error].present? %>
-        <div class="ui negative message">
+        <div class="ui negative icon message">
+            <i class="warning icon"></i>
             <i class="close icon"></i>
-            <div class="header">
-                <%= flash[:error] %>
+            <div class="content">
+                <div class="header">
+                    <%= flash[:error] %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+    <% if flash[:success].present? %>
+        <div class="ui positive icon message">
+            <i class="checkmark icon"></i>
+            <i class="close icon"></i>
+            <div class="content">
+                <div class="header">
+                    <%= flash[:success] %>
+                </div>
             </div>
         </div>
     <% end %>

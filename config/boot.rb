@@ -7,6 +7,8 @@ require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
 Bundler.require(:default, RACK_ENV)
 
+ENV['S3_ACCESS_KEY'] = 'AKIAIF33PSVYV2ITLY2A'
+ENV['S3_SEACRET_KEY'] = '9Qkk2RH1fKpjyQ+YWk3tqaXosUgQgC7NHqp+QUO9'
 ##
 # ## Enable devel logging
 #
@@ -39,6 +41,7 @@ Padrino.before_load do
   Padrino.require_dependencies File.join(Padrino.root, 'config/ldap.rb')
   Padrino.require_dependencies File.join(Padrino.root, 'racc/*.rb')
   Padrino.require_dependencies File.join(Padrino.root, 'config/s3.rb')
+  Padrino.require_dependencies File.join(Padrino.root, 'config/const.rb')
 end
 
 ##

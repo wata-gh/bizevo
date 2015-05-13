@@ -1,0 +1,9 @@
+:common:
+:development:
+  :base_url: http://bizevo.personal.jp:3000
+:staging:
+  :base_url: http://stating.bizevo.net
+:production:
+  :base_url: http://bizevo.net
+:test:
+  :base_url: http://bizevo.personal.jp:3000

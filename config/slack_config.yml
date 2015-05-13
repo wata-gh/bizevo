@@ -1,0 +1,15 @@
+:common:
+  :authorize_url: https://slack.com/oauth/authorize
+  :redirect_uri: /slack/oauth
+:development:
+  :client_id: ''
+  :client_secret: ''
+:staging:
+  :client_id: ''
+  :client_secret: ''
+:production:
+  :client_id: ''
+  :client_secret: ''
+:test:
+  :client_id: ''
+  :client_secret: ''

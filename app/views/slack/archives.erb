@@ -1,0 +1,33 @@
+<style>
+    .ui.feed {
+        min-height: 200px;
+    }
+</style>
+<div class="ui header"><i class="world icon"></i> <%= @info['name'] %></div>
+<div class="ui clearing divider"></div>
+<div class="ui feed">
+    <div class="ui inverted dimmer">
+        <h2 class="ui icon header">
+            <i class="heart icon"></i>
+            Coming soon!
+        </h2>
+    </div>
+    <% @messages.each do |m| %>
+        <div class="event">
+            <div class="content">
+                <div class="date"><%= m['ts'] %></div>
+                <div class="summary">
+                    <%= m['user'] %>
+                </div>
+                <div class="extra text">
+                    <%= m['text'] %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>
+<script>
+    $(function() {
+        $('.ui.dimmer').dimmer('show');
+    });
+</script>

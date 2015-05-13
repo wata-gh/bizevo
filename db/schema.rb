@@ -11,17 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 10) do
-
-  create_table "accounts", force: true do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.string   "email"
-    t.string   "crypted_password"
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 14) do
 
   create_table "article_tags", id: false, force: true do |t|
     t.integer  "article_id"
@@ -40,7 +30,18 @@ ActiveRecord::Schema.define(version: 10) do
     t.integer  "delete_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "likes"
   end
+
+  create_table "oauths", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "provider"
+    t.string   "access_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauths", ["user_id"], name: "index_oauths_on_user_id", using: :btree
 
   create_table "project_reports", force: true do |t|
     t.integer  "quotn_no",        limit: 8,  null: false
