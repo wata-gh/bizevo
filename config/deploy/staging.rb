@@ -16,7 +16,7 @@ role :app, %w{besw01}
 server 'besw01', user: 'webservice', password: 'webservice!', roles: %w{app}
 
 set :unicorn_config_path, File.join(fetch(:deploy_to), 'current/config/unicorn', "#{fetch(:stage)}.rb")
-set :linked_files, %w{config/database.rb}
+set :linked_files, %w{config/database.rb config/slack_config.yml}
 set :branch, 'develop'
 # Custom SSH Options
 # ==================
