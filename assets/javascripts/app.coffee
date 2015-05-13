@@ -9,3 +9,8 @@ $ ->
     'update feeling': '/api/feeling/{at}',
     'update comment': '/api/feeling/{id}/comment',
   }
+  $ '.message .close'
+  .on 'click', ->
+    $ this
+    .closest '.message'
+    .fadeOut()
