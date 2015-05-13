@@ -2,7 +2,7 @@
 :development:
   :base_url: http://bizevo.personal.jp:3000
 :staging:
-  :base_url: http://stating.bizevo.net
+  :base_url: http://staging.bizevo.net
 :production:
   :base_url: http://bizevo.net
 :test:
