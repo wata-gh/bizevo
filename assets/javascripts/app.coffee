@@ -14,3 +14,6 @@ $ ->
     $ this
     .closest '.message'
     .fadeOut()
+  $ '.ui.dropdown'
+  .dropdown()
+

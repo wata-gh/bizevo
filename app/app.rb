@@ -58,7 +58,7 @@ module Bizevo
     #
 
     get :index do
-      render :index
+      redirect url(:dashboard, :index, :mst_blg_cd => current_user.user.mst_blg_cd.strip, :month => Date.today.strftime('%Y%m'))
     end
 
     ##

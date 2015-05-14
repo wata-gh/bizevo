@@ -7,6 +7,7 @@ class ActiveUser < ActiveLdap::Base
       return nil unless a
       au = MockActiveUser.new
       au.description = '000000'
+      au.department = '10301000'
       au.sAMAccountName = email.split('@').first
       return au
     end
@@ -15,9 +16,13 @@ class ActiveUser < ActiveLdap::Base
     ldap.port = LDAP_CONFIG[:port]
     ldap.auth "ACTIVEWORK\\#{email}", pass
     if ldap.bind
-      u = self.find_user email
-      User.create name: u.sAMAccountName, psnal_cd: u.description unless User.find_by :name => u.sAMAccountName
-      return u
+      au = self.find_user email
+      u = User.where(:name => au.sAMAccountName).first_or_initialize
+      u.name = au.sAMAccountName
+      u.psnal_cd = au.description
+      u.mst_blg_cd = au.department.split(':')[0]
+      u.save!
+      return au
     end
     nil
   end
@@ -29,6 +34,7 @@ class ActiveUser < ActiveLdap::Base
     else
       au = MockActiveUser.new
       au.description = '000000'
+      au.department = '10301000'
       au.sAMAccountName = name
       au
     end
@@ -47,7 +53,7 @@ class ActiveUser < ActiveLdap::Base
   end
 
   class MockActiveUser
-    attr_accessor :description, :sAMAccountName
+    attr_accessor :description, :sAMAccountName, :department
     def id
       self.user.id
     end

@@ -11,10 +11,12 @@
 <div class="ui fixed main menu">
     <div class="container">
         <div class="left menu">
-            <a class="launch item"><i class="content icon"></i></a>
             <div class="title item">
                 <b>bizevo</b>
             </div>
+            <% link_to url(:index), :class => 'icon item' do %>
+                <i class="dashboard icon"></i>
+            <% end %>
             <% link_to url(:quotn, :index), :class => 'icon item' do %>
                 <i class="browser icon"></i>
             <% end %>
