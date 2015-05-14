@@ -4,3 +4,5 @@ dist
 .sass-cache
 src/bower_components
 vendor
+.project
+.tern-project

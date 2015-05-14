@@ -1,0 +1,16 @@
+<div ng-controller="SidebarCtrl">
+  <div class="list-group">
+    <a class="list-group-item" href="/">
+      <i class="dashboard icon"></i>dashboard
+    </a>
+  </div>
+  <hr />
+  <div class="list-group">
+    <a class="list-group-item" ui-sref="info" ng-class="{ active: $state.includes('info') }">
+      <span class="badge" tea-badge="badge-info"></span>お知らせ
+    </a>
+    <a class="list-group-item" ui-sref="sample" ng-class="{ active: $state.includes('sample') }">
+      <span class="badge">14</span>Sample
+    </a>
+  </div>
+</div>

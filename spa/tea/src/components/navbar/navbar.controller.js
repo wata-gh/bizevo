@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('tea')
-  .controller('NavbarCtrl', ['$scope', function ($scope) {
+  .controller('NavbarCtrl', function ($scope) {
     $scope.date = new Date();
-  }]);
+  });

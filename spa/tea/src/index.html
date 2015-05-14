@@ -2,8 +2,8 @@
 <html class="no-js" ng-app="tea">
   <head>
     <meta charset="utf-8">
-    <title>frontend</title>
-    <meta name="description" content="">
+    <title tea-title></title>
+    <meta tea-description name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="app/main/vendor.css">
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+    <link rel="stylesheet" href="bower_components/semantic-ui/dist/semantic.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -27,7 +29,24 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ui-view></div>
+    <div class="container">
+      <div class="row clearfix">
+        <div class="col-md-2 column">
+          <div class="bs-sidebar hidden-print" bs-affix>
+            <div ng-include="'components/sidebar/sidebar.html'"></div>
+          </div>
+        </div>
+        <div class="col-md-10 column am-fade-and-slide-right" ui-view></div>
+      </div>
+      <hr />
+      <footer>
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <p class="text-right">Powered by <a target="_blank" href="http://www.active.co.jp/"><img alt="ACTIVE WORK" src="//www.active.co.jp/wp-content/themes/aw/common/images/common/logo_footer.png"></img></a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -49,13 +68,21 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/semantic-ui/dist/semantic.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({src,.tmp}) scripts/main.js -->
     <script src="app/tea.js"></script>
     <script src="app/main/main.controller.js"></script>
+    <script src="app/top/top.controller.js"></script>
+    <script src="app/info/info.controller.js"></script>
     <script src="components/navbar/navbar.controller.js"></script>
+    <script src="components/sidebar/sidebar.controller.js"></script>
+    <script src="components/tdk/tdk.service.js"></script>
+    <script src="components/badge/badge.service.js"></script>
 
     <!-- inject:partials -->
     <!-- angular templates will be automaticaly converted in js and inserted here -->
