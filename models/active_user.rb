@@ -40,6 +40,14 @@ class ActiveUser < ActiveLdap::Base
     end
   end
 
+  def id
+    self.user.id
+  end
+
+  def name
+    self.sAMAccountName
+  end
+
   def post
     memberOf[0].rdns[0]['CN']
   end
