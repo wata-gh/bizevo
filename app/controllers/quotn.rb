@@ -21,7 +21,12 @@ Bizevo::App.controllers :quotn do
   end
 
   get :detail, :map => 'quotn/detail/:quotn_no/:quotn_ver_no' do
-    @quotn = Quotation.find_by :quotn_no => params[:quotn_no], :quotn_ver_no => params[:quotn_ver_no]
+    @quotns = Quotation
+      .references(:pcdc_contract, :maint_contract, :bulk_contract)
+      .joins(:sales_assoc, :updater, :belonging, :csc_cust)
+      .includes(:sales_assoc, :updater, :pcdc_contract, :maint_contract, :bulk_contract, :belonging, :csc_cust)
+      .where(:quotn_no => params[:quotn_no]).order(:quotn_ver_no => :desc)
+    @quotn = @quotns.find {|q| q.quotn_ver_no == params[:quotn_ver_no].to_i}
     halt 404 unless @quotn
     @reports = ProjectReport.where(:quotn_no => @quotn.quotn_no).order(:created_at => :desc).page(params[:page]).per(5)
     render 'quotn/detail'

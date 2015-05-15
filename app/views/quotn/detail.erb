@@ -24,6 +24,24 @@
     <div class="divider"> / </div>
     <div class="active section"><%= @quotn.quotn_no %>-<%= @quotn.quotn_ver_no %></div>
 </div>
+<% if @quotns.size > 1 %>
+<div class="ui top attached tabular menu">
+    <% @quotns.each do |q| %>
+    <a class="<% if q.quotn_ver_no == params[:quotn_ver_no].to_i %>active <% end %>item" data-tab="first" href="<%= url(:quotn, :detail, :quotn_no => q.quotn_no, :quotn_ver_no => q.quotn_ver_no) %>"><%= q.quotn_ver_no %> 版</a>
+    <% end %>
+</div>
+    <% if @quotns[0].quotn_ver_no != @quotn.quotn_ver_no %>
+    <div class="ui icon warning message">
+        <i class="warning icon"></i>
+        <div class="content">
+            <div class="header">
+                古い見積情報です。
+            </div>
+            <p>最新の見積もり情報ではありませんのでご注意ください。</p>
+        </div>
+    </div>
+    <% end %>
+<% end %>
 <h3 class="ui header">
     <i class="newspaper icon"></i>
     <div class="content"><%= @quotn.quotn_title %>
