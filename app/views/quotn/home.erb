@@ -12,6 +12,38 @@
     </div>
 </div>
 -->
+<div class="ui blue menu">
+    <% link_to url(:quotn, :index), :class => "item #{params[:main_group_mst_blg_cd].blank? ? 'active' : ''}" do %>
+        <i class="globe icon"></i> ALL
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10401000'), :class => "item #{params[:main_group_mst_blg_cd] == '10401000' ? 'active' : ''}" do %>
+        <i class="tablet icon"></i> 技術推進
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10401000'), :class => "item #{params[:main_group_mst_blg_cd] == '10401000' ? 'active' : ''}" do %>
+        <i class="tablet icon"></i> CDS
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10402000'), :class => "item #{params[:main_group_mst_blg_cd] == '10402000' ? 'active' : ''}" do %>
+        <i class="suitcase icon"></i> NBS
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10403000'), :class => "item #{params[:main_group_mst_blg_cd] == '10403000' ? 'active' : ''}" do %>
+        <i class="lightning icon"></i> NSS
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10501000'), :class => "item #{params[:main_group_mst_blg_cd] == '10501000' ? 'active' : ''}" do %>
+        <i class="gift icon"></i> ECS
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10502000'), :class => "item #{params[:main_group_mst_blg_cd] == '10502000' ? 'active' : ''}" do %>
+        <i class="diamond icon"></i> ITC
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10503000'), :class => "item #{params[:main_group_mst_blg_cd] == '10503000' ? 'active' : ''}" do %>
+        <i class="shipping icon"></i> RSL
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10201000'), :class => "item #{params[:main_group_mst_blg_cd] == '10201000' ? 'active' : ''}" do %>
+        <i class="line chart icon"></i> 営業
+    <% end %>
+    <% link_to url(:quotn, :index, :main_group_mst_blg_cd => '10202000'), :class => "item #{params[:main_group_mst_blg_cd] == '10202000' ? 'active' : ''}" do %>
+        <i class="game icon"></i> CD
+    <% end %>
+</div>
 <div class="ui divided items">
     <% @quotn.each do |q| %>
         <div class="item">
