@@ -1,4 +1,5 @@
 class Quotation < ActiveRecord::Base
+  include Filterable
   establish_connection configurations[:lushun]
   self.table_name = self.table_name.singularize
   self.primary_keys = :quotn_no, :quotn_ver_no
