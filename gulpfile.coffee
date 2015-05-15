@@ -54,7 +54,7 @@ gulp.task 'vendor', ->
 
 gulp.task 'css', ->
   gulp
-  .src './app/styles/*.scss'
+  .src './assets/styles/*.scss'
   .pipe plumber()
   .pipe sass()
   .pipe gulp.dest './public/stylesheets'
@@ -65,7 +65,7 @@ gulp.task 'css', ->
 gulp.task 'watch', ['build'], ->
   gulp.watch 'assets/**/*.coffee', ['js']
   gulp.watch 'app/**/*.jade', ['js']
-  gulp.watch 'app/styles/**/*.scss', ['css']
+  gulp.watch 'assets/styles/**/*.scss', ['css']
   gulp.watch 'bower_components/**/*.js', ['vendor']
 
 gulp.task 'bower', ->
