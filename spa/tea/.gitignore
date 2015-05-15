@@ -6,3 +6,4 @@ src/bower_components
 vendor
 .project
 .tern-project
+.settings
