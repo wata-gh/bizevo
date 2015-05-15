@@ -6,9 +6,9 @@ class ActiveUser < ActiveLdap::Base
       a = User.find_by :name => email
       return nil unless a
       au = MockActiveUser.new
-      au.description = '000000'
-      au.department = '10301000'
-      au.sAMAccountName = email.split('@').first
+      au.description = a.psnal_cd
+      au.department = a.mst_blg_cd
+      au.sAMAccountName = email
       return au
     end
     ldap = Net::LDAP.new
@@ -32,9 +32,11 @@ class ActiveUser < ActiveLdap::Base
     if Padrino.env != :development && Padrino.env != :test
       self.find(:first, filter: {:sAMAccountName => name})
     else
+      a = User.find_by :name => name
+      return nil unless a
       au = MockActiveUser.new
-      au.description = '000000'
-      au.department = '10301000'
+      au.description = a.psnal_cd
+      au.department = a.mst_blg_cd
       au.sAMAccountName = name
       au
     end
