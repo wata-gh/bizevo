@@ -31,7 +31,7 @@
     </div>
 </h2>
 <div class="ui blue menu">
-    <% link_to url(:dashboard, :index, :mst_blg_cd => current_user.user.mst_blg_cd.strip, :month => params[:month]), :class => "item #{current_user.user.mst_blg_cd.strip == params[:mst_blg_cd] ? 'active' : ''}" do %>
+    <% link_to url(:dashboard, :index, :mst_blg_cd => '10301000', :month => params[:month]), :class => "item #{params[:mst_blg_cd] == '10301000' ? 'active' : ''}" do %>
         <i class="github alternate icon"></i> 技術推進
     <% end %>
     <% link_to url(:dashboard, :index, :mst_blg_cd => '10401000', :month => params[:month]), :class => "item #{params[:mst_blg_cd] == '10401000' ? 'active' : ''}" do %>
@@ -51,6 +51,12 @@
     <% end %>
     <% link_to url(:dashboard, :index, :mst_blg_cd => '10503000', :month => params[:month]), :class => "item #{params[:mst_blg_cd] == '10503000' ? 'active' : ''}" do %>
         <i class="shipping icon"></i> RSL
+    <% end %>
+    <% link_to url(:dashboard, :index, :mst_blg_cd => '10201000', :month => params[:month]), :class => "item #{params[:mst_blg_cd] == '10201000' ? 'active' : ''}" do %>
+        <i class="line chart icon"></i> 営業
+    <% end %>
+    <% link_to url(:dashboard, :index, :mst_blg_cd => '10202000', :month => params[:month]), :class => "item #{params[:mst_blg_cd] == '10202000' ? 'active' : ''}" do %>
+        <i class="game icon"></i> CD
     <% end %>
     <div class="right menu">
         <div class="item">
