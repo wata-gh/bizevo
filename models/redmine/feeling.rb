@@ -1,5 +1,6 @@
 module Redmine
   class Feeling < ActiveRecord::Base
+    include Filterable
     include Bizevo::Helpers::WikiHelper
     include ActionView::Helpers::DateHelper
     establish_connection configurations[:redmine]
@@ -31,13 +32,14 @@ module Redmine
         },
         :comments => self.comments_count == 0 ? [] : self.comments.order(:created_on).map {|c|
           c.me = self.me
-          comment = ''
           comment = c.comments_disp_html
+          u = ::User.find_by :name => c.user.mail.split('@')[0]
           {
             :user => {
-              :id        => c.user.id,
-              :firstname => c.user.firstname,
-              :lastname  => c.user.lastname,
+              :id             => c.user.id,
+              :firstname      => c.user.firstname,
+              :lastname       => c.user.lastname,
+              :thumbnail_path => u.present? ? u.get_thumbnail_path : '/images/noimage.png'
             },
             :comments => comment,
             :created_on => time_ago_in_words(c.created_on),
