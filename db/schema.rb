@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 14) do
+ActiveRecord::Schema.define(version: 16) do
 
   create_table "article_tags", id: false, force: true do |t|
     t.integer  "article_id"
@@ -68,6 +68,35 @@ ActiveRecord::Schema.define(version: 14) do
     t.string   "icon_path"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mst_blg_cd"
+    t.string   "full_name"
   end
+
+  create_table "worktimes", force: true do |t|
+    t.string   "psnal_cd",                   null: false
+    t.date     "date",                       null: false
+    t.string   "calendar",                   null: false
+    t.string   "absence",                    null: false
+    t.string   "work_class",                 null: false
+    t.string   "start",                      null: false
+    t.string   "start_mc",                   null: false
+    t.string   "end",                        null: false
+    t.string   "end_mc",                     null: false
+    t.string   "going_out",                  null: false
+    t.string   "going_out_mc",               null: false
+    t.string   "return",                     null: false
+    t.float    "worked_hours",    limit: 24, null: false
+    t.float    "l_worked_hours",  limit: 24, null: false
+    t.float    "h_worked_hours",  limit: 24, null: false
+    t.float    "hl_worked_hours", limit: 24, null: false
+    t.float    "tardy_hours",     limit: 24, null: false
+    t.float    "early_hours",     limit: 24, null: false
+    t.float    "private_hours",   limit: 24, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "worktimes", ["date"], name: "index_worktimes_on_date", using: :btree
+  add_index "worktimes", ["psnal_cd"], name: "index_worktimes_on_psnal_cd", using: :btree
 
 end

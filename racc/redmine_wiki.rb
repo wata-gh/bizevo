@@ -46,19 +46,13 @@ def parse(line)
     case line
     when /\A-([^-\r\n]+)-/
       @q.push([:LINE_THROUGH,$1])
-    when /\A-([^-].*)$/
-      @q.push([:ITEM_1,$1])
-    when /\A--([^-].*)$/
-      @q.push([:ITEM_2,$1])
-    when /\A---([^-].*)$/
-      @q.push([:ITEM_3,$1])
     when /\A\*([^\*\r\n]+)\*/
       @q.push([:BOLD,$1])
     when /\A_([^_\r\n]+)_/
       @q.push([:ITALIC,$1])
     when /\A\+([^\+\r\n]+)\+/
       @q.push([:UNDERLINE,$1])
-    when /\A\*([^\*].*)$/
+    when /\A\*([^\*]*)$/
       @q.push([:ITEM_1,$1])
     when /\A\*\*([^\*].*)$/
       @q.push([:ITEM_2,$1])

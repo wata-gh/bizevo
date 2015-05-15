@@ -1,7 +1,12 @@
 Bizevo::App.controllers :quotn do
 
   get :index do
-    @quotn = Quotation.order(:final_upd_date => :desc, :quotn_no => :desc, :quotn_ver_no => :desc).page(params[:page]).per(10)
+    @quotn = Quotation
+      .filter(params)
+      .references(:pcdc_contract, :maint_contract, :bulk_contract)
+      .joins(:sales_assoc, :updater, :belonging, :csc_cust)
+      .includes(:sales_assoc, :updater, :pcdc_contract, :maint_contract, :bulk_contract, :belonging, :csc_cust)
+      .order(:final_upd_date => :desc, :quotn_no => :desc, :quotn_ver_no => :desc).per(10)
     render 'quotn/home'
   end
 
