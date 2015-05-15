@@ -36,7 +36,11 @@
             <div ng-include="'components/sidebar/sidebar.html'"></div>
           </div>
         </div>
-        <div class="col-md-10 column am-fade-and-slide-right" ui-view></div>
+        <div class="col-md-10 column">
+          <div class="row clearfix">
+            <div class="col-md-12 column am-fade-and-slide-right" ui-view></div>
+          </div>
+        </div>
       </div>
       <hr />
       <footer>
@@ -71,6 +75,7 @@
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="bower_components/semantic-ui/dist/semantic.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -79,6 +84,7 @@
     <script src="app/main/main.controller.js"></script>
     <script src="app/top/top.controller.js"></script>
     <script src="app/info/info.controller.js"></script>
+    <script src="app/list/list.controller.js"></script>
     <script src="components/navbar/navbar.controller.js"></script>
     <script src="components/sidebar/sidebar.controller.js"></script>
     <script src="components/tdk/tdk.service.js"></script>

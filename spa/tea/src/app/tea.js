@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap'])
+angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'infinite-scroll'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('sample', {
@@ -21,7 +21,14 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
         templateUrl: 'app/info/info.html',
         controller: 'InfoCtrl',
         title: 'お知らせ'
-      });
+      })
+      .state('list', {
+        url: '/list',
+        templateUrl: 'app/list/list.html',
+        controller: 'ListCtrl',
+        title: '一覧'
+      })
+      ;
     $urlRouterProvider.otherwise('/');
   })
 ;

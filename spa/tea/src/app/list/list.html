@@ -1,0 +1,38 @@
+
+<div class="row clearfix" ng-hide="items.length">
+  <div class="jumbotron">
+    <p>{{'勉強会が見つかりませんでした >_<'}}</p>
+  </div>
+</div>
+
+<div infinite-scroll="loadMore()" infinite-scroll-disabled='!hasNext()' class="row clearfix">
+  <div ng-repeat="item in items" class="col-md-12 column">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row clearfix">
+          <div class="col-md-10 column">
+            {{item.title}}
+          </div>
+          <div class="col-md-2 column">
+            <div class="text-right">
+              <a ng-click="likeParty(item)">
+                <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
+              </a>
+              &nbsp; <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row clearfix">
+          <div class="col-md-3 column">
+            <img class="img-responsive" ng-src="{{item.image}}" />
+          </div>
+          <div class="col-md-9 column">
+            {{item.description}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
