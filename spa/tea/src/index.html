@@ -12,6 +12,7 @@
 
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
     <link rel="stylesheet" href="bower_components/semantic-ui/dist/semantic.css" />
     <!-- endbower -->
     <!-- endbuild -->
@@ -30,9 +31,19 @@
     <![endif]-->
 
     <div class="container">
+
+      <nav class="navbar navbar-default visible-xs-block visible-sm-block" bs-navbar>
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-template="components/sidebar/sidebar.aside.html" data-animation="am-fade-and-slide-left" data-placement="left" data-container="body" bs-aside>
+            <i class="list icon"></i>
+          </button>
+          <a class="navbar-brand" href="/">bizevo</a>
+        </div>
+      </nav>
+
       <div class="row clearfix">
         <div class="col-md-2 column">
-          <div class="bs-sidebar hidden-print" bs-affix>
+          <div class="bs-sidebar hidden-print visible-md-block visible-lg-block" bs-affix>
             <div ng-include="'components/sidebar/sidebar.html'"></div>
           </div>
         </div>
@@ -74,8 +85,8 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-    <script src="bower_components/semantic-ui/dist/semantic.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/semantic-ui/dist/semantic.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
