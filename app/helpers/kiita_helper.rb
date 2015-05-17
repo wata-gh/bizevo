@@ -20,9 +20,7 @@ module Bizevo
         ActiveRecord::Base.transaction do
           @article = Article.new(params[:article])
           @article.save!
-          p 'もげえええ'
           raise 'タグを入力してください。' unless params[:article_tag].present?
-          p 'もげえええ'
           save_new_tag params[:article_tag][:tag]
           params[:article_tag][:tag].each do |t|
             @article.article_tags.create! article_id: @article.id, tag: t
