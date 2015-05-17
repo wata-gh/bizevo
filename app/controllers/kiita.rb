@@ -13,10 +13,11 @@ Bizevo::App.controllers :kiita do
     render 'kiita/new'
   end
 
-  post :create do
+  post :new do
     begin
       save_article params
     rescue => e
+      p e
       flash.now[:error] = e.message
       return render 'kiita/new'
     end
@@ -36,6 +37,7 @@ Bizevo::App.controllers :kiita do
       ActiveRecord::Base.transaction do
         update_article params
         # 新規タグのinsert、削除タグの delete を行う
+        raise 'タグを入力してください。' unless params[:article_tag].present?
         save_new_tag params[:article_tag][:tag]
         update_article_tag params
       end
@@ -75,7 +77,9 @@ Bizevo::App.controllers :kiita do
     @title = 'my page'
     @user = current_user
     @articles = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ?", @user.id)
-                  .order 'articles.created_at DESC'
+                  .limit(2).order 'articles.created_at DESC'
+    @popular_as = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ? and likes > ?", @user.id, 0)
+                  .limit(2).order 'articles.likes DESC'
     render 'kiita/mypage'
   end
 
@@ -102,4 +106,16 @@ Bizevo::App.controllers :kiita do
     render 'kiita/tag'
   end
 
+  get :profile, :with => :user_name do
+    @user = User.find_by :name => params[:user_name]
+    @articles = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ?", @user.id)
+                  .limit(3).order 'articles.created_at DESC'
+    @popular_as = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ? and likes > ?", @user.id, 0)
+                  .limit(2).order 'articles.likes DESC'
+    render 'kiita/profile'
+  end
+
+  post :search do
+    halt 404
+  end
 end

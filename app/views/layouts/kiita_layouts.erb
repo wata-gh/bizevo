@@ -5,31 +5,65 @@
   <script src="https://code.jquery.com/jquery-2.1.1.js"></script>
   <%= stylesheet_link_tag 'semantic', 'kiita', 'github', 'select2-4.0.0/select2' %>
   <%= javascript_include_tag 'semantic' %>
+  <style>
+    div.ui.icon.input {
+      margin-top: 3px;
+      margin-left: 3px;
+    }
+  </style>
 </head>
-<body class="background">
-  <div>
-    <section class="layout_column">
-      <div class="ui vertical labeled icon menu">
-        <% link_to url(:index), {class: "teal item"} do %>
-          <i class="dashboard icon"></i>
-          dashboard
-        <% end %>
-        <% link_to url(:kiita, :index), {class: "teal item"} do %>
-          <i class="home icon"></i>
-          kiita top
-        <% end %>
-        <% link_to url(:kiita, :new), {class: "teal item"} do %>
-          <i class="add icon"></i>
-          new post
-        <% end %>
-        <% link_to url(:kiita, :mypage), {class: "teal item"} do %>
-          <i class="child icon"></i>
-          my page
+<body>
+  <div class="ui fixed main menu">
+    <div class="container">
+      <div class="title item">
+        <% link_to url(:index)  do %>
+          <b>bizevo</b>
         <% end %>
       </div>
-    </section>
-    <section class="include layout_column column8">
-      <%= yield %>
-    </section>
+      <span class="ui search">
+        <div class="ui icon input">
+          <% form_tag url(:kiita, :search) do |f| %>
+          <input name="searchw" class="prompt" type="text" placeholder="input keyword...">
+          <% end %>
+          <i class="search icon"></i>
+        </div>
+        <div class="results"></div>
+      </span>
+    </div>
   </div>
+  <div class="pusher">
+    <div class="main container">
+      <div class="ui grid">
+        <div class="row">
+          <div class="two wide column">
+            <div class="ui vertical labeled icon menu">
+              <% link_to url(:kiita, :index), class: "teal item" do %>
+                <i class="home icon"></i>
+                kiita top
+              <% end %>
+              <% link_to url(:kiita, :new), class: "teal item" do %>
+                <i class="add icon"></i>
+                new post
+              <% end %>
+              <% link_to url(:kiita, :mypage), class: "teal item" do %>
+                <i class="child icon"></i>
+                my page
+              <% end %>
+            </div>
+          </div>
+          <div class="fourteen wide column">
+          <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $("a.item").each(function() {
+      if ($(this).attr('href') == location.pathname) {
+        $(this).addClass("active");
+      }
+    });
+  </script>
 </body>
+</html>

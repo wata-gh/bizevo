@@ -1,6 +1,22 @@
 <%= javascript_include_tag 'select2.4.0.0/select2.js' %>
+
+<style>
+  li {
+    margin: 0px;
+  }
+</style>
+
+<% if flash[:error].present? %>
+<div class="ui icon error message">
+  <i class="attention circle icon"></i>
+  <div class="content">
+    <%= flash_tag :error %>
+  </div>
+</div>
+<% end %>
+
 <div>
-  <% form_for :article, url(:kiita, :create), :name => 'article_form' do |f| %>
+  <% form_for :article, url(:kiita, :new), :name => 'article_form', :class => 'ui form' do |f| %>
     <%= partial 'kiita/form_article', :locals => { :f => f } %>
   <% end %>
 </div>

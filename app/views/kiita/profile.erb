@@ -1,60 +1,58 @@
 <div class="ui items">
   <div class="item">
     <div class="ui small image">
-      <img src="<%= @user.user.get_image_path %>">
+      <img src="<%= @user.get_image_path %>">
     </div>
     <div class="content">
       <a class="header"><%= @user.name %></a>
       <div class="description">
-        <span><%= @user.user.contribution %> Contribution</span>
+        <span><%= @user.contribution %> Contribution</span>
       </div>
-      <%= link_to 'edit profile', url(:kiita, :edit_profile) %>
     </div>
   </div>
 </div>
 
-
 <div class="ui stackable two column grid">
   <div class="column">
-  <% unless @articles.empty? %>
-  <% @articles.each do |at| %>
-  <div class="ui feed">
-    <div class="event">
-      <div class="label">
-        <i class="pencil icon"></i>
-      </div>
-      <div class="content">
-        <div class="summary">
-          <% link_to url(:kiita, :view, at.id) do %>
-            <%= at.title %>
-          <% end %>
-           を投稿しました。
-          <div class="date">
-            <%= at.get_created_at_ago %> days ago
-          </div>
+    <% unless @articles.empty? %>
+    <% @articles.each do |at| %>
+    <div class="ui feed">
+      <div class="event">
+        <div class="label">
+          <i class="pencil icon"></i>
         </div>
-        <div class="extra text">
-          <i class="tags icon"></i>
-          <% if at.article_tags.present? %>
-            <% at.article_tags.each do |tag| %>
-              <% link_to url(:kiita, :tag, tag.tag) do %>
-                <div id="tag" class="ui teal label">
-                  <%= tag.tag %>
-                </div>
+        <div class="content">
+          <div class="summary">
+            <% link_to url(:kiita, :view, at.id) do %>
+              <%= at.title %>
+            <% end %>
+             を投稿しました。
+            <div class="date">
+              <%= at.get_created_at_ago %> days ago
+            </div>
+          </div>
+          <div class="extra text">
+            <i class="tags icon"></i>
+            <% if at.article_tags.present? %>
+              <% at.article_tags.each do |tag| %>
+                <% link_to url(:kiita, :tag, tag.tag) do %>
+                  <div id="tag" class="ui teal label">
+                    <%= tag.tag %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon red"></i> <%= at.likes %> Likes
-          </a>
+          </div>
+          <div class="meta">
+            <a class="like">
+              <i class="like icon red"></i> <%= at.likes %> Likes
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <% end %>
-  <% end %>
+    <% end %>
+    <% end %>
   </div>
   <div class="column">
     <% unless @popular_as.empty? %>
@@ -82,7 +80,6 @@
           </div>
         <% end %>
       </div>
-    </div>
     <% end %>
   </div>
 </div>

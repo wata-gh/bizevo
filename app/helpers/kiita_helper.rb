@@ -11,7 +11,6 @@ module Bizevo
 
       def save_new_tag params
         #未登録タグの登録
-        raise 'タグを入力してください。' if params.empty?
         params.each do |tag|
           Tag.find_or_create_by(:tag => tag)
         end
@@ -19,7 +18,11 @@ module Bizevo
 
       def save_article params
         ActiveRecord::Base.transaction do
-          @article = Article.create! params[:article]
+          @article = Article.new(params[:article])
+          @article.save!
+          p 'もげえええ'
+          raise 'タグを入力してください。' unless params[:article_tag].present?
+          p 'もげえええ'
           save_new_tag params[:article_tag][:tag]
           params[:article_tag][:tag].each do |t|
             @article.article_tags.create! article_id: @article.id, tag: t
@@ -49,9 +52,6 @@ module Bizevo
         article.destroy!
       end
 
-      def article_params params
-        params.require(:article_tag).permit(:tag)
-      end
     end
 
     helpers KiitaHelper
