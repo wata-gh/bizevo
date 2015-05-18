@@ -5,7 +5,6 @@
   <%= flash_tag :success, :class => "ui green message" %>
 </div>
 
-<% unless @articles.empty? %>
 <% @articles.each do |at| %>
 <div class="ui feed">
   <div class="event">
@@ -14,12 +13,20 @@
     </div>
     <div class="content">
       <div class="summary">
-        <img src="<%= at.user.get_thumbnail_path %>" />
+        <% if current_user.id == at.user.id %>
+          <% link_to url(:kiita, :mypage) do %>
+            <img src="<%= at.user.get_thumbnail_path %>" />
+          <% end %>
+        <% else %>
+          <% link_to url(:kiita, :profile, at.user.name) do %>
+            <img src="<%= at.user.get_thumbnail_path %>" />
+          <% end %>
+        <% end %>
         <% link_to url(:kiita, :view, at.id) do %>
           <%= at.title %>
         <% end %>
         <div class="date">
-          <%= at.get_created_at_ago %> days ago
+          <%= time_ago_in_words at.created_at %>前
         </div>
       </div>
       <div class="extra text">
@@ -27,7 +34,7 @@
         <% if at.article_tags.present? %>
           <% at.article_tags.each do |tag| %>
             <% link_to url(:kiita, :tag, tag.tag) do %>
-              <div id="tag" class="ui label">
+              <div id="tag" class="ui teal label">
                 <%= tag.tag %>
               </div>
             <% end %>
@@ -36,13 +43,12 @@
       </div>
       <div class="meta">
         <a class="like">
-          <i class="like icon"></i> <%= at.likes %> Likes
+          <i class="like icon red"></i> <%= at.likes %> Likes
         </a>
       </div>
     </div>
   </div>
 </div>
-<% end %>
 <% end %>
 
 <section class="pager">

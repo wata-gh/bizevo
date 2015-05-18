@@ -1,0 +1,82 @@
+<div class="ui items">
+  <div class="item">
+    <div class="ui small image">
+      <img src="<%= @user.get_image_path %>">
+    </div>
+    <div class="content">
+      <a class="header"><%= @user.name %></a>
+      <div class="description">
+        <span><%= @user.contribution %> Contribution</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui stackable two column grid">
+  <div class="column">
+    <% @articles.each do |at| %>
+    <div class="ui feed">
+      <div class="event">
+        <div class="label">
+          <i class="pencil icon"></i>
+        </div>
+        <div class="content">
+          <div class="summary">
+            <% link_to url(:kiita, :view, at.id) do %>
+              <%= at.title %>
+            <% end %>
+             を投稿しました。
+            <div class="date">
+              <%= time_ago_in_words at.created_at %>前
+            </div>
+          </div>
+          <div class="extra text">
+            <i class="tags icon"></i>
+            <% if at.article_tags.present? %>
+              <% at.article_tags.each do |tag| %>
+                <% link_to url(:kiita, :tag, tag.tag) do %>
+                  <div id="tag" class="ui teal label">
+                    <%= tag.tag %>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="meta">
+            <a class="like">
+              <i class="like icon red"></i> <%= at.likes %> Likes
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <% if @popular_as.present? %>
+  <div class="column">
+    <div class="ui top attached tabular menu">
+      <div class="active item">人気の投稿</div>
+    </div>
+    <div class="ui bottom attached active tab segment">
+      <div class="ui divided items">
+        <% @popular_as.each_with_index do |pa,i| %>
+          <div class="item">
+            <a class="ui ribbon teal label"><i class="like icon"></i> <%= pa.likes %></a>
+            <p>
+            <%= link_to pa.title, url(:kiita, :view, pa.id) %>
+            </p>
+            <i class="tags icon"></i>
+            <% pa.article_tags.each do |tag| %>
+              <% link_to url(:kiita, :tag, tag.tag) do %>
+                <div id="tag" class="ui teal label">
+                  <%= tag.tag %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

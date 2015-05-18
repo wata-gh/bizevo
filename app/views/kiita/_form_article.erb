@@ -1,48 +1,39 @@
-<div class="errors">
-  <%= flash_tag :error, :class => "ui red message" %>
+<div class="field">
+  <div class="required field">
+    <label>title</label>
+    <div class="ui icon input">
+      <%= f.text_field :title, :placeholder => 'title' %>
+    </div>
+  </div>
+  <div class="required two fields">
+    <div class="field">
+      <label>tag</label>
+      <% if @article && !@article.article_tags.empty? %>
+          <% @article.article_tags.each do |tag| %>
+            <div class="tags" style="display: none;"><%= tag.tag %></div>
+          <% end %>
+      <% end %>
+      <% fields_for :article_tag do |ftag| %>
+          <%= ftag.select :tag, multiple: "multiple" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="required field">
+      <label>text</label>
+      <%= f.text_area :article %>
+    </div>
+    <div class="field">
+      <label>preview</label>
+      <%= text_area_tag :preview %>
+    </div>
+  </div>
+  <%= f.submit "submit", :class => 'ui right floated submit button' %>
+  <%= f.hidden_field :id %>
 </div>
 
-<div class="title_area form_content">
-  <%= f.text_field :title, :class => 'title_input form_input_item', :placeholder => 'タイトル' %>
-</div>
-
-<% if @article && !@article.article_tags.empty? %>
-    <% @article.article_tags.each do |tag| %>
-      <div class="tags" style="display: none;"><%= tag.tag %></div>
-    <% end %>
-<% end %>
-<% fields_for :article_tag do |ftag| %>
-  <div class="tag_area form_content">
-    <%= ftag.select :tag, multiple: "multiple" %>
-  </div>
-<% end %>
-
-<div class="form_table form_content">
-  <div class="table_block">
-    <%= f.text_area :article, :class => 'form_input_item' %>
-  </div>
-  <div class="table_block">
-    <%= text_area_tag :preview, :class => 'form_input_item' %>
-  </div>
-</div>
-
-<%= f.hidden_field :id %>
-<%= f.hidden_field :user_id, {value: current_user.id} %>
-
-<section class="submit_section">
-  <div class="ui secondary button">Save</div>
-</section>
-<style>
-  li {
-    margin: 0px;
-  }
-</style>
 <script>
 $(function() {
-  $('.submit_section').on('click', function() {
-    $('*[name=article_form]').submit();
-  });
-
   $data = [];
   $.each($('.tags'), function() {
     $data.push({

@@ -1,79 +1,16 @@
-.background {
-  background-color: FloralWhite;
+.container {
+  width: 980px;
+  margin: 0px auto;
 }
-
-textarea {
- width: 100%;
- min-height: 440px;
- font-size: 1em;
-}
-
-.form_section {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.form_content {
-  margin-top: 10px;
-}
-
-.form_input_item {
-  border-top-right-radius: 3px;
-  border-top-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border: 1px solid #bfbfbf;
-}
-
-.form_area {
-  width: 100%
-}
-
-.title_area {
-  width: 100%;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.title_input {
-  width: 100%;
-  height: 45px;
-  padding: 5px;
-  box-sizing: border-box;
-  font-size: 1.5em;
-}
-
-.tag_area {
-  width: 50%;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.tag_input {
-  width: 100%;
-  height: 30px;
-  padding: 5px;
-  box-sizing: border-box;
-  font-size: 1em;
-}
-
-.form_table {
-  display: table;
-  width: 100%;
-}
-
-.table_block {
-  vertical-align: top;
-  display: table-cell;
-  padding: 5px;
-  width: 50%;
-}
-
-.submit_section {
-  text-align: right;
-}
-
-.mark_down_area {
+.main.container {
+  background-color: #FFFFFF;
+  margin: 0em auto;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.05);
+  border-left: 1px solid #DDDDDD;
+  border-right: 1px solid #DDDDDD;
+  border-bottom: 1px solid #DDDDDD;
+  padding: 70px 2em 7em;
+  z-index: 1;
 }
 
 .view_area {
@@ -88,59 +25,6 @@ textarea {
   padding: 10px;
 }
 
-.errors {
-  padding-left: 5px;
-}
-
-.info {
-  margin-bottom: 10px;
-}
-
-.success {
-  margin-bottom: 10px;
-}
-
 #tag {
   text-transform: none !important;
-}
-
-// layouts
-.table_ui {
-  display: table;
-  width: 700px;
-}
-
-.table_block_ui {
-  vertical-align: top;
-  display: table-cell;
-  padding: 5px;
-}
-
-.column2 {
-  width: 20%;
-}
-
-.column8 {
-  width: 80%;
-}
-
-.include {
-  margin-left: 20px;
-}
-
-.layout_column {
-  float: left;
-}
-
-.ui_position_parent {
-  position: relative;
-}
-
-.ui_delete_right {
-  position: relative;
-  left: 475px;
-}
-
-.pager {
-  margin-top: 1rem;
 }

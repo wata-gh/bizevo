@@ -3,49 +3,78 @@
   cursor: pointer;
 }
 </style>
-<section class="background">
-  <section class="view_area">
-    <h1><%= @article.title %></h1>
-    <h5>
-      <img src="<%= @user.get_thumbnail_path %>" width="48" height="48" />
-      <%= @user.name %> が <%= @article.get_created_at %> に投稿しました。
-      <% if @article.mine? current_user.id %>
-        <% link_to url(:kiita,:update, @article.id) do  %>
-          <div class="small ui blue button">
-            edit
-        </div>
-        <% end %>
-        <% form_tag "/kiita/destroy/#{@article.id}", :method => :delete, :style => "display: inline" do %>
-          <%= submit_tag "delete", :class => 'tiny ui red button'%>
-        <% end %>
-      <% end %>
-    </h5>
-    <h6>
-      <a class="like">
-        <i class="like icon"></i> <%= @article.likes %> Likes
-      </a>
-    </h6>
-  </section>
 
-  <section class="view_area">
+<div class="ui teal segment">
+  <h1 class="ui header"><%= @article.title %></h1>
+  <div class="ui items">
+    <div class="item">
+      <div class="ui tiny image">
+        <img src="<%= @user.get_image_path %>" />
+      </div>
+      <div class="middle aligned content">
+        <div class="ui item content"><%= @user.name %> が <%= @article.get_created_at %> に投稿しました。</div>
+        <% if @article.mine? current_user.id %>
+          <% link_to url(:kiita,:update, @article.id) do  %>
+            <div class="small ui blue button">
+              edit
+          </div>
+          <% end %>
+          <% form_tag "/kiita/destroy/#{@article.id}", :method => :delete, :id => "delete_form", :style => "display: inline" do %>
+            <span id="delete" class="tiny ui red button">delete</span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <a class="like">
+      <i class="like icon red"></i> <%= @article.likes %> Likes
+    </a>
+  </div>
+</div>
+
+<div class="ui teal compact segment">
   <% if @article && @article.article_tags.present? %>
     <i class="tags icon"></i>
     <% @article.article_tags.each do |tag| %>
-      <a id="tag" class="ui label">
+      <a id="tag" class="ui teal label">
         <%= tag.tag %>
       </a>
     <% end %>
   <% end %>
-  </section>
+</div>
 
-  <section class="view_area">
-    <%= @md_text.html_safe %>
-  </section>
-</section>
+<div class="ui teal segment">
+  <%= @md_text.html_safe %>
+</div>
+
+<div class="ui small modal">
+  <i class="close icon"></i>
+  <div class="content">
+    <div class="description">
+      <div class="ui header">投稿を削除してよろしいでしょうか。</div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui black button">
+      No
+    </div>
+    <div id="delete_yes" class="ui positive right labeled icon button">
+      Yes
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+
 <script>
 $(function() {
+  $('#delete').click(function() {
+    $('.ui.modal').modal('show');
+  });
+  $('#delete_yes').click(function() {
+    $('#delete_form').submit();
+  });
+
   $like = $("a.like");
-  $icon = $('<i class="like icon"></i>');
+  $icon = $('<i class="like icon red"></i>');
 
   $like.click(function(){
     $.ajax({

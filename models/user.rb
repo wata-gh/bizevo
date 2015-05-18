@@ -18,5 +18,10 @@ class User < ActiveRecord::Base
     self.icon_path ? "http://#{S3_CONFIG['host']}/thumbnail/#{self.icon_path}.png" : "/images/noimage.png"
   end
 
+  def contribution
+    a = Article.group(:user_id).having(:user_id => self.id).count
+    a[self.id]
+  end
+
   has_many :articles
 end
