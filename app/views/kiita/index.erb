@@ -5,7 +5,6 @@
   <%= flash_tag :success, :class => "ui green message" %>
 </div>
 
-<% unless @articles.empty? %>
 <% @articles.each do |at| %>
 <div class="ui feed">
   <div class="event">
@@ -27,7 +26,7 @@
           <%= at.title %>
         <% end %>
         <div class="date">
-          <%= at.get_created_at_ago %> days ago
+          <%= time_ago_in_words at.created_at %>前
         </div>
       </div>
       <div class="extra text">
@@ -50,7 +49,6 @@
     </div>
   </div>
 </div>
-<% end %>
 <% end %>
 
 <section class="pager">

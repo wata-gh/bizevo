@@ -16,7 +16,6 @@
 
 <div class="ui stackable two column grid">
   <div class="column">
-  <% unless @articles.empty? %>
   <% @articles.each do |at| %>
   <div class="ui feed">
     <div class="event">
@@ -30,7 +29,7 @@
           <% end %>
            を投稿しました。
           <div class="date">
-            <%= at.get_created_at_ago %> days ago
+            <%= time_ago_in_words at.created_at %>前
           </div>
         </div>
         <div class="extra text">
@@ -54,10 +53,8 @@
     </div>
   </div>
   <% end %>
-  <% end %>
   </div>
   <div class="column">
-    <% unless @popular_as.empty? %>
     <div class="ui top attached tabular menu">
       <div class="active item">人気の投稿</div>
     </div>
@@ -67,9 +64,7 @@
           <div class="item">
             <a class="ui ribbon teal label"><i class="like icon"></i> <%= pa.likes %></a>
             <p>
-            <% link_to url(:kiita, :view, pa.id) do %>
-              <%= pa.title %>
-            <% end %>
+            <% link_to pa.title, url(:kiita, :view, pa.id) %>
             </p>
             <i class="tags icon"></i>
             <% pa.article_tags.each do |tag| %>
@@ -83,6 +78,5 @@
         <% end %>
       </div>
     </div>
-    <% end %>
   </div>
 </div>

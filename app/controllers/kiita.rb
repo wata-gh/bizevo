@@ -14,6 +14,7 @@ Bizevo::App.controllers :kiita do
   end
 
   post :new do
+    params[:article][:user_id] = current_user.id
     begin
       save_article params
     rescue => e
@@ -32,6 +33,7 @@ Bizevo::App.controllers :kiita do
   end
 
   post :update do
+    params[:article][:user_id] = current_user.id
     begin
       ActiveRecord::Base.transaction do
         update_article params
@@ -75,9 +77,9 @@ Bizevo::App.controllers :kiita do
     @title = 'my page'
     @user = current_user
     @articles = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ?", @user.id)
-                  .limit(2).order 'articles.created_at DESC'
+                  .limit(2).order :created_at => :desc
     @popular_as = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ? and likes > ?", @user.id, 0)
-                  .limit(2).order 'articles.likes DESC'
+                  .limit(2).order :likes => :desc
     render 'kiita/mypage'
   end
 
@@ -107,9 +109,9 @@ Bizevo::App.controllers :kiita do
   get :profile, :with => :user_name do
     @user = User.find_by :name => params[:user_name]
     @articles = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ?", @user.id)
-                  .limit(3).order 'articles.created_at DESC'
+                  .limit(3).order :created_at => :desc
     @popular_as = Article.eager_load(:article_tags).includes(:article_tags).where("user_id = ? and likes > ?", @user.id, 0)
-                  .limit(2).order 'articles.likes DESC'
+                  .limit(2).order :likes => :desc
     render 'kiita/profile'
   end
 

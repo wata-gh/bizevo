@@ -59,11 +59,13 @@
     </div>
   </div>
   <script type="text/javascript">
-    $("a.item").each(function() {
-      if ($(this).attr('href') == location.pathname) {
-        $(this).addClass("active");
-      }
-    });
+    $(function() {
+      $("a.item").each(function() {
+        if ($(this).attr('href') == location.pathname) {
+          $(this).addClass("active");
+        }
+      });
+    })
   </script>
 </body>
 </html>

@@ -6,7 +6,11 @@ Bizevo::App.controllers :kiita_api do
 
   get :increment_like, :with => :id do
     a = increment_like params[:id]
-    suc_res :likes => a.likes if a
+    if a
+      suc_res :likes => a.likes
+    else
+      err_res
+    end
   end
 
 end
