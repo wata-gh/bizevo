@@ -45,25 +45,47 @@ angular.module('tea')
          *    いいねしたかフラグ
          */
         var img = 'https://pbs.twimg.com/profile_images/2579542348/l2b371d8r57tu6m4wu7i_400x400.jpeg';
-        $scope.items.push({
-          id: i,
-          image: img,
-          title: 'タイトル' + i,
-          description: 'ほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげ' + "\n" + 'ふがふがふがふがふがふがふがふがふが',
-          likes: {
+        var person = {id: 999, name: 'たろう', image: img};
+        var likes = {
             count: 1,
             isLiked: i % 2 == 0 ? false : true,
             liked: [
-              {id: 999, name: 'たろう', image: img},
+              person,
             ],
-          },
+          };
+        $scope.items.push({
+          id: 123,
+          image: img,
+          title: 'タイトル' + i,
+          description: 'ほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげほげ' + "\n" + 'ふがふがふがふがふがふがふがふがふが',
+          likes: likes,
           tags: [
            'Java', 'Ruby', 'AngularJS'
           ],
+          dates: '2009/08/11 08:14:45',
+          venue: '6F研修室',
+          reseratin: 'http://www.google.com/',
+          attendees: {
+            count: 10,
+            isAttended: i % 2 == 0 ? false : true,
+            attended: [
+              person,
+            ],
+          },
+          comments: {
+            count: 10,
+            items: [
+              {
+                comment: "こめんと\n改行\nこめんと",
+                auther: person,
+                date: '2009/08/11 08:14:45',
+                likes: likes,
+              }
+            ]
+          }
         });
       }
       _hasNext = $scope.items.length < 300;
-
     };
     $scope.loadMore();
     $scope.loadMore();

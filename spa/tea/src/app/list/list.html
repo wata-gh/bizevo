@@ -10,10 +10,10 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <div class="row clearfix">
-          <div class="col-md-10 column">
-            {{item.title}}
+          <div class="col-md-9 column">
+            <a ui-sref="detail({id: item.id})">{{item.title}}</a>
           </div>
-          <div class="col-md-2 column">
+          <div class="col-md-3 column">
             <div class="text-right">
               <a ng-click="likeParty(item)">
                 <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
@@ -22,6 +22,13 @@
             </div>
           </div>
         </div>
+
+      <div class="row clearfix">
+        <div class="col-md-12 column">
+          <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>
+        </div>
+      </div>
+
       </div>
       <div class="panel-body">
         <div class="row clearfix">
@@ -31,6 +38,7 @@
           <div class="col-md-9 column">
             {{item.description}}
           </div>
+
         </div>
       </div>
     </div>
