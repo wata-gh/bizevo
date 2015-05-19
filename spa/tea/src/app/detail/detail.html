@@ -1,0 +1,106 @@
+<div class="row clearfix">
+  <div class="col-md-12 column">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row clearfix">
+          <div class="col-md-9 column">
+            <h2>{{item.title}}</h2>
+          </div>
+          <div class="col-md-3 column">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <small>
+                  更新日：{{item.update}}
+                </small> 
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-xs" ng-click="likeParty(item)" ng-class="{'btn-default': item.likes.is_liked, 'btn-primary': !item.likes.is_liked}">
+                    <small>いいね！<span ng-show="item.likes.is_liked">を解除</span></small>
+                  </button>
+                  &nbsp;
+                  <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(item)">
+                    <i class="icon heart" ng-class="{empty: !item.likes.is_liked}"></i>{{item.likes.count}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row clearfix">
+          <div class="col-md-3 column">
+            <img class="img-responsive center-block" ng-src="{{item.image}}" />
+          </div>
+          <div class="col-md-9 column">
+            {{item.description}}
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <dl class="dl-horizontal">
+              <dt>主催</dt><dd>{{item.owner.name}}</dd>
+              <dt>日時</dt><dd>{{item.date}}</dd>
+              <dt>会場</dt><dd>{{item.venue}}</dd>
+              <dt>参加者 / 定員</dt>
+              <dd>
+                <strong>{{item.attends.count}}</strong><small>人</small>
+                /
+                <span ng-switch on="item.capacity">
+                  <span ng-switch-when="-1">上限なし</span>
+                  <span ng-switch-default>
+                    <strong>{{item.capacity}}</strong><small>人</small>
+                  </span>
+                </span>
+              </dd>
+              <dd>
+                <button type="button" class="btn btn-xs btn-default" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="attended_modal(item)">
+                  <i class="icon users"></i>参加者一覧
+                </button>
+              </dd>
+              <dt>URL</dt>
+              <dd>
+                <a target="_blank" ng-show="item.reseration" ng-href="{{item.reseration}}">{{item.reseration}}</a>
+                <span ng-hide="item.reseration"> - </span>
+              </dd>
+              <dt ng-show="item.attaches.attached.length">資料</dt>
+              <dd ng-repeat="f in item.attaches.attached">
+                <a target="_blank" ng-href="{{f.link}}">{{f.file_name}}</a>
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <div>
+              <button type="button" class="btn btn-block btn-default" ng-show="item.attends.is_attended" ng-click="leave_confirm.confirm()">
+                  参加を取りやめる
+              </button>
+            </div>
+            <div>
+              <button type="button" class="btn btn-block btn-primary" ng-hide="item.attends.is_attended" ng-click="attend_confirm.confirm()">
+                  この勉強会に参加する
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>

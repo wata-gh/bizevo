@@ -28,6 +28,12 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
         controller: 'ListCtrl',
         title: '一覧'
       })
+      .state('detail', {
+        url: '/detail/{id:int}',
+        templateUrl: 'app/detail/detail.html',
+        controller: 'DetailCtrl',
+        title: '詳細'
+      })
       ;
     $urlRouterProvider.otherwise('/');
   })
