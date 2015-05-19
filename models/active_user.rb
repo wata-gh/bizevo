@@ -17,6 +17,7 @@ class ActiveUser < ActiveLdap::Base
     ldap.auth "ACTIVEWORK\\#{email}", pass
     if ldap.bind
       au = self.find_user email
+      return nil unless au
       u = User.where(:name => au.sAMAccountName).first_or_initialize
       u.name = au.sAMAccountName
       u.psnal_cd = au.description
