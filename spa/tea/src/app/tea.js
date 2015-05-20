@@ -37,4 +37,37 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
       ;
     $urlRouterProvider.otherwise('/');
   })
-;
+  .config(function($httpProvider) {
+    $httpProvider.interceptors.push(function($q, $injector) {
+      var loadingService = null;
+      var getService = function() {
+        if (!loadingService) {
+          loadingService = $injector.get('loadingService');
+        }
+        return loadingService;
+      };
+      var interceptor =  {
+        request: function(config) {
+          getService().start();
+          return config;
+        },
+        requestError: function(rejection) {
+          getService().end().then(function(){
+            return getService().error(rejection.status);
+          });
+          return $q.reject(rejection);
+        },
+        response: function(response) {
+          getService().end();
+          return response;
+        },
+        responseError: function(rejection) {
+          getService().end().then(function(){
+            return getService().error(rejection.status);
+          });
+          return $q.reject(rejection);
+        },
+      };
+      return interceptor;
+    });
+  });
