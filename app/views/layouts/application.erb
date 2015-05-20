@@ -50,7 +50,6 @@
     <% if flash[:error].present? %>
         <div class="ui negative icon message">
             <i class="warning icon"></i>
-            <i class="close icon"></i>
             <div class="content">
                 <div class="header">
                     <%= flash[:error] %>
@@ -61,7 +60,6 @@
     <% if flash[:success].present? %>
         <div class="ui positive icon message">
             <i class="checkmark icon"></i>
-            <i class="close icon"></i>
             <div class="content">
                 <div class="header">
                     <%= flash[:success] %>

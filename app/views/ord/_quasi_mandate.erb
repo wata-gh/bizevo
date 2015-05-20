@@ -1,0 +1,191 @@
+<div class="row">
+    <div class="sixteen wide column">
+        <div class="ui accordion">
+            <div class="active title">
+                <i class="dropdown icon"></i>
+                見積情報（準委任・派遣）
+            </div>
+            <div class="active content">
+                <table class="ui very basic very compact table">
+                    <tbody>
+                    <tr>
+                        <td class="title">作業完了日</td>
+                        <td><%= @ord.estimate_quasi_mandate.work_completion_date %></td>
+                        <td class="title">請求締日</td>
+                        <td><%= @ord.estimate_quasi_mandate.closing_date %> <%= @ord.estimate_quasi_mandate.closing_words %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">支払日</td>
+                        <td><%= @ord.estimate_quasi_mandate.payday %></td>
+                        <td class="title">見積有効期限</td>
+                        <td><%= @ord.estimate_quasi_mandate.estimate_expiration_date %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">見積前提条件及び作業内容</td>
+                        <td colspan="3"><%= simple_format(h(@ord.estimate_quasi_mandate.estimate_precondition_word)) %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">作業指示</td>
+                        <td colspan="3"><%= @ord.estimate_quasi_mandate.instruction %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">ご請求方法</td>
+                        <td colspan="3"><%= @ord.estimate_quasi_mandate.billing_method %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">契約形態</td>
+                        <td colspan="3"><%= @ord.estimate_quasi_mandate.contract_form %></td>
+                    </tr>
+                    <tr>
+                        <td>契約形態</td>
+                        <td>作業体制・月額単価</td>
+                        <td>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        氏名
+                                    </th>
+                                    <th>
+                                        人月単価
+                                    </th>
+                                    <th>
+
+                                        契約期間
+                                    </th>
+                                    <th>
+
+                                        契約人月
+                                    </th>
+                                    <th>
+
+                                        契約金額
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @ord.estimate_quasi_mandate_personnels.each do |p| %>
+                                <tr>
+                                    <td><%= p.psnl_cd %></td>
+                                    <td><%= p.unit_price.jpy_comma %></td>
+                                    <td><%= p.contract_term_from %>〜<%= p.contract_term_to %></td>
+                                    <td><%= p.man_month_contract %></td>
+                                    <td><%= p.total_cost.jpy_comma %></td>
+                                </tr>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>契約形態</td>
+                        <td>加算減算調整料</td>
+                        <td>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        氏名
+                                    </th>
+                                    <th>
+                                        加算
+                                        精算時間
+                                    </th>
+                                    <th>
+
+                                        加算
+                                        精算金額
+                                    </th>
+                                    <th>
+
+                                        減算
+                                        精算時間
+                                    </th>
+                                    <th>
+
+                                        減算
+                                        精算金額
+
+                                    </th>
+                                    <th>
+                                        加算・減算
+                                        調整単位
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @ord.estimate_quasi_mandate_personnels.each do |p| %>
+                                    <tr>
+                                        <td><%= p.psnl_cd %></td>
+                                        <td><%= p.nml_add_time %></td>
+                                        <td><%= p.nml_add_amount.jpy_comma %></td>
+                                        <td><%= p.nml_del_time %></td>
+                                        <td><%= p.nml_del_amount %></td>
+                                        <td><%= p.nml_adjust_unit_cd %></td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>契約形態</td>
+                        <td>初月入場時契約時間</td>
+                        <td>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        氏名
+                                    </th>
+                                    <th>
+                                        初月
+                                        人月単価
+                                    </th>
+                                    <th>
+                                        加算
+                                        精算時間
+                                    </th>
+                                    <th>
+                                        加算
+                                        精算金額
+                                    </th>
+                                    <th>
+                                        減算
+                                        精算時間
+                                    </th>
+                                    <th>
+                                        減算
+                                        精算金額
+                                    </th>
+                                    <th>
+                                        加算・減算
+                                        調整単位 </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @ord.estimate_quasi_mandate_personnels.each do |p| %>
+                                    <tr>
+                                        <td><%= p.psnl_cd %></td>
+                                        <td><%= p.fst_unit_price %></td>
+                                        <td><%= p.fst_add_time %></td>
+                                        <td><%= p.fst_add_amount %></td>
+                                        <td><%= p.fst_del_time %></td>
+                                        <td><%= p.fst_del_amount %></td>
+                                        <td><%= p.fst_adjust_unit_cd %></td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title collapsing">その他見積付帯条件</td>
+                        <td colspan="3"><%= simple_format(h(@ord.estimate_quasi_mandate.estimate_incidental_condition)) %></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

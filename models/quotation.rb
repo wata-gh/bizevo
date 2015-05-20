@@ -44,6 +44,11 @@ class Quotation < ActiveRecord::Base
     .references(:project, :csc_cust, :assign_pmbrs)
     .order(:main_group_mst_blg_cd, :pcu_cd, :quotn_no, :quotn_ver_no => :desc)
   }
+  scope :detail, -> {
+    references(:pcdc_contract, :maint_contract, :bulk_contract)
+    .joins(:sales_assoc, :updater, :belonging, :csc_cust)
+    .includes(:sales_assoc, :updater, :pcdc_contract, :maint_contract, :bulk_contract, :belonging, :csc_cust)
+  }
 
   def contract_man_hour_mm
     return self.contract.try :quotn_man_hour_mm if self.maintenance?

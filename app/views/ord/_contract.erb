@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="sixteen wide column">
+        <div class="ui accordion">
+            <div class="active title">
+                <i class="dropdown icon"></i>
+                見積情報（一括請負）
+            </div>
+            <div class="active content">
+                <table class="ui very basic very compact table">
+                    <tbody>
+                    <tr>
+                        <td class="title">納入場所</td>
+                        <td><%= @ord.estimate_contract.delivery_point %></td>
+                        <td class="title">見積有効期限</td>
+                        <td><%= @ord.estimate_contract.estimate_expiration_date %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">見積もり前提条件及び作業内容</td>
+                        <td><%= simple_format(h(@ord.estimate_contract.estimate_precondition_word)) %>
+                            <%= simple_format(h(@ord.estimate_contract.estimate_precondition_content)) %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="title">納品物</td>
+                        <td colspan="3"><%= simple_format(h(@ord.estimate_contract.delivered_goods)) %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">検収方法</td>
+                        <td colspan="3"><%= @ord.estimate_contract.inspection_method %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">契約形態</td>
+                        <td colspan="3"><%= @ord.estimate_contract.contract_form %></td>
+                    </tr>
+                    <tr>
+                        <td class="title">その他見積付帯条件</td>
+                        <td colspan="3"><%= @ord.estimate_contract.estimate_incidental_condition %></td>
+                    </tr>
+                    <tr>
+                        <td class="title" rowspan="2">工数</td>
+                        <td class="title">総工数</td>
+                        <td><%= @ord.estimate_contract.total_man_day %><%= @ord.estimate_contract.total_man_day_unit %></td>
+                    </tr>
+                    <tr>
+                        <td>工数内訳</td>
+                        <td>xxx</td>
+                        <td>xxx</td>
+                    </tr>
+                    <tr>
+                        <td class="title" rowspan="4">費用</td>
+                        <td class="title">開発費用内訳</td>
+                        <td>xxx</td>
+                        <td>xxx</td>
+                    </tr>
+                    <tr>
+                        <td>開発費用合計</td>
+                        <td colspan="2">xxx</td>
+                    </tr>
+                    <tr>
+                        <td>営業部門利益金額（開発費用内）</td>
+                        <td colspan="2">xxx</td>
+                    </tr>
+                    <tr>
+                        <td>営業部門利益金額（開発費用外）</td>
+                        <td colspan="2">xxx</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

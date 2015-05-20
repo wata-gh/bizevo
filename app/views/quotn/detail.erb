@@ -1,24 +1,4 @@
-<style>
-    .ui.dividing.header {
-        margin-bottom: 3px;
-    }
-        .ui.table {
-            margin-top: 3px;
-        }
-        body {
-            color: #111111;
-        }
-        .ui.accordion div.title {
-            border-bottom: 1px solid rgba(0,0,0,0.2);
-            font-weight: bold;;
-        }
-        .ui.accordion .content {
-            margin: 0 10px !important;
-        }
-        .table tr td.title {
-            color: #707070 !important;
-        }
-</style>
+<%= stylesheet_link_tag 'vendor', 'quotn' %>
 <div class="ui large breadcrumb">
     <%= link_to '案件一覧', url(:quotn, :index, :month => Date.today.strftime('%Y%m'), :blg_cd => @quotn.belonging.try(:mst_blg_cd).try(:strip)), :class => 'section' %>
     <div class="divider"> / </div>
@@ -160,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div class="five wide column">
+        <div class="four wide column">
             <div class="ui accordion">
                 <div class="active title">
                     <i class="dropdown icon"></i>
@@ -208,7 +188,23 @@
                 </div>
         </div>
     </div>
-</div>
+        <div class="one wide column">
+            <div class="ui vertical icon basic primary buttons">
+                <div class="ui button active">
+                    <i class="browser icon"></i>
+                </div>
+                <a class="ui button" href="/ord/<%= @quotn.quotn_no %>/<%= sprintf '%02d', @quotn.quotn_ver_no %>">
+                    <i class="payment icon"></i>
+                </a>
+                <div class="ui button">
+                    <i class="tasks icon"></i>
+                </div>
+                <div class="ui button">
+                    <i class="bar chart icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="ui quotn fullscreen modal">
     <i class="close icon"></i>
     <div class="header">
