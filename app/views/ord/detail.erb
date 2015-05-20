@@ -1,0 +1,206 @@
+<%= stylesheet_link_tag 'vendor', 'quotn' %>
+<h3 class="ui header">
+    <i class="newspaper icon"></i>
+    <div class="content"><%= @ord.title %>
+        <div class="sub header"><%= @ord.contract_class %></div>
+    </div>
+</h3>
+<div class="ui grid">
+    <div class="row">
+        <div class="eleven wide column">
+            <div class="ui accordion">
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    詳細
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">PCU</td>
+                            <td><%= @ord.pcu_cd %></td>
+                            <td class="title">見積番号</td>
+                            <td><%= @ord.estimate_no %>-<%= @ord.estimate_branch_no %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">注文ID</td>
+                            <td><%= @ord.ord_id %></td>
+                            <td class="title">ステータス</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">顧客</td>
+                            <td colspan="3"><%= @ord.cust_post_no %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">見積日付</td>
+                            <td><%= @ord.estimate_date %></td>
+                            <td class="title"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="title">見積</td>
+                            <td><i class="icon yen"></i><%= @ord.estimate_amount.try :jpy_comma %></td>
+                            <td class="title">工数</td>
+                            <td><%= @ord.estimate_man_day %> mm</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    説明
+                </div>
+                <div class="active content">
+                    <div class="ui segment">
+                        <%= simple_format(h(@ord.remarks)) %>
+                    </div>
+                </div>
+                <!-- div class="active title">
+                    <i class="dropdown icon"></i>
+                    リンク
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">プロジェクト計画書</td>
+                            <td><a>計画書.pptx</a></td>
+                            <td><a class="ui blue mini label">レビュー済</a></td>
+                        </tr>
+                        <tr>
+                            <td class="title">体制図</td>
+                            <td><a>体制図.pptx</a></td>
+                            <td><a class="ui yellow mini label">未レビュー</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div -->
+            </div>
+        </div>
+        <div class="four wide column">
+            <div class="ui accordion">
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    ピープル
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">営業担当</td>
+                            <td><%= @ord.sales_dept_psnl_cd %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">技術担当</td>
+                            <td><%= @ord.manager_empcode %></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    日付
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <td class="title">開始日</td>
+                            <td><%= @ord.working_from %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">終了日</td>
+                            <td><%= @ord.working_to %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">納期日</td>
+                            <td><%= @ord.delivery_date %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">検収日</td>
+                            <td><%= @ord.inspection_date %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">支払日</td>
+                            <td><%= @ord.pay_day %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">作成日</td>
+                            <td><%= @ord.ins_date %></td>
+                        </tr>
+                        <tr>
+                            <td class="title">更新日</td>
+                            <td><%= @ord.upd_date %></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="one wide column">
+            <div class="ui vertical icon basic primary buttons">
+                <a class="ui button disabled" href="/quotn/detail/<%= @ord.estimate_no %>/<%= @ord.estimate_branch_no.to_i %>">
+                    <i class="browser icon"></i>
+                </a>
+                <a class="ui button active">
+                    <i class="payment icon"></i>
+                </a>
+                <div class="ui button">
+                    <i class="tasks icon"></i>
+                </div>
+                <div class="ui button">
+                    <i class="bar chart icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% ap @ord %>
+    <% if @ord.contract? %>
+        <%= partial 'ord/contract' %>
+    <% elsif @ord.quasi_mandate? %>
+        <%= partial 'ord/quasi_mandate' %>
+    <% end %>
+
+    <div class="row">
+        <div class="eleven wide column">
+            <div class="ui accordion">
+                <div class="active title">
+                    <i class="dropdown icon"></i>
+                    見積承認
+                </div>
+                <div class="active content">
+                    <table class="ui very basic very compact table">
+                        <tbody>
+                        <tr>
+                            <th class="title">承認者</th>
+                            <th>承認／否認</th>
+                            <th>承認日時</th>
+                            <th>コメント</th>
+                            <th>依頼取り消し</th>
+                        </tr>
+                        <% @ord.approval_request.approvers.each do |a| %>
+                            <tr>
+                                <td><%= a.approver_empcode %></td>
+                                <td><%= a.approval_cd %></td>
+                                <td><%= a.approval_timestamp %></td>
+                                <td><%= a.approval_comment %></td>
+                                <td></td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('select.dropdown').dropdown();
+        $('.ui.accordion').accordion({
+            exclusive: false
+        });
+    });
+</script>
