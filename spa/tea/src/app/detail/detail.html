@@ -98,6 +98,50 @@
           </div>
         </div>
 
+      <span ng-show="item.comments.count">
+        <hr />
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="comment in item.comments.commented">
+            <div class="row clearfix">
+              <div class="col-md-2 column">
+                <div>
+                  {{comment.auther.name}}
+                </div>
+                <div>
+                  <img ng-show="comment.auther.image" class="img-responsive center-block" ng-src="{{comment.auther.image}}" />
+                  <img ng-hide="comment.auther.image" class="img-responsive center-block" src="/images/noimage.png" />
+                </div>
+              </div>
+              <div class="col-md-10 column">
+                <div class="row clearfix">
+                  <div class="col-md-12 column">
+                    <small>
+                      <span>
+                        {{comment.date}}
+                      </span>
+                      <span class="pull-right">
+                        <button type="button" class="btn btn-xs" ng-click="likeComment(comment)" ng-class="{'btn-default': comment.likes.is_liked, 'btn-primary': !comment.likes.is_liked}">
+                          <small>いいね！<span ng-show="comment.likes.is_liked">を解除</span></small>
+                        </button>
+                        &nbsp;
+                        <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(comment)">
+                          <i class="icon heart" ng-class="{empty: !comment.likes.is_liked}"></i>{{comment.likes.count}}
+                        </button>
+                      </span>
+                    </small>
+                  </div>
+                </div>
+                <hr />
+                <div class="row clearfix">
+                  <div class="col-md-12 column">
+                    {{comment.text}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </span>
 
       </div>
     </div>

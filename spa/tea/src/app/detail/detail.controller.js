@@ -14,6 +14,11 @@ angular.module('tea')
         item.likes.count += 1;
       };
 
+      $scope.likeComment = function(comment) {
+        comment.likes.is_liked = !comment.likes.is_liked;
+        comment.likes.count += 1;
+      };
+
       $scope.attendParty = function(item) {
         item.attends.is_attended = !item.attends.is_attended;
         item.attends.count += 1;
