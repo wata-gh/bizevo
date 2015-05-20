@@ -1,3 +1,100 @@
+[
 {
-    items: [],
+  "id": 123,
+  "image": "https://pbs.twimg.com/profile_images/1345198632/o036202881302519966804_400x400.jpg",
+  "title": "タイトル123",
+  "description": "ほげほげ\n改行\nもげもげ",
+  "date": "2009/08/11 08:14:45",
+  "venue": "6F研修室",
+  "reseration": "http://www.amazon.co.jp/P.F.-%E3%83%89%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC/e/B000AP61TE",
+  "capacity": 88,
+  "owner": {
+    "id": 999,
+    "name": "たろう",
+    "image": "https://pbs.twimg.com/profile_images/2579542348/l2b371d8r57tu6m4wu7i_400x400.jpeg"
+  },
+  "tags": [
+    "Java", "Ruby", "AngularJS"
+  ],
+  "attaches": {
+    "count": 2,
+    "attached": [
+      {"id": 123, "file_name": "ファイル123", "link": "https://pbs.twimg.com/media/CFVNrYcUsAA4fPE.png"},
+      {"id": 1234, "file_name": "ファイル1234", "link": "https://pbs.twimg.com/media/CFVNrYcUsAA4fPE.png"}
+    ]
+  },
+  "likes": {
+    "count": 99,
+    "is_liked": true,
+    "liked": [
+      {
+        "id": 111,
+        "name": "じろう",
+        "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
+      },
+      {
+        "id": 1111,
+        "name": "じじろう",
+        "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
+      }
+    ]
+  },
+  "attends": {
+    "count": 23,
+    "is_attended": true,
+    "attended": [
+      {
+        "id": 666,
+        "name": "ろくろう",
+        "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
+      }
+    ]
+  },
+  "comments": {
+    "count": 333,
+    "commented": [
+      {
+        "text": "コメントコメント\n改行\nこめんと",
+        "date": "2015/09/01 20:11:23",
+        "auther": {
+          "id": 222,
+          "name": "さぶろう",
+          "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
+        },
+        "likes": {
+          "count": 1111,
+          "is_liked": false,
+          "liked": [
+            {
+              "id": 555,
+              "name": "ごろー",
+              "image": "https://pbs.twimg.com/profile_images/575659284958048256/MPmAo8aD_bigger.jpeg"
+            }
+          ]
+        }
+      },
+      {
+        "text": "コメントコメント2\n改行2\nこめんと2",
+        "date": "2015/09/01 20:11:23",
+        "auther": {
+          "id": 2222,
+          "name": "さぶろう2",
+          "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
+        },
+        "likes": {
+          "count": 1111,
+          "is_liked": false,
+          "liked": [
+            {
+              "id": 5552,
+              "name": "ごろー2",
+              "image": "https://pbs.twimg.com/profile_images/575659284958048256/MPmAo8aD_bigger.jpeg"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "update": "2009/08/11 08:14:45"
 }
+]

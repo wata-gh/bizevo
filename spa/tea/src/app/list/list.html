@@ -11,35 +11,74 @@
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 column">
-            <a ui-sref="detail({id: item.id})">{{item.title}}</a>
+            <a ui-sref="detail({id: item.id})">
+              <h2>{{item.title}}</h2>
+            </a>
           </div>
           <div class="col-md-3 column">
-            <div class="text-right">
-              <a ng-click="likeParty(item)">
-                <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
-              </a>
-              &nbsp; <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <small>
+                  更新日：{{item.update}}
+                </small> 
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-xs" ng-click="likeParty(item)" ng-class="{'btn-default': item.likes.is_liked, 'btn-primary': !item.likes.is_liked}">
+                    <small>いいね！<span ng-show="item.likes.is_liked">を解除</span></small>
+                  </button>
+                  &nbsp;
+                  <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(item)">
+                    <i class="icon heart" ng-class="{empty: !item.likes.is_liked}"></i>{{item.likes.count}}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-      <div class="row clearfix">
-        <div class="col-md-12 column">
-          <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>
+          </div>
         </div>
-      </div>
-
       </div>
       <div class="panel-body">
         <div class="row clearfix">
           <div class="col-md-3 column">
-            <img class="img-responsive" ng-src="{{item.image}}" />
+            <a ui-sref="detail({id: item.id})">
+              <img class="img-responsive center-block" ng-src="{{item.image}}" />
+            </a>
           </div>
           <div class="col-md-9 column">
-            {{item.description}}
-          </div>
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+               {{item.description}}
+              </div>
+            </div>
+            <hr />
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <div class="pull-right">
+                  <span class="label label-default">
+                    <i class="comment outline icon"></i>{{item.comments.count}}
+                  </span>
+                  &nbsp;
+                  <span class="label" ng-class="{'label-default': !item.attends.is_attended, 'label-primary': item.attends.is_attended}">
+                    <span ng-switch="item.attends.is_attended">
+                      <span ng-switch-when="true">参加</span>
+                      <span ng-switch-default>不参加</span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
 
+          </div>
         </div>
+      </div>
+      <div class="panel-footer">
       </div>
     </div>
   </div>
