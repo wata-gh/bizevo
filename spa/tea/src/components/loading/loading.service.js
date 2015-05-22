@@ -47,6 +47,9 @@ angular.module('tea')
           } else if (status == 404) {
             local_title = 'ページが見つかりません';
             local_message = 'お探しのページは見つかりませんでした。';
+          } else if (status == 403) {
+            local_title = '権限がありません';
+            local_message = 'このページを表示する権限がありません。';
           } else {
             local_title = 'エラーが発生しました';
             local_message = '通信中に予期せぬエラーが発生しました。';
