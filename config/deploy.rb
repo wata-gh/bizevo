@@ -5,7 +5,7 @@ set :application, 'bizevo'
 set :repo_url, 'https://github.com/wata-gh/bizevo.git'
 set :deploy_to, "/opt/bizevo/#{fetch(:stage)}"
 set :keep_releases, 5
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/conf bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/conf tmp/bizevo bundle public/system}
 set :unicorn_rack_env, fetch(:stage)
 set :bundle_jobs, 4
 

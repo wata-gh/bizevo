@@ -6,10 +6,12 @@ module Bizevo
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
     register Padrino::Mailer
     register Padrino::Helpers
+    register Padrino::Cache
     register Kaminari::Helpers::SinatraHelpers
     register Bizevo::Auth::AccessControl
 
     enable :sessions
+    enable :caching
 
     set :locale_path, Proc.new { Dir[Padrino.root('config', 'locales', '**/ja.yml')] }
     ##
