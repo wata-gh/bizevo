@@ -16,4 +16,8 @@ $ ->
     .fadeOut()
   $ '.ui.dropdown'
   .dropdown()
+  $ '.ui.fixed.main.menu .popup'
+  .popup {
+    position: 'bottom center'
+  }
 

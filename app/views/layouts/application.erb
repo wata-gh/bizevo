@@ -16,22 +16,22 @@
                     <b>bizevo</b>
                 <% end %>
             </div>
-            <% link_to url(:index), :class => 'icon item', :title => 'ダッシュボード' do %>
+            <% link_to url(:index), :class => 'popup icon item', 'data-content' => 'ダッシュボード' do %>
                 <i class="dashboard icon"></i>
             <% end %>
-            <% link_to url(:quotn, :index), :class => 'icon item', :title => '見積もり一覧' do %>
+            <% link_to url(:quotn, :index), :class => 'popup icon item', 'data-content' => '見積もり一覧' do %>
                 <i class="browser icon"></i>
             <% end %>
-            <% link_to url(:kiita, :index), :class => 'icon item', :title => 'Kiita' do %>
+            <% link_to url(:kiita, :index), :class => 'popup icon item', 'data-content' => 'Kiita' do %>
                 <i class="book icon"></i>
             <% end %>
-            <% link_to url(:feeling, :index), :class => 'icon item', :title => 'ニコカレ' do %>
+            <% link_to url(:feeling, :index), :class => 'popup icon item', 'data-content' => 'ニコカレ' do %>
                 <i class="smile icon"></i>
             <% end %>
-            <% link_to url(:slack, :index), :class => 'icon item', :title => 'slack' do %>
+            <% link_to url(:slack, :index), :class => 'popup icon item', 'data-content' => 'slack' do %>
                 <i class="slack icon"></i>
             <% end %>
-            <a class="icon item" data-content="" href="" title="Timepro">
+            <a class="popup icon item" href="" data-content="Timepro">
                 <i class="wait icon"></i>
             </a>
         </div>
