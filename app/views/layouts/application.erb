@@ -12,24 +12,26 @@
     <div class="container">
         <div class="left menu">
             <div class="title item">
-                <b>bizevo</b>
+                <% link_to url(:index)  do %>
+                    <b>bizevo</b>
+                <% end %>
             </div>
-            <% link_to url(:index), :class => 'icon item' do %>
+            <% link_to url(:index), :class => 'icon item', :title => 'ダッシュボード' do %>
                 <i class="dashboard icon"></i>
             <% end %>
-            <% link_to url(:quotn, :index), :class => 'icon item' do %>
+            <% link_to url(:quotn, :index), :class => 'icon item', :title => '見積もり一覧' do %>
                 <i class="browser icon"></i>
             <% end %>
-            <% link_to url(:kiita, :index), :class => 'icon item' do %>
+            <% link_to url(:kiita, :index), :class => 'icon item', :title => 'Kiita' do %>
                 <i class="book icon"></i>
             <% end %>
-            <% link_to url(:feeling, :index), :class => 'icon item' do %>
+            <% link_to url(:feeling, :index), :class => 'icon item', :title => 'ニコカレ' do %>
                 <i class="smile icon"></i>
             <% end %>
-            <% link_to url(:slack, :index), :class => 'icon item' do %>
+            <% link_to url(:slack, :index), :class => 'icon item', :title => 'slack' do %>
                 <i class="slack icon"></i>
             <% end %>
-            <a class="icon item" data-content="" href="">
+            <a class="icon item" data-content="" href="" title="Timepro">
                 <i class="wait icon"></i>
             </a>
         </div>
