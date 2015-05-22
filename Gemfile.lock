@@ -110,6 +110,7 @@ GEM
     net-ssh (2.9.2)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    newrelic_rpm (3.12.0.288)
     padrino (0.12.5)
       padrino-admin (= 0.12.5)
       padrino-cache (= 0.12.5)
@@ -237,6 +238,7 @@ DEPENDENCIES
   mysql2
   net-ldap
   net-ssh-gateway
+  newrelic_rpm
   padrino (= 0.12.5)
   pg
   racc
