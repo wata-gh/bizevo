@@ -54,24 +54,22 @@
           <div class="col-md-9 column">
             <div class="row clearfix">
               <div class="col-md-12 column">
-               {{item.description}}
+                <span class="label label-default">
+                  <i class="comment outline icon"></i>{{item.comments.count}}
+                </span>
+                &nbsp;
+                <span class="label" ng-class="{'label-default': !item.attends.is_attended, 'label-primary': item.attends.is_attended}">
+                  <span ng-switch="item.attends.is_attended">
+                    <span ng-switch-when="true">参加</span>
+                    <span ng-switch-default>不参加</span>
+                  </span>
+                </span>
               </div>
             </div>
             <hr />
             <div class="row clearfix">
               <div class="col-md-12 column">
-                <div class="pull-right">
-                  <span class="label label-default">
-                    <i class="comment outline icon"></i>{{item.comments.count}}
-                  </span>
-                  &nbsp;
-                  <span class="label" ng-class="{'label-default': !item.attends.is_attended, 'label-primary': item.attends.is_attended}">
-                    <span ng-switch="item.attends.is_attended">
-                      <span ng-switch-when="true">参加</span>
-                      <span ng-switch-default>不参加</span>
-                    </span>
-                  </span>
-                </div>
+                {{item.description}}
               </div>
             </div>
 
