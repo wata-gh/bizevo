@@ -1,6 +1,7 @@
 :common:
   :authorize_url: https://slack.com/oauth/authorize
   :redirect_uri: /slack/oauth
+  :token: dummy
 :development:
   :client_id: ''
   :client_secret: ''
