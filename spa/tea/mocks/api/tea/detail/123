@@ -18,13 +18,13 @@
   "attaches": {
     "count": 2,
     "attached": [
-      {"id": 123, "file_name": "ファイル123", "link": "https://pbs.twimg.com/media/CFVNrYcUsAA4fPE.png"},
-      {"id": 1234, "file_name": "ファイル1234", "link": "https://pbs.twimg.com/media/CFVNrYcUsAA4fPE.png"}
+      {"id": 123, "fileName": "ファイル123", "link": "https://pbs.twimg.com/media/CFVNrYcUsAA4fPE.png"},
+      {"id": 1234, "fileName": "ファイル1234", "link": "https://pbs.twimg.com/media/CFVNrYcUsAA4fPE.png"}
     ]
   },
   "likes": {
     "count": 99,
-    "is_liked": true,
+    "isLiked": true,
     "liked": [
       {
         "id": 111,
@@ -62,7 +62,7 @@
         },
         "likes": {
           "count": 1111,
-          "is_liked": false,
+          "isLiked": true,
           "liked": [
             {
               "id": 555,
@@ -82,7 +82,7 @@
         },
         "likes": {
           "count": 1111,
-          "is_liked": false,
+          "isLiked": false,
           "liked": [
             {
               "id": 5552,

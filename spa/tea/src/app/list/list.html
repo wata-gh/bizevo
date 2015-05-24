@@ -26,12 +26,12 @@
             <div class="row clearfix">
               <div class="col-md-12 column">
                 <div class="pull-right">
-                  <button type="button" class="btn btn-xs" ng-click="likeParty(item)" ng-class="{'btn-default': item.likes.is_liked, 'btn-primary': !item.likes.is_liked}">
-                    <small>いいね！<span ng-show="item.likes.is_liked">を解除</span></small>
+                  <button type="button" class="btn btn-xs" ng-click="likeParty(item)" ng-class="{'btn-default': item.likes.isLiked, 'btn-primary': !item.likes.isLiked}">
+                    <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
                   </button>
                   &nbsp;
                   <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(item)">
-                    <i class="icon heart" ng-class="{empty: !item.likes.is_liked}"></i>{{item.likes.count}}
+                    <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
                   </button>
                 </div>
               </div>

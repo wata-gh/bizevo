@@ -10,12 +10,12 @@ angular.module('tea')
       tdkService.setDescription(item.description);
 
       $scope.likeParty = function(item) {
-        item.likes.is_liked = !item.likes.is_liked;
+        item.likes.isLiked = !item.likes.isLiked;
         item.likes.count += 1;
       };
 
       $scope.likeComment = function(comment) {
-        comment.likes.is_liked = !comment.likes.is_liked;
+        comment.likes.isLiked = !comment.likes.isLiked;
         comment.likes.count += 1;
       };
 
