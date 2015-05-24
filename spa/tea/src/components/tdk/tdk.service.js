@@ -37,7 +37,7 @@ angular.module('tea')
           element.text(tdkService.getTitle());
         });
         $rootScope.$on('setTeaDescription', function(event, title) {
-          element.attr('content', tdkService.getDescription())
+          element.attr('content', tdkService.getDescription());
         });
       },
     };
@@ -47,10 +47,10 @@ angular.module('tea')
     restrict: 'A',
     link: function(scope, element) {
       $rootScope.$on('setTeaDescription', function(event, title) {
-        element.attr('content', tdkService.getDescription())
+        element.attr('content', tdkService.getDescription());
       });
       $rootScope.$on('setTeaDescription', function(event, title) {
-        element.attr('content', tdkService.getDescription())
+        element.attr('content', tdkService.getDescription());
       });
     },
   };
