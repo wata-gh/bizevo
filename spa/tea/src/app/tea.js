@@ -3,13 +3,6 @@
 angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'infinite-scroll'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('sample', {
-        url: '/sample',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl',
-        title: 'Sample!!',
-        description: 'さんぷる'
-      })
       .state('top', {
         url: '/',
         templateUrl: 'app/top/top.html',
