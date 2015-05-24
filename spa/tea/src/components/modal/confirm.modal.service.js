@@ -14,7 +14,7 @@ angular.module('tea')
 
         scope.title = title;
         scope.content = content;
-        scope.ok_confirm = function() {
+        scope.okConfirm = function() {
           success(scope);
           modal.hide();
         };

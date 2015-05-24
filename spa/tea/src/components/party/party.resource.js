@@ -11,8 +11,6 @@ angular.module('tea')
             url: '/api/tea/list',
             isArray: true,
             params: {
-              index: 0,
-              size: 10,
             },
           },
         });

@@ -1,5 +1,5 @@
 'use strict';
 
 angular.module('tea')
-  .controller('TopCtrl', function ($scope) {
+  .controller('TopCtrl', function () {
   });

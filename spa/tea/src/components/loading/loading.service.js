@@ -2,8 +2,8 @@
 
 angular.module('tea')
   .factory('loadingService', function ($q, $modal) {
-    var loading_count = 0;
-    var loading_modal = $modal({
+    var _loadingCount = 0;
+    var _loadingModal = $modal({
       show: false,
       backdrop: 'static',
       animation: 'am-fade-and-slide-top',
@@ -11,7 +11,7 @@ angular.module('tea')
       keyboard: false,
       template: 'components/loading/loading.modal.html',
     });
-    var error_modal = $modal({
+    var _errorModal = $modal({
       show: false,
       backdrop: 'static',
       animation: 'am-fade-and-slide-top',
@@ -19,46 +19,45 @@ angular.module('tea')
       keyboard: false,
       template: 'components/loading/error.modal.html',
     });
-    var service = {
+    return {
         start: function() {
-          if (++loading_count > 1) {
+          if (++_loadingCount > 1) {
             return $q.defer().primise;
           }
-          return loading_modal.$promise.then(loading_modal.show);
+          return _loadingModal.$promise.then(_loadingModal.show);
         },
         end: function() {
-          if (--loading_count < 0) {
-            loading_count = 0;
+          if (--_loadingCount < 0) {
+            _loadingCount = 0;
           }
-          if (loading_modal > 0) {
+          if (_loadingCount > 0) {
             return $q.defer().primise;
           }
-          return loading_modal.$promise.then(loading_modal.hide);
+          return _loadingModal.$promise.then(_loadingModal.hide);
         },
         error: function(status, message, title) {
-          if (error_modal.$isShown) {
+          if (_errorModal.$isShown) {
             return $q.defer().primise;
           }
-          var local_message = null;
-          var local_title = null;
+          var localMessage = null;
+          var localTitle = null;
           if (status == 401) {
-            local_title = 'セッションが切れました';
-            local_message = '再度ログインを行ってください。';
+            localTitle = 'セッションが切れました';
+            localMessage = '再度ログインを行ってください。';
           } else if (status == 404) {
-            local_title = 'ページが見つかりません';
-            local_message = 'お探しのページは見つかりませんでした。';
+            localTitle = 'ページが見つかりません';
+            localMessage = 'お探しのページは見つかりませんでした。';
           } else if (status == 403) {
-            local_title = '権限がありません';
-            local_message = 'このページを表示する権限がありません。';
+            localTitle = '権限がありません';
+            localMessage = 'このページを表示する権限がありません。';
           } else {
-            local_title = 'エラーが発生しました';
-            local_message = '通信中に予期せぬエラーが発生しました。';
+            localTitle = 'エラーが発生しました';
+            localMessage = '通信中に予期せぬエラーが発生しました。';
           }
-          error_modal.$scope.title = title || local_title;
-          error_modal.$scope.content = message || local_message;
+          _errorModal.$scope.title = title || localTitle;
+          _errorModal.$scope.content = message || localMessage;
 
-          return error_modal.$promise.then(error_modal.show);
+          return _errorModal.$promise.then(_errorModal.show);
         },
     };
-    return service;
   });
