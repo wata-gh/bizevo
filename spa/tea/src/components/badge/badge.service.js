@@ -22,7 +22,7 @@ angular.module('tea')
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {
-        badgeService.regist(key, function(){
+        badgeService.regist(attrs.teaBadge, function(){
           element.text(badgeService.getBadge(attrs.teaBadge));
         });
       },
