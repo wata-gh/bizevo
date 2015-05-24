@@ -41,7 +41,7 @@
   },
   "attends": {
     "count": 23,
-    "is_attended": true,
+    "isAttended": true,
     "attended": [
       {
         "id": 666,
@@ -139,7 +139,7 @@
   },
   "attends": {
     "count": 23,
-    "is_attended": true,
+    "isAttended": false,
     "attended": [
       {
         "id": 666,

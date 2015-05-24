@@ -58,8 +58,8 @@
                   <i class="comment outline icon"></i>{{item.comments.count}}
                 </span>
                 &nbsp;
-                <span class="label" ng-class="{'label-default': !item.attends.is_attended, 'label-primary': item.attends.is_attended}">
-                  <span ng-switch="item.attends.is_attended">
+                <span class="label" ng-class="{'label-default': !item.attends.isAttended, 'label-primary': item.attends.isAttended}">
+                  <span ng-switch="item.attends.isAttended">
                     <span ng-switch-when="true">参加</span>
                     <span ng-switch-default>不参加</span>
                   </span>

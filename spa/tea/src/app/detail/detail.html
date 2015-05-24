@@ -86,12 +86,12 @@
         <div class="row clearfix">
           <div class="col-md-12 column">
             <div>
-              <button type="button" class="btn btn-block btn-default" ng-show="item.attends.is_attended" ng-click="leave_confirm.confirm()">
+              <button type="button" class="btn btn-block btn-default" ng-show="item.attends.isAttended" ng-click="leaveConfirm.confirm()">
                   参加を取りやめる
               </button>
             </div>
             <div>
-              <button type="button" class="btn btn-block btn-primary" ng-hide="item.attends.is_attended" ng-click="attend_confirm.confirm()">
+              <button type="button" class="btn btn-block btn-primary" ng-hide="item.attends.isAttended" ng-click="attendConfirm.confirm()">
                   この勉強会に参加する
               </button>
             </div>

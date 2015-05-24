@@ -20,7 +20,7 @@ angular.module('tea')
       };
 
       $scope.attendParty = function(item) {
-        item.attends.is_attended = !item.attends.is_attended;
+        item.attends.isAttended = !item.attends.isAttended;
         item.attends.count += 1;
       };
 
@@ -38,14 +38,14 @@ angular.module('tea')
         };
       };
 
-      var attend_function = function(scope) {
+      var attendFunction = function(scope) {
         item.attends.count += 1;
-        item.attends.is_attended = !item.attends.is_attended;
+        item.attends.isAttended = !item.attends.isAttended;
         return true;
       };
-      var confirm_options = {
+      var confirmOptions = {
       };
-      $scope.attend_confirm = confirmModalService.createConfirm(attend_function, '参加確認', 'この勉強会に参加しますか？', confirm_options);
-      $scope.leave_confirm = confirmModalService.createConfirm(attend_function, '不参加確認', 'この勉強会への参加を取りやめますか？', confirm_options);
+      $scope.attendConfirm = confirmModalService.createConfirm(attendFunction, '参加確認', 'この勉強会に参加しますか？', confirmOptions);
+      $scope.leaveConfirm = confirmModalService.createConfirm(attendFunction, '不参加確認', 'この勉強会への参加を取りやめますか？', confirmOptions);
     });
   });
