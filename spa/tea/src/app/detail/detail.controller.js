@@ -24,14 +24,14 @@ angular.module('tea')
         item.attends.count += 1;
       };
 
-      $scope.liked_modal = function(item) {
+      $scope.likedModal = function(item) {
         return {
           title: 'いいねした人一覧',
           persons: item.likes.liked,
         };
       };
 
-      $scope.attended_modal = function(item) {
+      $scope.attendedModal = function(item) {
         return {
           title: '参加者一覧',
           persons: item.attends.attended,

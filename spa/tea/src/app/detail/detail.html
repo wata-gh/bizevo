@@ -22,7 +22,7 @@
                     <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
                   </button>
                   &nbsp;
-                  <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(item)">
+                  <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="likedModal(item)">
                     <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
                   </button>
                 </div>
@@ -66,7 +66,7 @@
                 </span>
               </dd>
               <dd>
-                <button type="button" class="btn btn-xs btn-default" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="attended_modal(item)">
+                <button type="button" class="btn btn-xs btn-default" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="attendedModal(item)">
                   <i class="icon users"></i>参加者一覧
                 </button>
               </dd>
@@ -124,7 +124,7 @@
                             <small>いいね！<span ng-show="comment.likes.isLiked">を解除</span></small>
                           </button>
                           &nbsp;
-                          <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(comment)">
+                          <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="likedModal(comment)">
                             <i class="icon heart" ng-class="{empty: !comment.likes.isLiked}"></i>{{comment.likes.count}}
                           </button>
                         </span>
