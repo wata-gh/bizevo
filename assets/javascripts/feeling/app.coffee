@@ -172,6 +172,8 @@ $ ->
           .val(),
           level: $f.find 'input[name=level]'
           .val(),
+          email: $f.find 'input[name=email]'
+          .val(),
           }
           $f.addClass 'loading'
           s

@@ -75,12 +75,10 @@ module Bizevo
               end
             end
             html += '</div>'
-            ap html
             html = html_org + html
           elsif f[0] == :item2_list
             html += '<li><ul>'
             f[1].each do |i|
-              ap i
               if i[0] == :item_2
                 html += "<li>#{i[1].chomp}</li>"
                 if i[2].present?

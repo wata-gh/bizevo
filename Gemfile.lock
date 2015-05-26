@@ -234,6 +234,7 @@ DEPENDENCIES
   erubis (~> 2.7.0)
   factory_girl
   kaminari (= 0.16.1)
+  mail
   multi_json
   mysql2
   net-ldap

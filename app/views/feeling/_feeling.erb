@@ -85,6 +85,10 @@
                 <div class="ui submit basic blue button right floated"><i class="write icon"></i>保存</div>
             </div>
             <div class="field">
+                <div class="ui fluid icon input">
+                    <i class="mail outline icon"></i>
+                    <input type="text" name="email" placeholder="進捗メール送信先" value="<%= current_user.user.report_mail %>">
+                </div>
             </div>
         </div>
     </div>
