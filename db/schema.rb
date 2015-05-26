@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 16) do
+ActiveRecord::Schema.define(version: 18) do
 
   create_table "article_tags", id: false, force: true do |t|
     t.integer  "article_id"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 16) do
     t.integer  "delete_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "likes"
+    t.integer  "likes",      default: 0
   end
 
   create_table "oauths", force: true do |t|
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 16) do
     t.datetime "updated_at"
     t.string   "mst_blg_cd"
     t.string   "full_name"
+    t.string   "report_mail"
   end
 
   create_table "worktimes", force: true do |t|

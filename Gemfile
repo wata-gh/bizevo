@@ -37,6 +37,7 @@ gem 'awesome_print'
 gem 'multi_json'
 gem 'slack-api'
 gem 'newrelic_rpm'
+gem 'mail'
 group :oracle do
   gem 'ruby-oci8'
   gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.0'

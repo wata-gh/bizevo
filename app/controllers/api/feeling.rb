@@ -33,10 +33,26 @@ Bizevo::App.controllers 'api/feeling' do
 
   post :index, :with => :at do
     ru = current_user.redmine_user
-    f = Redmine::Feeling.where(:at => params[:at], :user_id => ru.id).first_or_initialize
-    f.description = params[:description].gsub /\n/, "\r\n"
-    f.level = params[:level]
-    f.save
+    f = Redmine::Feeling.transaction do
+      f = Redmine::Feeling.where(:at => params[:at], :user_id => ru.id).first_or_initialize
+      f.description = params[:description].gsub /\n/, "\r\n"
+      f.level = params[:level]
+      f.save!
+      email = params[:email]
+      if email.present? && email.end_with?('@active.co.jp')
+        mail = Mail.new do
+          from     'bizevo@active.co.jp'
+          to       email
+          subject  "進捗報告(#{f.at.strftime('%Y/%m/%d')})#{ru.lastname} #{ru.firstname}"
+          body     f.description
+        end
+        mail.deliver!
+        u = current_user.user
+        u.report_mail = email
+        u.save!
+      end
+      f
+    end
     suc_res f.as_json
   end
 
