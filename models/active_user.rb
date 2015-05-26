@@ -2,21 +2,22 @@ class ActiveUser < ActiveLdap::Base
   ldap_mapping :dn_attribute => "cn", :prefix => ''
 
   def self.authenticate email, pass
+    account = email.split('@active.co.jp')[0] # allow only active mail.
     if Padrino.env == :development || Padrino.env == :test
-      a = User.find_by :name => email
+      a = User.find_by :name => account
       return nil unless a
       au = MockActiveUser.new
       au.description = a.psnal_cd
       au.department = a.mst_blg_cd
-      au.sAMAccountName = email
+      au.sAMAccountName = account
       return au
     end
     ldap = Net::LDAP.new
     ldap.host = LDAP_CONFIG[:host]
     ldap.port = LDAP_CONFIG[:port]
-    ldap.auth "ACTIVEWORK\\#{email}", pass
+    ldap.auth "ACTIVEWORK\\#{account}", pass
     if ldap.bind
-      au = self.find_user email
+      au = self.find_user account
       return nil unless au
       u = User.where(:name => au.sAMAccountName).first_or_initialize
       u.name = au.sAMAccountName
