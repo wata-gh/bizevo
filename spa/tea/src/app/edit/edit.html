@@ -1,0 +1,127 @@
+<div class="row clearfix">
+
+  <div class="col-md-12 column">
+
+    <div class="panel panel-info">
+
+      <div class="panel-heading">
+        <div class="row clearfix">
+          <div class="col-md-9 column">
+            <input type="text" class="form-control input-lg" placeholder="タイトル" ng-bind="item.title" />
+          </div>
+          <div class="col-md-3 column">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <small>
+                  更新日：{{item.update}}
+                </small> 
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <ui-select multiple tagging tagging-label="（新規追加）" ng-model="item.tags" theme="bootstrap" sortable="true">
+              <ui-select-match placeholder="タグ付け">
+                {{$item}}
+              </ui-select-match>
+              <ui-select-choices repeat="tag in allTags | filter:$select.search" refresh="findTags($select.search)" refresh-delay="2">
+                {{tag}}
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="row clearfix">
+          <div class="col-md-3 column">
+            <img ng-hide="tmpImage" class="img-responsive center-block" ng-src="{{item.image}}" />
+            <img ng-show="tmpImage" class="img-responsive center-block" ngf-src="tmpImage" ngf-default-src="/images/noimage.png" ngf-accept="'image/*'" />
+            <div class="panel panel-primary">
+              <div ngf-drop ngf-select ng-model="imgFiles" class="panel-body" 
+                  ngf-drag-over-class="{accept:'bg-primary', reject:'bg-danger', delay:100}"
+                  ngf-multiple="false" ngf-allow-dir="false"
+                  ngf-accept="'image/*'">
+                <p>Drop Image file here</p>
+                <p>Click to select</p>
+              </div>
+              <div ngf-no-file-drop>
+                <div ngf-select ng-model="imgFiles" class="panel-body" 
+                        ngf-drag-over-class="{accept:'bg-primary', reject:'bg-danger', delay:100}"
+                        ngf-multiple="false" ngf-allow-dir="false"
+                        ngf-accept="'image/*'">
+                  <p>Click to select</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9 column">
+            <textarea class="form-control" placeholder="詳細" ng-bind="item.description" rows="8"></textarea>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <form class="form-horizontal">
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="item.owner.name">主催</label>
+                <div class="col-md-9">
+                  <input id="item.owner.name" type="text" class="form-control" value="{{item.owner.name}}" disabled/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="item.date">日時</label>
+                <div class="col-md-3">
+                  <input type="text" size="10" class="form-control" ng-model="item.date" date-format="yyyy/MM/dd" data-autoclose="1" placeholder="yyyy/mm/dd" bs-datepicker id="item.date" />
+                </div>
+                <div class="col-md-3">
+                  <input type="text" size="8" class="form-control" ng-model="item.date" data-time-format="hh:mm" data-autoclose="1" placeholder="hh:mm" bs-timepicker />
+                </div>
+                <div class="col-md-3">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="item.venue">会場</label>
+                <div class="col-md-9">
+                  <input id="item.venue" type="text" class="form-control" ng-model="item.venue" placeholder="会場" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="item.capacity">定員</label>
+                <div class="col-md-9">
+                  <input id="item.capacity" type="number" class="form-control" ng-model="item.capacity" placeholder="定員" min="0"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="item.reseration">URL</label>
+                <div class="col-md-9">
+                  <input id="item.reseration" type="url" class="form-control" ng-model="item.reseration" placeholder="URL" />
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <div class="row clearfix">
+          <div class="col-md-6 column pull-right text-right">
+            <button type="button" class="btn btn-lg btn-default">キャンセル</button>
+            <button type="button" class="btn btn-lg btn-danger">登録</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

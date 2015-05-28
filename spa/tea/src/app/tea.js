@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'mgcrea.ngStrap', 'infinite-scroll'])
+angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.select', 'mgcrea.ngStrap', 'infinite-scroll', 'ngFileUpload'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('top', {
@@ -26,6 +26,16 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
         templateUrl: 'app/detail/detail.html',
         controller: 'DetailCtrl',
         title: '詳細'
+      })
+      .state('new', {
+        url: '/new',
+        controller: 'EditCtrl',
+      })
+      .state('edit', {
+        url: '/edit/{id:int}',
+        templateUrl: 'app/edit/edit.html',
+        controller: 'EditCtrl',
+        title: '投稿'
       })
       ;
     $urlRouterProvider.otherwise('/');
