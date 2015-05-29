@@ -143,6 +143,41 @@
           </ul>
         </span>
 
+        <span>
+          <hr />
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row clearfix">
+                <div class="col-md-2 column">
+                  <div>
+                    {{'ほげほげ'}}
+                  </div>
+                  <div>
+                    <img ng-show="comment.auther.image" class="img-responsive center-block" ng-src="{{comment.auther.image}}" />
+                    <img ng-hide="comment.auther.image" class="img-responsive center-block" src="/images/noimage.png" />
+                  </div>
+                </div>
+                <div class="col-md-10 column">
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">
+                      <div class="form-horizonal">
+                        <div class="form-group">
+                          <textarea rows="3" class="form-control" ng-model="newComment"></textarea>
+                        </div>
+                        <div class="form-group pull-right">
+                          <button type="button" class="btn btn-danger btn-xs" ng-click="postComment()">
+                            <small>コメントする</small>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </span>
+
       </div>
     </div>
 

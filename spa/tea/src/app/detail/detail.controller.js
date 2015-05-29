@@ -47,5 +47,28 @@ angular.module('tea')
       };
       $scope.attendConfirm = confirmModalService.createConfirm(attendFunction, '参加確認', 'この勉強会に参加しますか？', confirmOptions);
       $scope.leaveConfirm = confirmModalService.createConfirm(attendFunction, '不参加確認', 'この勉強会への参加を取りやめますか？', confirmOptions);
+
+      $scope.newComment = '';
+      $scope.postComment = function() {
+        if (!$scope.newComment) {
+          return;
+        }
+        $scope.item.comments.count += 1;
+        $scope.item.comments.commented.push({
+          text: $scope.newComment,
+          date: '2015/09/01 20:11:23',
+          auther: {
+            id: 222,
+            name: 'さぶろう',
+            image: 'https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg',
+          },
+          likes: {
+            count: 0,
+            isLiked: false,
+            liked: [],
+          },
+        });
+        $scope.newComment = '';
+      };
     });
   });
