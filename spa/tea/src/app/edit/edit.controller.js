@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload) {
+  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService) {
 
     var id = $stateParams.id;
     if (!id) {
@@ -11,6 +11,7 @@ angular.module('tea')
 
     Party.get({id: id}).$promise.then(function(item){
       $scope.item = item;
+      var isNewPost = item.status === 1;
 
       $scope.likedModal = function(item) {
         return {
@@ -18,6 +19,17 @@ angular.module('tea')
           persons: item.likes.liked,
         };
       };
+
+      $scope.saveConfirm = confirmModalService.createConfirm(function(scope){
+        $state.go('detail', {id: item.id});
+      }, '確認', '保存しますか？', {});
+      $scope.cancelConfirm = confirmModalService.createConfirm(function(scope){
+        if (isNewPost) {
+          $state.go('list');
+        } else {
+          $state.go('detail', {id: item.id});
+        }
+      }, '確認', '保存せずに終了しますか？', {});
     });
 
     $scope.allTags = [];
