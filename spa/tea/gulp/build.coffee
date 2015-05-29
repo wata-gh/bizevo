@@ -33,7 +33,18 @@ gulp.task 'partials', ->
     .pipe gulp.dest('.tmp')
     .pipe $.size()
 
-gulp.task 'html', ['styles', 'scripts', 'partials'], ->
+gulp.task 'inject', ->
+  gulp.src 'src/*.html'
+    .pipe $.inject(gulp.src('src/{app,components}/**/*.js'),
+      read: false,
+      starttag: '<!-- inject:modules -->',
+      addRootSlash: false,
+      ignorePath: 'src'
+    )
+    .pipe gulp.dest('src')
+    .pipe $.size()
+
+gulp.task 'html', ['inject', 'styles', 'scripts', 'partials'], ->
   htmlFilter = $.filter '*.html'
   jsFilter = $.filter '**/*.js'
   cssFilter = $.filter '**/*.css'
