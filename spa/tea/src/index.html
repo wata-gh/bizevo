@@ -24,6 +24,10 @@
     <!-- build:js scripts/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
+
+    <!-- use semantic-ui manually. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.1/semantic.min.css" />
+
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -97,22 +101,25 @@
     <!-- inject:modules -->
     <script src="app/tea.js"></script>
     <script src="app/detail/detail.controller.js"></script>
-    <script src="app/edit/edit.controller.js"></script>
     <script src="app/info/info.controller.js"></script>
     <script src="app/list/list.controller.js"></script>
     <script src="app/top/top.controller.js"></script>
-    <script src="components/badge/badge.service.js"></script>
+    <script src="app/edit/edit.controller.js"></script>
     <script src="components/loading/loading.service.js"></script>
-    <script src="components/modal/confirm.modal.service.js"></script>
-    <script src="components/party/party.resource.js"></script>
+    <script src="components/badge/badge.service.js"></script>
     <script src="components/sidebar/sidebar.controller.js"></script>
     <script src="components/tdk/tdk.service.js"></script>
+    <script src="components/party/party.resource.js"></script>
+    <script src="components/modal/confirm.modal.service.js"></script>
     <!-- endinject -->
 
     <!-- inject:partials -->
     <!-- angular templates will be automaticaly converted in js and inserted here -->
     <!-- endinject -->
     <!-- endbuild -->
+
+    <!-- use semantic-ui manually -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.1/semantic.min.js"></script>
 
   </body>
 </html>
