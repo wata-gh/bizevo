@@ -129,12 +129,12 @@
     "liked": [
       {
         "id": 111,
-        "name": "じろう",
+        "name": "じろう２",
         "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
       },
       {
         "id": 1111,
-        "name": "じじろう",
+        "name": "じじろう２",
         "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
       }
     ]

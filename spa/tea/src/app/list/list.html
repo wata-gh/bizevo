@@ -30,7 +30,7 @@
                     <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
                   </button>
                   &nbsp;
-                  <button type="button" class="btn btn-xs btn-info" data-animation="am-fade-and-slide-top" data-template="components/modal/person.list.modal.html" data-container="body" bs-modal="liked_modal(item)">
+                  <button type="button" class="btn btn-xs btn-info" ng-click="likedModal(item)">
                     <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
                   </button>
                 </div>

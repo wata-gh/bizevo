@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('ListCtrl', function ($scope, Party) {
+  .controller('ListCtrl', function ($scope, Party, personListModalService) {
     $scope.items = [];
 
     var _hasNext = false;
@@ -33,5 +33,10 @@ angular.module('tea')
     $scope.likeParty = function(item) {
       item.likes.isLiked = !item.likes.isLiked;
       item.likes.count += 1;
+    };
+
+    $scope.likedModal = function(item) {
+      var modal = personListModalService.createModal(item.likes.liked, 'いいねした人一覧')
+      modal.$promise.then(modal.show);
     };
   });

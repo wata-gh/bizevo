@@ -6,7 +6,7 @@ angular.module('tea')
       createConfirm: function(success, title, content, options) {
         options = options || {};
         var scope = $rootScope.$new(true);
-        options.template = 'components/modal/confirm.modal.html';
+        options.template = 'components/templates/confirm/confirm.modal.html';
         options.show = false;
         options.scope = scope;
 
