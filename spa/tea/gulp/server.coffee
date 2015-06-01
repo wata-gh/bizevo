@@ -29,7 +29,7 @@ browserSyncInit = (baseDir, files, browser) ->
     browser: browser,
   })
 
-gulp.task 'serve', ['watch'], ->
+gulp.task 'serve', ['inject', 'watch'], ->
   browserSyncInit [
     'src',
     '.tmp',
