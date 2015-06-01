@@ -38,7 +38,7 @@
 
       <nav class="navbar navbar-default visible-xs-block visible-sm-block" bs-navbar>
         <div class="navbar-header">
-          <button class="navbar-toggle" type="button" data-template="components/sidebar/sidebar.aside.html" data-animation="am-fade-and-slide-left" data-placement="left" data-container="body" bs-aside>
+          <button class="navbar-toggle" type="button" data-template="components/templates/sidebar/sidebar.aside.html" data-animation="am-fade-and-slide-left" data-placement="left" data-container="body" bs-aside>
             <i class="list icon"></i>
           </button>
           <a class="navbar-brand" href="/">bizevo</a>
@@ -48,7 +48,7 @@
       <div class="row clearfix">
         <div class="col-md-2 column">
           <div class="bs-sidebar hidden-print visible-md-block visible-lg-block" bs-affix>
-            <div ng-include="'components/sidebar/sidebar.html'"></div>
+            <div ng-include="'components/templates/sidebar/sidebar.tpl.html'"></div>
           </div>
         </div>
         <div class="col-md-10 column">
@@ -101,16 +101,18 @@
     <!-- inject:modules -->
     <script src="app/tea.js"></script>
     <script src="app/detail/detail.controller.js"></script>
+    <script src="app/edit/edit.controller.js"></script>
     <script src="app/info/info.controller.js"></script>
     <script src="app/list/list.controller.js"></script>
     <script src="app/top/top.controller.js"></script>
-    <script src="app/edit/edit.controller.js"></script>
-    <script src="components/loading/loading.service.js"></script>
-    <script src="components/badge/badge.service.js"></script>
-    <script src="components/sidebar/sidebar.controller.js"></script>
-    <script src="components/tdk/tdk.service.js"></script>
-    <script src="components/party/party.resource.js"></script>
     <script src="components/modal/confirm.modal.service.js"></script>
+    <script src="components/directives/badge/badge.directive.js"></script>
+    <script src="components/directives/tdk/description.directive.js"></script>
+    <script src="components/directives/tdk/title.directive.js"></script>
+    <script src="components/resources/party/party.resource.js"></script>
+    <script src="components/services/badge/badge.service.js"></script>
+    <script src="components/services/loading/loading.service.js"></script>
+    <script src="components/services/tdk/tdk.service.js"></script>
     <!-- endinject -->
 
     <!-- inject:partials -->

@@ -9,7 +9,7 @@ angular.module('tea')
       animation: 'am-fade-and-slide-top',
       placement: 'center',
       keyboard: false,
-      template: 'components/loading/loading.modal.html',
+      template: 'components/templates/loading/loading.modal.html',
     });
     var _errorModal = $modal({
       show: false,
@@ -17,7 +17,7 @@ angular.module('tea')
       animation: 'am-fade-and-slide-top',
       placement: 'center',
       keyboard: false,
-      template: 'components/loading/error.modal.html',
+      template: 'components/templates/error/error.modal.html',
     });
     return {
         start: function() {
