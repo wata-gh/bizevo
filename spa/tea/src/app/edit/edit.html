@@ -7,7 +7,7 @@
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 column">
-            <input type="text" class="form-control input-lg" placeholder="タイトル" ng-bind="item.title" />
+            <input type="text" ng-model="item.title" class="form-control input-lg" placeholder="タイトル">
           </div>
           <div class="col-md-3 column">
             <div class="row clearfix">
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="col-md-9 column">
-            <textarea class="form-control" placeholder="詳細" ng-bind="item.description" rows="8"></textarea>
+            <textarea class="form-control" placeholder="詳細" ng-model="item.description" rows="8"></textarea>
           </div>
         </div>
 
