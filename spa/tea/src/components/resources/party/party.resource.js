@@ -2,13 +2,13 @@
 
 angular.module('tea')
   .factory('Party', function ($resource) {
-    return $resource('/api/tea/detail/:id',
+    return $resource('/api/tea/party/:id',
         {
           id: '@id',
         },{
           query: {
             method: 'GET',
-            url: '/api/tea/list',
+            url: '/api/tea/party',
             isArray: true,
             params: {
             },

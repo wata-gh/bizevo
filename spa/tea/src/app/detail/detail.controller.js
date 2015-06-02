@@ -1,13 +1,19 @@
 'use strict';
 
 angular.module('tea')
-  .controller('DetailCtrl', function ($scope, $stateParams, Party, tdkService, confirmModalService, personListModalService) {
+  .controller('DetailCtrl', function ($scope, $stateParams, Party, tdkService, confirmModalService, personListModalService, myService) {
     var id = $stateParams.id;
 
     Party.get({id: id}).$promise.then(function(item){
       $scope.item = item;
       tdkService.setTitle(item.title);
       tdkService.setDescription(item.description);
+
+      $scope.itsMine = false;
+      myService.getMe().$promise.then(function(me){
+        $scope.me = me;
+        $scope.itsMine = me.id === item.owner.id;
+      });
 
       $scope.likeParty = function(item) {
         item.likes.isLiked = !item.likes.isLiked;
@@ -30,7 +36,7 @@ angular.module('tea')
       };
 
       $scope.attendedModal = function(item) {
-        var modal = personListModalService.createModal(item.attends.liked, '参加者一覧')
+        var modal = personListModalService.createModal(item.attends.attended, '参加者一覧')
         modal.$promise.then(modal.show);
       };
 
@@ -66,5 +72,6 @@ angular.module('tea')
         });
         $scope.newComment = '';
       };
+
     });
   });

@@ -5,7 +5,12 @@
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 column">
-            <h2>{{item.title}}</h2>
+            <h2>
+              {{item.title}}
+              <small class="pull-right" ng-show="itsMine">
+                <a ui-sref="edit({id: item.id})" class="btn btn-danger btn-xs">編集</a>
+              </small>
+            </h2>
           </div>
           <div class="col-md-3 column">
             <div class="row clearfix">
@@ -32,7 +37,7 @@
         </div>
         <div class="row clearfix">
           <div class="col-md-12 column">
-            <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>
+            <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>&nbsp;
           </div>
         </div>
       </div>
@@ -150,11 +155,11 @@
               <div class="row clearfix">
                 <div class="col-md-2 column">
                   <div>
-                    {{'ほげほげ'}}
+                    {{me.name}}
                   </div>
                   <div>
-                    <img ng-show="comment.auther.image" class="img-responsive center-block" ng-src="{{comment.auther.image}}" />
-                    <img ng-hide="comment.auther.image" class="img-responsive center-block" src="/images/noimage.png" />
+                    <img ng-show="me.image" class="img-responsive center-block" ng-src="{{me.image}}" />
+                    <img ng-hide="me.image" class="img-responsive center-block" src="/images/noimage.png" />
                   </div>
                 </div>
                 <div class="col-md-10 column">
