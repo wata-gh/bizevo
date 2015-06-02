@@ -8,8 +8,14 @@ apimock = (req, res, next) ->
   url = req.url.toString()
   method = req.method.toString()
 
-  res.setHeader("Content-Type", "application/json") if /^\/api\/.+/.test url
-  req.url = "#{url}_#{method}" if /^\/api\/.+/.test url && method != 'get'
+  if /^\/api\/.+/.test url
+    urlPrefix = "/api/"
+    dummyUrl = url.substring url.indexOf(urlPrefix) + urlPrefix.length
+    dummyPath = dummyUrl.split("/").join("_");
+    dummyPath += "_#{method}" unless /GET/i.test method
+    res.setHeader "Content-Type", "application/json"
+    req.url = urlPrefix + dummyPath
+
   next()
 
 if middleware?
