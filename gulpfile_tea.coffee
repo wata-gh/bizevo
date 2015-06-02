@@ -7,7 +7,7 @@ rimraf     = require 'gulp-rimraf'
 size       = require 'gulp-size'
 
 gulp.task 'clean', ->
-  gulp.src ['public/tea/{scripts,styles,fonts}/**', 'app/views/tea/**/*.erb'], read: false
+  gulp.src ['public/tea/{scripts,styles,fonts}/**/*', 'app/views/tea/**/*.erb'], read: false
     .pipe rimraf()
     .pipe size()
 
