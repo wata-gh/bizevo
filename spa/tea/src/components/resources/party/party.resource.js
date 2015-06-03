@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('tea')
-  .factory('Party', function ($resource) {
-    return $resource('api/party/:id',
+  .factory('Party', function (teaResource) {
+    return teaResource('api/party/:id',
         {
           id: '@id',
         },{
