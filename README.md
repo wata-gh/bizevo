@@ -1,4 +1,4 @@
-bizevo
+bizevo [![Code Climate](https://codeclimate.com/github/wata-gh/bizevo/badges/gpa.svg)](https://codeclimate.com/github/wata-gh/bizevo)
 ======
 
 bizevoはbizsupの後継でビジネスの進化を促進します。
