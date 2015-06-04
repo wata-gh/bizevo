@@ -91,7 +91,7 @@ module Bizevo
           end
         end
         @sum = sum.values.sort_by {|s| s[:est_overtime]}.reverse
-        @aveo = owa.inject{|t, v| t + v} / owa.size
+        @aveo = owa.present? ? owa.inject{|t, v| t + v} / owa.size : 0
       end
     end
     helpers DashboardHelper
