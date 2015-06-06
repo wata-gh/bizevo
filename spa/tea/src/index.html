@@ -2,32 +2,70 @@
 <html class="no-js" ng-app="tea">
   <head>
     <meta charset="utf-8">
-    <title>frontend</title>
-    <meta name="description" content="">
+    <title tea-title></title>
+    <meta tea-description name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp,src}) styles/vendor.css -->
-    <link rel="stylesheet" href="app/main/vendor.css">
+    <link rel="stylesheet" href="app/vendor.css">
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css({.tmp,src}) styles/main.css -->
-    <link rel="stylesheet" href="app/main/main.css">
+    <link rel="stylesheet" href="app/main.css">
     <!-- endbuild -->
 
     <!-- build:js scripts/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
+
+    <!-- use semantic-ui manually. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.1/semantic.min.css" />
+
   </head>
   <body>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div ui-view></div>
+    <div class="container">
+
+      <nav class="navbar navbar-default visible-xs-block visible-sm-block" bs-navbar>
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-template="components/templates/sidebar/sidebar.aside.html" data-animation="am-fade-and-slide-left" data-placement="left" data-container="body" bs-aside>
+            <i class="list icon"></i>
+          </button>
+          <a class="navbar-brand" href="/">bizevo</a>
+        </div>
+      </nav>
+
+      <div class="row clearfix">
+        <div class="col-md-2 column">
+          <div class="bs-sidebar hidden-print visible-md-block visible-lg-block" bs-affix>
+            <div ng-include="'components/templates/sidebar/sidebar.tpl.html'"></div>
+          </div>
+        </div>
+        <div class="col-md-10 column">
+          <div class="row clearfix">
+            <div class="col-md-12 column am-fade-and-slide-right" ui-view autoscroll="true"></div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <footer>
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <p class="text-right">Powered by <a target="_blank" href="http://www.active.co.jp/"><img alt="ACTIVE WORK" src="//www.active.co.jp/wp-content/themes/aw/common/images/common/logo_footer.png"></img></a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -49,18 +87,45 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/semantic-ui/dist/semantic.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({src,.tmp}) scripts/main.js -->
+
+    <!-- inject:modules -->
     <script src="app/tea.js"></script>
-    <script src="app/main/main.controller.js"></script>
-    <script src="components/navbar/navbar.controller.js"></script>
+    <script src="components/commons/tea.resource.js"></script>
+    <script src="app/detail/detail.controller.js"></script>
+    <script src="app/edit/edit.controller.js"></script>
+    <script src="app/info/info.controller.js"></script>
+    <script src="app/list/list.controller.js"></script>
+    <script src="app/top/top.controller.js"></script>
+    <script src="components/directives/badge/badge.directive.js"></script>
+    <script src="components/directives/tdk/description.directive.js"></script>
+    <script src="components/directives/tdk/title.directive.js"></script>
+    <script src="components/resources/party/party.resource.js"></script>
+    <script src="components/resources/user/user.resource.js"></script>
+    <script src="components/services/badge/badge.service.js"></script>
+    <script src="components/services/confirm/confirm.modal.service.js"></script>
+    <script src="components/services/loading/loading.service.js"></script>
+    <script src="components/services/my/my.service.js"></script>
+    <script src="components/services/person-list/person.list.modal.service.js"></script>
+    <script src="components/services/tdk/tdk.service.js"></script>
+    <!-- endinject -->
 
     <!-- inject:partials -->
     <!-- angular templates will be automaticaly converted in js and inserted here -->
     <!-- endinject -->
     <!-- endbuild -->
+
+    <!-- use semantic-ui manually -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.1/semantic.min.js"></script>
 
   </body>
 </html>

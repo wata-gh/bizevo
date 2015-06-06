@@ -1,0 +1,83 @@
+
+<div class="row clearfix" ng-hide="items.length">
+  <div class="jumbotron">
+    <p>{{'勉強会が見つかりませんでした >_<'}}</p>
+  </div>
+</div>
+
+<div infinite-scroll="loadMore()" infinite-scroll-disabled='!hasNext()' class="row clearfix">
+  <div ng-repeat="item in items" class="col-md-12 column">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row clearfix">
+          <div class="col-md-9 column">
+            <a ui-sref="detail({id: item.id})">
+              <h2>{{item.title}}</h2>
+            </a>
+          </div>
+          <div class="col-md-3 column">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <small>
+                  更新日：{{item.update}}
+                </small> 
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-xs" ng-click="likeParty(item)" ng-class="{'btn-default': item.likes.isLiked, 'btn-primary': !item.likes.isLiked}">
+                    <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
+                  </button>
+                  &nbsp;
+                  <button type="button" class="btn btn-xs btn-info" ng-click="likedModal(item)">
+                    <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row clearfix">
+          <div class="col-md-3 column">
+            <a ui-sref="detail({id: item.id})">
+              <img class="img-responsive center-block" ng-src="{{item.image}}" />
+            </a>
+          </div>
+          <div class="col-md-9 column">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <span class="label label-default">
+                  <i class="comment outline icon"></i>{{item.comments.count}}
+                </span>
+                &nbsp;
+                <span class="label" ng-class="{'label-default': !item.attends.isAttended, 'label-primary': item.attends.isAttended}">
+                  <span ng-switch="item.attends.isAttended">
+                    <span ng-switch-when="true">参加</span>
+                    <span ng-switch-default>不参加</span>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <hr />
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                {{item.description}}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+      </div>
+    </div>
+  </div>
+</div>

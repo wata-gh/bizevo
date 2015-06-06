@@ -4,6 +4,25 @@ browserSync = require 'browser-sync'
 
 middleware = require './proxy'
 
+apimock = (req, res, next) ->
+  url = req.url.toString()
+  method = req.method.toString()
+
+  if /^\/api\/.+/.test url
+    urlPrefix = "/api/"
+    dummyUrl = url.substring url.indexOf(urlPrefix) + urlPrefix.length
+    dummyPath = dummyUrl.split("/").join("_");
+    dummyPath += "_#{method}" unless /GET/i.test method
+    res.setHeader "Content-Type", "application/json"
+    req.url = urlPrefix + dummyPath
+
+  next()
+
+if middleware?
+  middleware = apimock
+else if !(middleware.unshift?(apimock))
+  middleware = [middleware, apimock]
+
 browserSyncInit = (baseDir, files, browser) ->
   browser = 'default' if browser is undefined
 
@@ -11,15 +30,16 @@ browserSyncInit = (baseDir, files, browser) ->
     startPath: '/index.html',
     server:
       baseDir: baseDir,
-      middleware: middleware,
+      middleware: middleware
     ,
     browser: browser,
   })
 
-gulp.task 'serve', ['watch'], ->
+gulp.task 'serve', ['inject', 'watch'], ->
   browserSyncInit [
     'src',
     '.tmp',
+    'mocks',
   ], [
     '.tmp/{app,components}/**/*.css',
     'src/assets/images/**/*',

@@ -21,7 +21,10 @@
     "jade": "~1.9.2"
   },
   "devDependencies": {
-    "coffee-script": "~1.8.0"
+    "coffee-script": "~1.8.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rimraf": "^0.1.1",
+    "gulp-size": "^1.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

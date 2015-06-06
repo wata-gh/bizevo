@@ -1,0 +1,190 @@
+<div class="row clearfix">
+  <div class="col-md-12 column">
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row clearfix">
+          <div class="col-md-9 column">
+            <h2>
+              {{item.title}}
+              <small class="pull-right" ng-show="itsMine">
+                <a ui-sref="edit({id: item.id})" class="btn btn-danger btn-xs">編集</a>
+              </small>
+            </h2>
+          </div>
+          <div class="col-md-3 column">
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <small>
+                  更新日：{{item.update}}
+                </small> 
+              </div>
+            </div>
+            <div class="row clearfix">
+              <div class="col-md-12 column">
+                <div class="pull-right">
+                  <button type="button" class="btn btn-xs" ng-click="likeParty(item)" ng-class="{'btn-default': item.likes.isLiked, 'btn-primary': !item.likes.isLiked}">
+                    <small>いいね！<span ng-show="item.likes.isLiked">を解除</span></small>
+                  </button>
+                  &nbsp;
+                  <button type="button" class="btn btn-xs btn-info" ng-click="likedModal(item)">
+                    <i class="icon heart" ng-class="{empty: !item.likes.isLiked}"></i>{{item.likes.count}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <span ng-repeat="tag in item.tags" class="label label-default">{{tag}}</span>&nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row clearfix">
+          <div class="col-md-3 column">
+            <img class="img-responsive center-block" ng-src="{{item.image}}" />
+          </div>
+          <div class="col-md-9 column">
+            {{item.description}}
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <dl class="dl-horizontal">
+              <dt>主催</dt><dd>{{item.owner.name}}</dd>
+              <dt>日時</dt><dd>{{item.date}}</dd>
+              <dt>会場</dt><dd>{{item.venue}}</dd>
+              <dt>参加者 / 定員</dt>
+              <dd>
+                <strong>{{item.attends.count}}</strong><small>人</small>
+                /
+                <span ng-switch on="item.capacity">
+                  <span ng-switch-when="-1">上限なし</span>
+                  <span ng-switch-default>
+                    <strong>{{item.capacity}}</strong><small>人</small>
+                  </span>
+                </span>
+              </dd>
+              <dd>
+                <button type="button" class="btn btn-xs btn-info" ng-click="attendedModal(item)">
+                  <i class="icon users"></i>参加者一覧
+                </button>
+              </dd>
+              <dt>URL</dt>
+              <dd>
+                <a target="_blank" ng-show="item.reseration" ng-href="{{item.reseration}}">{{item.reseration}}</a>
+                <span ng-hide="item.reseration"> - </span>
+              </dd>
+              <dt ng-show="item.attaches.attached.length">資料</dt>
+              <dd ng-repeat="f in item.attaches.attached">
+                <a target="_blank" ng-href="{{f.link}}">{{f.fileName}}</a>
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            <div>
+              <button type="button" class="btn btn-block btn-default" ng-show="item.attends.isAttended" ng-click="leaveConfirm.confirm()">
+                  参加を取りやめる
+              </button>
+            </div>
+            <div>
+              <button type="button" class="btn btn-block btn-primary" ng-hide="item.attends.isAttended" ng-click="attendConfirm.confirm()">
+                  この勉強会に参加する
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <span ng-show="item.comments.count">
+          <hr />
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="comment in item.comments.commented">
+              <div class="row clearfix">
+                <div class="col-md-2 column">
+                  <div>
+                    {{comment.auther.name}}
+                  </div>
+                  <div>
+                    <img ng-show="comment.auther.image" class="img-responsive center-block" ng-src="{{comment.auther.image}}" />
+                    <img ng-hide="comment.auther.image" class="img-responsive center-block" src="/images/noimage.png" />
+                  </div>
+                </div>
+                <div class="col-md-10 column">
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">
+                      <small>
+                        <span>
+                          {{comment.date}}
+                        </span>
+                        <span class="pull-right">
+                          <button type="button" class="btn btn-xs" ng-click="likeComment(comment)" ng-class="{'btn-default': comment.likes.isLiked, 'btn-primary': !comment.likes.isLiked}">
+                            <small>いいね！<span ng-show="comment.likes.isLiked">を解除</span></small>
+                          </button>
+                          &nbsp;
+                          <button type="button" class="btn btn-xs btn-info" ng-click="likedModal(comment)">
+                            <i class="icon heart" ng-class="{empty: !comment.likes.isLiked}"></i>{{comment.likes.count}}
+                          </button>
+                        </span>
+                      </small>
+                    </div>
+                  </div>
+                  <hr />
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">
+                      {{comment.text}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </span>
+
+        <span>
+          <hr />
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row clearfix">
+                <div class="col-md-2 column">
+                  <div>
+                    {{me.name}}
+                  </div>
+                  <div>
+                    <img ng-show="me.image" class="img-responsive center-block" ng-src="{{me.image}}" />
+                    <img ng-hide="me.image" class="img-responsive center-block" src="/images/noimage.png" />
+                  </div>
+                </div>
+                <div class="col-md-10 column">
+                  <div class="row clearfix">
+                    <div class="col-md-12 column">
+                      <div class="form-horizonal">
+                        <div class="form-group">
+                          <textarea rows="3" class="form-control" ng-model="newComment"></textarea>
+                        </div>
+                        <div class="form-group pull-right">
+                          <button type="button" class="btn btn-danger btn-xs" ng-click="postComment()">
+                            <small>コメントする</small>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </span>
+
+      </div>
+    </div>
+
+  </div>
+</div>

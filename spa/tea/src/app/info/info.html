@@ -1,0 +1,24 @@
+<div class="row clearfix">
+  <div class="col-md-12 column">
+    <div class="panel-group" ng-model="panels.activePanel" aria-multiselectable="true" data-allow-multiple="true" bs-collapse>
+      <div class="panel panel-default" ng-repeat="panel in panels">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a bs-collapse-toggle>
+              {{ panel.title }}
+            </a>
+          </h4>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+          <div class="panel-body">
+            {{ panel.body }}
+          </div>
+          <div class="panel-body">
+            {{ panel.body }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

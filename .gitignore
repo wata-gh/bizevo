@@ -1,4 +1,5 @@
 .DS_Store
+._.DS_Store
 log/**/*
 tmp/**/*
 vendor/gems/*
@@ -15,3 +16,5 @@ unicorn.pid
 node_modules
 bower_components
 coverage
+public/tea
+app/views/tea/**/*.erb
