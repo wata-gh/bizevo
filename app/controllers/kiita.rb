@@ -29,6 +29,7 @@ Bizevo::App.controllers :kiita do
     @title = 'kiita | edit'
     @article = Article.eager_load(:article_tags).includes(:article_tags).find_by :id => params[:id]
     halt 404 unless @article
+    halt 403 unless @article.user_id == current_user.id
     render 'kiita/update'
   end
 

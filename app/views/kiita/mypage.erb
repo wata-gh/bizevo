@@ -64,7 +64,7 @@
           <div class="item">
             <a class="ui ribbon teal label"><i class="like icon"></i> <%= pa.likes %></a>
             <p>
-            <% link_to pa.title, url(:kiita, :view, pa.id) %>
+            <%= link_to pa.title, url(:kiita, :view, pa.id) %>
             </p>
             <i class="tags icon"></i>
             <% pa.article_tags.each do |tag| %>

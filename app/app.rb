@@ -69,6 +69,10 @@ module Bizevo
     error 404 do
       render 'errors/404'
     end
+
+    error 403 do
+      render 'errors/403'
+    end
     #
     #   error 500 do
     #     render 'errors/500'
