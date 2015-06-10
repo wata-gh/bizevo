@@ -35,7 +35,7 @@ gulp.task 'partials', ->
 
 gulp.task 'inject', ->
   gulp.src 'src/*.html'
-    .pipe $.inject(gulp.src('src/{app,components}/**/*.js'),
+    .pipe $.inject(gulp.src('src/{app,components}/**/*.js').pipe($.sort()),
       read: false,
       starttag: '<!-- inject:modules -->',
       addRootSlash: false,
