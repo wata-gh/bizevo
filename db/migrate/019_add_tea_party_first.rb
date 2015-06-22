@@ -16,7 +16,6 @@ class AddTeaPartyFirst < ActiveRecord::Migration
       t.string    :venue
       t.string    :reseration
       t.integer   :capacity
-
       t.timestamps
     end
     add_index :tea_parties, [:id], unique: true
@@ -28,11 +27,29 @@ class AddTeaPartyFirst < ActiveRecord::Migration
     end
     add_index :tea_likes, [:id, :user_id], unique: true
 
+    create_table :tea_comments, id: false do |t|
+      t.integer   :id,          null: false
+      t.integer   :parent_id,   null: false
+      t.text      :text,        null: false
+      t.integer   :user_id,     null: false
+      t.timestamps
+    end
+    add_index :tea_comments, [:id], unique: true
+
+    create_table :tea_party_attends, id: false do |t|
+      t.integer   :id,          null: false
+      t.integer   :user_id,     null: false
+      t.timestamps
+    end
+    add_index :tea_party_attends, [:id, :user_id], unique: true
+
   end
 
   def self.down
     drop_table :tea_ids
     drop_table :tea_parties
     drop_table :tea_likes
+    drop_table :tea_comments
+    drop_table :tea_party_attends
   end
 end
