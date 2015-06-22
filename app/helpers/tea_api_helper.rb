@@ -25,6 +25,8 @@ module Bizevo
           h[key] = val.strftime '%Y/%m/%d %T' if date_conv.include?(key) && val.present?
         end
         h['likes'] = transfer_likes party.likes
+        h['comments'] = transfer_comments party.comments
+        h['attends'] = transfer_attends party.attends
         h['attaches'] = {
           count: 0,
           attached: [],
@@ -38,6 +40,36 @@ module Bizevo
         count: likes.length,
         is_liked: likes.any? {|v| v.user_id == current_user.id},
         liked: likes.map {|v| v.user},
+      }
+      h.deep_transform_keys! {|k| k.to_s.camelize :lower}
+    end
+
+    def transfer_comments comments = []
+      h = {
+        count: comments.length,
+        commented: comments.map {|v| transfer_comment v},
+      }
+      h.deep_transform_keys! {|k| k.to_s.camelize :lower}
+    end
+
+    def transfer_comment comment = nil
+      return {} unless comment.present?
+      opts = {
+        only: ['id', 'parent_id', 'text', 'author', 'post_date'],
+        methods: ['author', 'post_date'],
+      }
+      h = comment.as_json opts
+      h['post_date'] = comment.post_date.strftime '%Y/%m/%d %T' if comment.post_date.present?
+      h['likes'] = transfer_likes comment.likes
+
+      h.deep_transform_keys! {|k| k.to_s.camelize :lower}
+    end
+
+    def transfer_attends attends = []
+      h = {
+        count: attends.length,
+        is_attended: attends.any? {|v| v.user_id == current_user.id},
+        attended: attends.map {|v| v.user},
       }
       h.deep_transform_keys! {|k| k.to_s.camelize :lower}
     end
