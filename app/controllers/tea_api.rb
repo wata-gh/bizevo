@@ -7,7 +7,9 @@ Bizevo::App.controllers 'tea/api' do
   };
 
   get :user, with: :id  do
-    suc_res sample_person
+    u = Tea::User.find_by_id(params[:id] == 'me' ? current_user.id : params[:id])
+    halt 404 unless u
+    suc_res u
   end
 
   sample_party = {
@@ -56,10 +58,68 @@ Bizevo::App.controllers 'tea/api' do
   };
 
   get :party do
-    suc_res [sample_party]
+    start_index = params[:index].present? ? params[:index].to_i : 0;
+    limit = params[:size].present? ? params[:size].to_i : 10;
+
+    parties = Tea::Party.limit(limit).offset(start_index).reorder(updated_at: :desc)
+    p parties
+    ret = parties.map{ |p| transfer_party p }
+    suc_res ret
   end
 
   get :party, with: :id do
-    suc_res sample_party
+    if params[:id] != 'new'
+      p = Tea::Party.owner_by(current_user).find_by_id params[:id]
+      halt 404 unless p
+      return suc_res transfer_party p
+    end
+
+    ActiveRecord::Base.transaction do
+      p = Tea::Party.unsaved.owner_by(current_user).first
+      return suc_res transfer_party p if p
+
+      p = Tea::Party.create_new_party current_user
+      suc_res transfer_party p
+    end
   end
+
+  post :party, with: :id do
+    p = Tea::Party.owner_by(current_user).find_by_id params[:id]
+    halt 404 unless p
+
+    json = posted_json %w/id title description venue start_date reseration capacity/
+    ActiveRecord::Base.transaction do
+      p.assign_attributes json
+      p.save!
+      suc_res id: p.id
+    end
+  end
+
+  get :like, with: :id do
+    likes = Tea::Like.liked_for params[:id]
+    suc_res transfer_likes likes
+  end
+
+  post :like, with: :id do
+    ActiveRecord::Base.transaction do
+      l = Tea::Like.find_by id: params[:id], user_id: current_user.id
+      Tea::Like.create! id: [params[:id], current_user.id] unless l
+      likes = Tea::Like.liked_for params[:id]
+      suc_res transfer_likes likes
+    end
+  end
+
+  delete :like, with: :id do
+    ActiveRecord::Base.transaction do
+      l = Tea::Like.find_by id: params[:id], user_id: current_user.id
+      l.delete if l
+      likes = Tea::Like.liked_for params[:id]
+      suc_res transfer_likes likes
+    end
+  end
+
+
+
+
+
 end
