@@ -13,40 +13,143 @@
 
 ActiveRecord::Schema.define(version: 19) do
 
-# Could not dump table "article_tags" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe4ff1fd0>
+  create_table "article_tags", id: false, force: true do |t|
+    t.integer  "article_id"
+    t.string   "tag"
+    t.integer  "delete_flg"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
-# Could not dump table "articles" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5030c30>
+  add_index "article_tags", ["article_id", "tag"], name: "index_article_tags_on_article_id_and_tag", unique: true, using: :btree
 
-# Could not dump table "oauths" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5062208>
+  create_table "articles", force: true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "article"
+    t.integer  "delete_flg"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "likes",      default: 0
+  end
 
-# Could not dump table "project_reports" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5089e98>
+  create_table "oauths", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "provider"
+    t.string   "access_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
-# Could not dump table "tags" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe50a3b68>
+  add_index "oauths", ["user_id"], name: "index_oauths_on_user_id", using: :btree
 
-# Could not dump table "tea_comments" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe50f71a0>
+  create_table "project_reports", force: true do |t|
+    t.integer  "quotn_no",        limit: 8,  null: false
+    t.text     "report"
+    t.string   "report_psnal_cd", limit: 10, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
-# Could not dump table "tea_ids" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe51538d8>
+  add_index "project_reports", ["quotn_no"], name: "index_project_reports_on_quotn_no", using: :btree
 
-# Could not dump table "tea_likes" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5130950>
+  create_table "tags", id: false, force: true do |t|
+    t.string   "tag"
+    t.integer  "delete_flg"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
-# Could not dump table "tea_parties" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5195a08>
+  add_index "tags", ["tag"], name: "index_tags_on_tag", unique: true, using: :btree
 
-# Could not dump table "tea_party_attends" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5d50f50>
+  create_table "tea_comments", id: false, force: true do |t|
+    t.integer  "id",         null: false
+    t.integer  "parent_id",  null: false
+    t.text     "text",       null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
-# Could not dump table "users" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5d82b40>
+  add_index "tea_comments", ["id"], name: "index_tea_comments_on_id", unique: true, using: :btree
 
-# Could not dump table "worktimes" because of following NoMethodError
-#   undefined method `virtual?' for #<ActiveRecord::ConnectionAdapters::Mysql2Adapter::Column:0x007fbfe5dcc2e0>
+  create_table "tea_ids", force: true do |t|
+    t.string   "id_kind",    limit: 128, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tea_likes", id: false, force: true do |t|
+    t.integer  "id",         null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_likes", ["id", "user_id"], name: "index_tea_likes_on_id_and_user_id", unique: true, using: :btree
+
+  create_table "tea_parties", id: false, force: true do |t|
+    t.integer  "id",          null: false
+    t.integer  "status",      null: false
+    t.integer  "owner_id",    null: false
+    t.string   "image_path"
+    t.string   "title"
+    t.string   "description"
+    t.datetime "start_date"
+    t.string   "venue"
+    t.string   "reseration"
+    t.integer  "capacity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_parties", ["id"], name: "index_tea_parties_on_id", unique: true, using: :btree
+
+  create_table "tea_party_attends", id: false, force: true do |t|
+    t.integer  "id",         null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_party_attends", ["id", "user_id"], name: "index_tea_party_attends_on_id_and_user_id", unique: true, using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "psnal_cd"
+    t.string   "icon_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "mst_blg_cd"
+    t.string   "full_name"
+    t.string   "report_mail"
+  end
+
+  create_table "worktimes", force: true do |t|
+    t.string   "psnal_cd",                   null: false
+    t.date     "date",                       null: false
+    t.string   "calendar",                   null: false
+    t.string   "absence",                    null: false
+    t.string   "work_class",                 null: false
+    t.string   "start",                      null: false
+    t.string   "start_mc",                   null: false
+    t.string   "end",                        null: false
+    t.string   "end_mc",                     null: false
+    t.string   "going_out",                  null: false
+    t.string   "going_out_mc",               null: false
+    t.string   "return",                     null: false
+    t.float    "worked_hours",    limit: 24, null: false
+    t.float    "l_worked_hours",  limit: 24, null: false
+    t.float    "h_worked_hours",  limit: 24, null: false
+    t.float    "hl_worked_hours", limit: 24, null: false
+    t.float    "tardy_hours",     limit: 24, null: false
+    t.float    "early_hours",     limit: 24, null: false
+    t.float    "private_hours",   limit: 24, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "worktimes", ["date"], name: "index_worktimes_on_date", using: :btree
+  add_index "worktimes", ["psnal_cd"], name: "index_worktimes_on_psnal_cd", using: :btree
 
 end
