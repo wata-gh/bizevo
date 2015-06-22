@@ -11,6 +11,7 @@ module Tea
 
     scope :owner_by, -> (user) { where(owner: user.id) }
     scope :unsaved, -> { where(status: Status::UNSAVED) }
+    scope :alived, -> { where.not(status: [Status::UNSAVED, Status::CLOSED]) }
 
     def image
       self.image_path ? "http://#{S3_CONFIG['host']}/thumbnail/#{self.image_path}.png" : "/images/noimage.png"

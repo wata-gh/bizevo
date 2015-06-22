@@ -10,14 +10,14 @@ Bizevo::App.controllers 'tea/api' do
     start_index = params[:index].present? ? params[:index].to_i : 0;
     limit = params[:size].present? ? params[:size].to_i : 10;
 
-    parties = Tea::Party.limit(limit).offset(start_index).reorder(updated_at: :desc)
+    parties = Tea::Party.alived.limit(limit).offset(start_index).reorder(updated_at: :desc)
     ret = parties.map{ |p| transfer_party p }
     suc_res ret
   end
 
   get :party, with: :id do
     if params[:id] != 'new'
-      p = Tea::Party.owner_by(current_user).find_by_id params[:id]
+      p = Tea::Party.find_by_id params[:id]
       halt 404 unless p
       return suc_res transfer_party p
     end
