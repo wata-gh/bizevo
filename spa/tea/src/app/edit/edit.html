@@ -13,8 +13,8 @@
             <div class="row clearfix">
               <div class="col-md-12 column">
                 <small>
-                  更新日：{{item.update}}
-                </small> 
+                  更新日：{{item.updateDate}}
+                </small>
               </div>
             </div>
           </div>
@@ -40,7 +40,7 @@
             <img ng-hide="tmpImage" class="img-responsive center-block" ng-src="{{item.image}}" />
             <img ng-show="tmpImage" class="img-responsive center-block" ngf-src="tmpImage" ngf-default-src="/images/noimage.png" ngf-accept="'image/*'" />
             <div class="panel panel-primary">
-              <div ngf-drop ngf-select ng-model="imgFiles" class="panel-body" 
+              <div ngf-drop ngf-select ng-model="imgFiles" class="panel-body"
                   ngf-drag-over-class="{accept:'bg-primary', reject:'bg-danger', delay:100}"
                   ngf-multiple="false" ngf-allow-dir="false"
                   ngf-accept="'image/*'">
@@ -48,7 +48,7 @@
                 <p>Click to select</p>
               </div>
               <div ngf-no-file-drop>
-                <div ngf-select ng-model="imgFiles" class="panel-body" 
+                <div ngf-select ng-model="imgFiles" class="panel-body"
                         ngf-drag-over-class="{accept:'bg-primary', reject:'bg-danger', delay:100}"
                         ngf-multiple="false" ngf-allow-dir="false"
                         ngf-accept="'image/*'">
@@ -76,12 +76,12 @@
               </div>
 
               <div class="form-group">
-                <label class="col-md-3 control-label" for="item.date">日時</label>
+                <label class="col-md-3 control-label" for="item.startDate">日時</label>
                 <div class="col-md-3">
-                  <input type="text" size="10" class="form-control" ng-model="item.date" date-format="yyyy/MM/dd" data-autoclose="1" placeholder="yyyy/mm/dd" bs-datepicker id="item.date" />
+                  <input type="text" size="10" class="form-control" ng-model="item.startDate" date-format="yyyy/MM/dd" data-autoclose="1" placeholder="yyyy/mm/dd" bs-datepicker id="item.startDate" />
                 </div>
                 <div class="col-md-3">
-                  <input type="text" size="8" class="form-control" ng-model="item.date" data-time-format="hh:mm" data-autoclose="1" placeholder="hh:mm" bs-timepicker />
+                  <input type="text" size="8" class="form-control" ng-model="item.startDate" data-time-format="HH:mm" data-autoclose="1" placeholder="HH:mm" bs-timepicker />
                 </div>
                 <div class="col-md-3">
                 </div>

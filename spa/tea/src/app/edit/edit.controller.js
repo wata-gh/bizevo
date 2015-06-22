@@ -5,7 +5,9 @@ angular.module('tea')
 
     var id = $stateParams.id;
     if (!id) {
-      $state.go('edit', {id: 123});
+      Party.get({id: 'new'}).$promise.then(function(item){
+        $state.go('edit', {id: item.id});
+      });
       return;
     }
 
@@ -21,7 +23,9 @@ angular.module('tea')
       };
 
       $scope.saveConfirm = confirmModalService.createConfirm(function(scope){
-        $state.go('detail', {id: item.id});
+        $scope.item.$save().then(function(item){
+          $state.go('detail', {id: item.id});
+        });
       }, '確認', '保存しますか？', {});
       $scope.cancelConfirm = confirmModalService.createConfirm(function(scope){
         if (isNewPost) {
