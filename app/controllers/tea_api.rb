@@ -1,68 +1,16 @@
 Bizevo::App.controllers 'tea/api' do
 
-  sample_person = {
-    id: 123,
-    name: '太郎',
-    image: 'https://pbs.twimg.com/profile_images/2579542348/l2b371d8r57tu6m4wu7i_400x400.jpeg',
-  };
-
   get :user, with: :id  do
     u = Tea::User.find_by_id(params[:id] == 'me' ? current_user.id : params[:id])
     halt 404 unless u
     suc_res u
   end
 
-  sample_party = {
-    id: 123,
-    status: 2,
-    image: 'https://pbs.twimg.com/profile_images/1345198632/o036202881302519966804_400x400.jpg',
-    title: 'テストタイトル',
-    description: "ほげほげ\n改行\nもげもげ",
-    date: '2009/08/11 08:14:45',
-    venue: '6F研修室',
-    reseration: 'http://www.amazon.co.jp/P.F.-%E3%83%89%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC/e/B000AP61TE',
-    capacity: 23,
-    owner: sample_person,
-    update: '2009/08/11 08:14:45',
-    tags: ['Java', 'Ruby', 'AngularJS'],
-    attaches: {
-      count: 0,
-      attached: [],
-    },
-    likes: {
-      count: 0,
-      isLiked: false,
-      liked: [],
-    },
-    attends: {
-      count: 0,
-      isAttended: false,
-      attended: [],
-    },
-    comments: {
-      count: 1,
-      commented: [
-        {
-          id: 123,
-          text: "コメントコメント\n改行\nこめんと",
-          date: '2015/09/01 20:11:23',
-          auther: sample_person,
-          likes: {
-            count: 0,
-            isLiked: false,
-            liked: [],
-          }
-        }
-      ],
-    }
-  };
-
   get :party do
     start_index = params[:index].present? ? params[:index].to_i : 0;
     limit = params[:size].present? ? params[:size].to_i : 10;
 
     parties = Tea::Party.limit(limit).offset(start_index).reorder(updated_at: :desc)
-    p parties
     ret = parties.map{ |p| transfer_party p }
     suc_res ret
   end
@@ -78,7 +26,7 @@ Bizevo::App.controllers 'tea/api' do
       p = Tea::Party.unsaved.owner_by(current_user).first
       return suc_res transfer_party p if p
 
-      p = Tea::Party.create_new_party current_user
+      p = Tea::Party.create_new_party! current_user
       suc_res transfer_party p
     end
   end
@@ -87,7 +35,7 @@ Bizevo::App.controllers 'tea/api' do
     p = Tea::Party.owner_by(current_user).find_by_id params[:id]
     halt 404 unless p
 
-    json = posted_json %w/id title description venue start_date reseration capacity/
+    json = posted_json %w/id title description venue start_date reseration capacity status/
     ActiveRecord::Base.transaction do
       p.assign_attributes json
       p.save!
@@ -118,8 +66,57 @@ Bizevo::App.controllers 'tea/api' do
     end
   end
 
+  get :comments, with: :id do
+    cs = Tea::Comment.commented_for params[:id]
+    suc_res transfer_comments cs
+  end
 
+  get :comment, with: :id do
+    c = Tea::Comment.find_by_id params[:id]
+    halt 404 unless c
+    suc_res transfer_comment c
+  end
 
+  post :comment, with: :parent_id do
+    json = posted_json %w/text/
+    ActiveRecord::Base.transaction do
+      c = Tea::Comment.create_new_comment! params[:parent_id], current_user, json['text']
+      suc_res transfer_comment c
+    end
+  end
 
+  put :comment, with: :id do
+    c = Tea::Comment.author_by(current_user).find_by_id params[:id]
+    halt 404 if c
+    json = posted_json %w/text/
+    ActiveRecord::Base.transaction do
+      c.assign_attributes json
+      c.save!
+      suc_res transfer_comment c
+    end
+  end
+
+  get :attend, with: :id do
+    likes = Tea::PartyAttend.attended_for params[:id]
+    suc_res transfer_attends likes
+  end
+
+  post :attend, with: :id do
+    ActiveRecord::Base.transaction do
+      a = Tea::PartyAttend.find_by id: params[:id], user_id: current_user.id
+      Tea::PartyAttend.create! id: [params[:id], current_user.id] unless a
+      attends = Tea::PartyAttend.attended_for params[:id]
+      suc_res transfer_attends attends
+    end
+  end
+
+  delete :attend, with: :id do
+    ActiveRecord::Base.transaction do
+      a = Tea::PartyAttend.find_by id: params[:id], user_id: current_user.id
+      a.delete if a
+      attends = Tea::PartyAttend.attended_for params[:id]
+      suc_res transfer_attends attends
+    end
+  end
 
 end
