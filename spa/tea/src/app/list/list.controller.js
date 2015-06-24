@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('ListCtrl', function ($scope, Party, personListModalService) {
+  .controller('ListCtrl', function ($scope, Party, likeService, personListModalService) {
     $scope.items = [];
 
     var _hasNext = false;
@@ -30,10 +30,7 @@ angular.module('tea')
     };
     $scope.loadMore();
 
-    $scope.likeParty = function(item) {
-      item.likes.isLiked = !item.likes.isLiked;
-      item.likes.count += 1;
-    };
+    $scope.likeParty = likeService.likeItem;
 
     $scope.likedModal = function(item) {
       var modal = personListModalService.createModal(item.likes.liked, 'いいねした人一覧')

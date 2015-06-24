@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('DetailCtrl', function ($scope, $stateParams, Party, tdkService, confirmModalService, personListModalService, myService) {
+  .controller('DetailCtrl', function ($scope, $stateParams, Party, likeService, tdkService, confirmModalService, personListModalService, myService) {
     var id = $stateParams.id;
 
     Party.get({id: id}).$promise.then(function(item){
@@ -15,15 +15,8 @@ angular.module('tea')
         $scope.itsMine = me.id === item.owner.id;
       });
 
-      $scope.likeParty = function(item) {
-        item.likes.isLiked = !item.likes.isLiked;
-        item.likes.count += 1;
-      };
-
-      $scope.likeComment = function(comment) {
-        comment.likes.isLiked = !comment.likes.isLiked;
-        comment.likes.count += 1;
-      };
+      $scope.likeParty = likeService.likeItem;
+      $scope.likeComment = likeService.likeItem;
 
       $scope.attendParty = function(item) {
         item.attends.isAttended = !item.attends.isAttended;
