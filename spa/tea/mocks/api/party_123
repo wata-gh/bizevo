@@ -1,7 +1,7 @@
 {"is_success":1,"results":
 {
   "id": 123,
-  "status": 1,
+  "status": "unsaved",
   "image": "https://pbs.twimg.com/profile_images/1345198632/o036202881302519966804_400x400.jpg",
   "title": "タイトル123",
   "description": "ほげほげ\n改行\nもげもげ",
