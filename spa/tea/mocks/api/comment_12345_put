@@ -1,0 +1,18 @@
+{"is_success":1,"results":
+  {
+    "id": 12345,
+    "parentId": 123,
+    "text": "コメントしたよ編集",
+    "postDate": "2015/09/01 20:11:23",
+    "auther": {
+      "id": 999,
+      "name": "コメント編集太郎",
+      "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
+    },
+    "likes": {
+      "count": 0,
+      "isLiked": false,
+      "liked": []
+    }
+  }
+}
