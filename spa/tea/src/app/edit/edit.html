@@ -2,13 +2,22 @@
 
   <div class="col-md-12 column">
 
+    <div class="row clearfix" ng-show="errors">
+      <div class="col-md-12 column">
+        <div class="alert alert-danger">
+          <p ng-repeat="msg in errorMessages">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{msg}}
+          <p>
+        </div>
+      </div>
+    </div>
+
     <div class="panel panel-info">
 
       <div class="panel-heading">
         <div class="row clearfix">
           <div class="col-md-9 column" ng-class="{'has-error': errors.title}">
             <input type="text" ng-model="item.title" class="form-control input-lg" placeholder="タイトル">
-            <span class="help-block" ng-repeat="mess in errors.title">{{mess}}</span>
           </div>
           <div class="col-md-3 column">
             <div class="row clearfix">

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService) {
+  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService, $alert) {
 
     var id = $stateParams.id;
     if (!id) {
@@ -29,6 +29,13 @@ angular.module('tea')
         $scope.item.$save().then(function(item){
           if (item.errors) {
             $scope.errors = item.errors;
+            $scope.errorMessages = item.messages;
+            $alert({
+              content: '入力エラーがあります',
+              type: 'danger',
+              container: 'body',
+              placement: 'top-right',
+            }).$show();
           } else {
             $state.go('detail', {id: item.id});
           }
