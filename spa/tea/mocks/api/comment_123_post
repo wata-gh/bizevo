@@ -4,7 +4,7 @@
     "parentId": 123,
     "text": "コメントしたよ",
     "postDate": "2015/09/01 20:11:23",
-    "auther": {
+    "author": {
       "id": 999,
       "name": "コメントした太郎",
       "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"

@@ -57,7 +57,7 @@
       {
         "text": "コメントコメント\n改行\nこめんと",
         "date": "2015/09/01 20:11:23",
-        "auther": {
+        "author": {
           "id": 222,
           "name": "さぶろう",
           "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
@@ -77,7 +77,7 @@
       {
         "text": "コメントコメント2\n改行2\nこめんと2",
         "date": "2015/09/01 20:11:23",
-        "auther": {
+        "author": {
           "id": 2222,
           "name": "さぶろう2",
           "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
