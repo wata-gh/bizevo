@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('DetailCtrl', function ($scope, $stateParams, Party, likeService, tdkService, confirmModalService, personListModalService, myService, commentService) {
+  .controller('DetailCtrl', function ($scope, $stateParams, Party, likeService, tdkService, confirmModalService, personListModalService, myService, commentService, attendService) {
     var id = $stateParams.id;
 
     Party.get({id: id}).$promise.then(function(item){
@@ -17,12 +17,6 @@ angular.module('tea')
 
       $scope.likeParty = likeService.likeItem;
       $scope.likeComment = likeService.likeItem;
-
-      $scope.attendParty = function(item) {
-        item.attends.isAttended = !item.attends.isAttended;
-        item.attends.count += 1;
-      };
-
       $scope.likedModal = function(item) {
         var modal = personListModalService.createModal(item.likes.liked, 'いいねした人一覧')
         modal.$promise.then(modal.show);
@@ -34,8 +28,7 @@ angular.module('tea')
       };
 
       var attendFunction = function(scope) {
-        item.attends.count += 1;
-        item.attends.isAttended = !item.attends.isAttended;
+        attendService.attendParty($scope.item);
         return true;
       };
       var confirmOptions = {
