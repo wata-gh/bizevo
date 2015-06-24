@@ -17,7 +17,8 @@ angular.module('tea')
             if (!/application\/json/i.test(headers("Content-Type"))) {
               return data;
             }
-            return angular.fromJson(data).results;
+            var json = angular.fromJson(data);
+            return json.is_success ? json.results : json.error;
           },
         });
         customActions[key] = h;

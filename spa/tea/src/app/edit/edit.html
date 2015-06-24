@@ -6,8 +6,9 @@
 
       <div class="panel-heading">
         <div class="row clearfix">
-          <div class="col-md-9 column">
+          <div class="col-md-9 column" ng-class="{'has-error': errors.title}">
             <input type="text" ng-model="item.title" class="form-control input-lg" placeholder="タイトル">
+            <span class="help-block" ng-repeat="mess in errors.title">{{mess}}</span>
           </div>
           <div class="col-md-3 column">
             <div class="row clearfix">
@@ -112,11 +113,11 @@
                 <label class="col-md-3 control-label">ステータス</label>
                 <div class="col-md-9">
                   <div class="btn-group" ng-model="item.status" bs-radio-group>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="2">下書き</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="3">WIP</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="4">募集中</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="5">アンケート待ち</label>
-                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="6">終了</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="draft">下書き</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="wip">WIP</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="recruitment">募集中</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="feedback">アンケート待ち</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="closed">終了</label>
                   </div>
                 </div>
               </div>

@@ -13,9 +13,9 @@ angular.module('tea')
 
     Party.get({id: id}).$promise.then(function(item){
       $scope.item = item;
-      var isNewPost = item.status === 1;
+      var isNewPost = item.status === 'unsaved';
       if (isNewPost) {
-        item.status = 2;
+        item.status = 'draft';
       }
 
       $scope.likedModal = function(item) {
@@ -27,7 +27,11 @@ angular.module('tea')
 
       $scope.saveConfirm = confirmModalService.createConfirm(function(scope){
         $scope.item.$save().then(function(item){
-          $state.go('detail', {id: item.id});
+          if (item.errors) {
+            $scope.errors = item.errors;
+          } else {
+            $state.go('detail', {id: item.id});
+          }
         });
       }, '確認', '保存しますか？', {});
       $scope.cancelConfirm = confirmModalService.createConfirm(function(scope){
