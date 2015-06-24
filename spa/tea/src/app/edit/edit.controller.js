@@ -26,14 +26,13 @@ angular.module('tea')
       };
 
       $scope.saveConfirm = confirmModalService.createConfirm(function(scope){
-        $scope.item.$save().then(function(item){
+        Party.save($scope.item).$promise.then(function(item){
           if (item.errors) {
             $scope.errors = item.errors;
             $scope.errorMessages = item.messages;
             $alert({
               content: '入力エラーがあります',
               type: 'danger',
-              container: 'body',
               placement: 'top-right',
             }).$show();
           } else {
