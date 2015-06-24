@@ -8,7 +8,7 @@ angular.module('tea')
         var callback = function(likes) {
           item.likes = likes;
         };
-        item.likes.isLiked ? like.$delete(callback) : like.$save(callback);
+        return item.likes.isLiked ? like.$delete(callback) : like.$save(callback);
       }
     };
   });
