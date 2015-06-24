@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('tea')
-  .factory('commentService', function (Comment, Comments) {
+  .factory('commentService', function (Comment) {
     var _restoreComments = function(item) {
-      var comments = Comments.get({id: item.id}, function(){
+      var comments = Comment.summary({parentId: item.id}, function(){
         item.comments = comments;
       });
     };

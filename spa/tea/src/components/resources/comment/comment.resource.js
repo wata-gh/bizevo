@@ -14,6 +14,14 @@ angular.module('tea')
               parentId: '@parentId',
             },
           },
+          summary: {
+            method: 'GET',
+            url: 'api/comments/:parentId',
+            isArray: false,
+            params: {
+              parentId: '@parentId',
+            },
+          },
           edit: {
             method: 'PUT',
             url: 'api/comment/:id',
