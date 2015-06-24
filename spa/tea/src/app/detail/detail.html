@@ -64,7 +64,7 @@
                 <strong>{{item.attends.count}}</strong><small>人</small>
                 /
                 <span ng-switch on="item.capacity">
-                  <span ng-switch-when="-1">上限なし</span>
+                  <span ng-switch-when="0">上限なし</span>
                   <span ng-switch-default>
                     <strong>{{item.capacity}}</strong><small>人</small>
                   </span>
