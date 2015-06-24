@@ -14,6 +14,9 @@ angular.module('tea')
     Party.get({id: id}).$promise.then(function(item){
       $scope.item = item;
       var isNewPost = item.status === 1;
+      if (isNewPost) {
+        item.status = 2;
+      }
 
       $scope.likedModal = function(item) {
         return {
