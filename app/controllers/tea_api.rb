@@ -38,6 +38,7 @@ Bizevo::App.controllers 'tea/api' do
     json = posted_json %w/id title description venue start_date reseration capacity status/
     ActiveRecord::Base.transaction do
       p.assign_attributes json
+      return err_res transfer_errors p.errors unless p.valid?
       p.save!
       suc_res id: p.id
     end

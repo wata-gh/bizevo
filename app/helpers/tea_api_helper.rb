@@ -74,6 +74,10 @@ module Bizevo
       h.deep_transform_keys! {|k| k.to_s.camelize :lower}
     end
 
+    def transfer_errors errors = {}
+      {errors: errors, messages: errors.full_messages}
+    end
+
     def posted_json includes = []
       h = JSON.parse request.body.read
       h.deep_transform_keys! {|k| k.to_s.underscore }
