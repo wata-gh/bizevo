@@ -8,10 +8,10 @@ Bizevo::App.controllers 'tea/api' do
   end
 
   get :party do
-    start_index = params[:index].present? ? params[:index].to_i : 0;
-    limit = params[:size].present? ? params[:size].to_i : 10;
+    start_index = params[:index].to_i
+    limit = params[:size].present? ? params[:size].to_i : 10
 
-    parties = Tea::Party.alived.limit(limit).offset(start_index).reorder(updated_at: :desc)
+    parties = Tea::Party.alived.limit(limit).offset(start_index).order(updated_at: :desc)
     ret = parties.map{ |p| transfer_party p }
     suc_res ret
   end
