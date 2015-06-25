@@ -6,10 +6,10 @@ module Tea
 
     validates :title, length: { minimum: 1 }
 
-    belongs_to  :owner, class_name: 'Tea::User', foreign_key: 'owner_id', primary_key: 'id'
-    has_many    :likes, ->{order(created_at: :asc)}, class_name: 'Tea::Like', foreign_key: 'id', primary_key: 'id'
-    has_many    :comments, ->{order(created_at: :asc)}, class_name: 'Tea::Comment', foreign_key: 'parent_id', primary_key: 'id'
-    has_many    :attends, ->{order(created_at: :asc)}, class_name: 'Tea::PartyAttend', foreign_key: 'id', primary_key: 'id'
+    belongs_to  :owner, class_name: 'Tea::User', primary_key: 'id'
+    has_many    :likes, ->{order(created_at: :asc)}, class_name: 'Tea::Like', foreign_key: 'id'
+    has_many    :comments, ->{order(created_at: :asc)}, class_name: 'Tea::Comment', foreign_key: 'parent_id'
+    has_many    :attends, ->{order(created_at: :asc)}, class_name: 'Tea::PartyAttend', foreign_key: 'id'
 
     scope :owner_by, -> (user) { where(owner: user.id) }
     scope :alived, -> { where(Party.wip.recruitment.feedback.where_values.reduce(:or)) }

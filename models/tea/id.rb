@@ -1,6 +1,6 @@
 module Tea
   class Id < ActiveRecord::Base
-    self.table_name = 'tea_ids'
+    self.table_name = :tea_ids
 
     def self.new_id_as_party
       self.new_id 'Party'
