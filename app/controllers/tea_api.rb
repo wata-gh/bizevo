@@ -1,7 +1,8 @@
 Bizevo::App.controllers 'tea/api' do
 
   get :user, with: :id  do
-    u = Tea::User.find_by_id(params[:id] == 'me' ? current_user.id : params[:id])
+    user_id = params[:id] == 'me' ? current_user.id : params[:id]
+    u = Tea::User.find_by id: user_id
     halt 404 unless u
     suc_res u
   end
@@ -17,7 +18,7 @@ Bizevo::App.controllers 'tea/api' do
 
   get :party, with: :id do
     if params[:id] != 'new'
-      p = Tea::Party.find_by_id params[:id]
+      p = Tea::Party.find_by id: params[:id]
       halt 404 unless p
       return suc_res transfer_party p
     end
@@ -32,7 +33,7 @@ Bizevo::App.controllers 'tea/api' do
   end
 
   post :party, with: :id do
-    p = Tea::Party.owner_by(current_user).find_by_id params[:id]
+    p = Tea::Party.owner_by(current_user).find_by id: params[:id]
     halt 404 unless p
 
     json = posted_json %w/id title description venue start_date reseration capacity status/
@@ -73,7 +74,7 @@ Bizevo::App.controllers 'tea/api' do
   end
 
   get :comment, with: :id do
-    c = Tea::Comment.find_by_id params[:id]
+    c = Tea::Comment.find_by id: params[:id]
     halt 404 unless c
     suc_res transfer_comment c
   end
@@ -87,7 +88,7 @@ Bizevo::App.controllers 'tea/api' do
   end
 
   put :comment, with: :id do
-    c = Tea::Comment.author_by(current_user).find_by_id params[:id]
+    c = Tea::Comment.author_by(current_user).find_by id: params[:id]
     halt 404 if c
     json = posted_json %w/text/
     ActiveRecord::Base.transaction do
