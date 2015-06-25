@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 19) do
+ActiveRecord::Schema.define(version: 20) do
 
   create_table "article_tags", id: false, force: true do |t|
     t.integer  "article_id"
@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 19) do
 
   create_table "tags", id: false, force: true do |t|
     t.string   "tag"
-    t.integer  "delete_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
