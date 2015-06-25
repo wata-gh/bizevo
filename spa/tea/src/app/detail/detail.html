@@ -47,7 +47,7 @@
             <img class="img-responsive center-block" ng-src="{{item.image}}" />
           </div>
           <div class="col-md-9 column">
-            {{item.description}}
+            <span class="ln" ng-bind-html="item.description | linky:'_blank'"></span>
           </div>
         </div>
 
