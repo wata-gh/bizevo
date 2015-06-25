@@ -36,9 +36,9 @@ Bizevo::App.controllers 'tea/api' do
     p = Tea::Party.owner_by(current_user).find_by id: params[:id]
     halt 404 unless p
 
-    json = posted_json %w/id title description venue start_date reseration capacity status/
+    json = posted_json Tea::Party.require_params
     ActiveRecord::Base.transaction do
-      p.assign_attributes json
+      p.update_attributes json
       return err_res transfer_errors p.errors unless p.valid?
       p.save!
       suc_res id: p.id
@@ -80,9 +80,9 @@ Bizevo::App.controllers 'tea/api' do
   end
 
   post :comment, with: :parent_id do
-    json = posted_json %w/text/
+    json = posted_json Tea::Comment.require_params
     ActiveRecord::Base.transaction do
-      c = Tea::Comment.create_new_comment! params[:parent_id], current_user, json['text']
+      c = Tea::Comment.create_new_comment! params[:parent_id], current_user, json
       suc_res transfer_comment c
     end
   end
@@ -90,9 +90,9 @@ Bizevo::App.controllers 'tea/api' do
   put :comment, with: :id do
     c = Tea::Comment.author_by(current_user).find_by id: params[:id]
     halt 404 if c
-    json = posted_json %w/text/
+    json = posted_json Tea::Comment.require_params
     ActiveRecord::Base.transaction do
-      c.assign_attributes json
+      c.update_attributes json
       c.save!
       suc_res transfer_comment c
     end

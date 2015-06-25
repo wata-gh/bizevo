@@ -4,6 +4,10 @@ module Tea
     self.table_name = :tea_parties
     self.primary_key = :id
 
+    def self.require_params
+      @require_params ||= %w/id title description venue start_date reseration capacity status/
+    end
+
     validates :title, length: { minimum: 1 }
 
     belongs_to  :owner, class_name: 'Tea::User', primary_key: 'id'
