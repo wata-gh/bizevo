@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.select', 'mgcrea.ngStrap', 'infinite-scroll', 'ngFileUpload'])
+angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router', 'ui.select', 'mgcrea.ngStrap', 'infinite-scroll', 'ngFileUpload', 'angulartics', 'angulartics.google.analytics'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('top', {
@@ -16,7 +16,7 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
         title: 'お知らせ'
       })
       .state('list', {
-        url: '/list',
+        url: '/list?q&tag&owner&sort&page',
         templateUrl: 'app/list/list.html',
         controller: 'ListCtrl',
         title: '一覧'
@@ -78,4 +78,7 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
       var $cookies = angular.injector(['ngCookies']).get('$cookies');
       return $cookies[csrfTokenKey];
     };
+  })
+  .config(function($analyticsProvider){
+    $analyticsProvider.virtualPageviews(false);
   });
