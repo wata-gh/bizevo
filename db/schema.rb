@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 18) do
+ActiveRecord::Schema.define(version: 20) do
 
   create_table "article_tags", id: false, force: true do |t|
     t.integer  "article_id"
@@ -55,12 +55,63 @@ ActiveRecord::Schema.define(version: 18) do
 
   create_table "tags", id: false, force: true do |t|
     t.string   "tag"
-    t.integer  "delete_flg"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "tags", ["tag"], name: "index_tags_on_tag", unique: true, using: :btree
+
+  create_table "tea_comments", id: false, force: true do |t|
+    t.integer  "id",         null: false
+    t.integer  "parent_id",  null: false
+    t.text     "text",       null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_comments", ["id"], name: "index_tea_comments_on_id", unique: true, using: :btree
+
+  create_table "tea_ids", force: true do |t|
+    t.string   "id_kind",    limit: 128, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tea_likes", id: false, force: true do |t|
+    t.integer  "id",         null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_likes", ["id", "user_id"], name: "index_tea_likes_on_id_and_user_id", unique: true, using: :btree
+
+  create_table "tea_parties", id: false, force: true do |t|
+    t.integer  "id",          null: false
+    t.integer  "status",      null: false
+    t.integer  "owner_id",    null: false
+    t.string   "image_path"
+    t.string   "title"
+    t.string   "description"
+    t.datetime "start_date"
+    t.string   "venue"
+    t.string   "reseration"
+    t.integer  "capacity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_parties", ["id"], name: "index_tea_parties_on_id", unique: true, using: :btree
+
+  create_table "tea_party_attends", id: false, force: true do |t|
+    t.integer  "id",         null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tea_party_attends", ["id", "user_id"], name: "index_tea_party_attends_on_id_and_user_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

@@ -2,19 +2,29 @@
 
   <div class="col-md-12 column">
 
+    <div class="row clearfix" ng-show="errors">
+      <div class="col-md-12 column">
+        <div class="alert alert-danger">
+          <p ng-repeat="msg in errorMessages">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>{{msg}}
+          <p>
+        </div>
+      </div>
+    </div>
+
     <div class="panel panel-info">
 
       <div class="panel-heading">
         <div class="row clearfix">
-          <div class="col-md-9 column">
+          <div class="col-md-9 column" ng-class="{'has-error': errors.title}">
             <input type="text" ng-model="item.title" class="form-control input-lg" placeholder="タイトル">
           </div>
           <div class="col-md-3 column">
             <div class="row clearfix">
               <div class="col-md-12 column">
                 <small>
-                  更新日：{{item.update}}
-                </small> 
+                  更新日：{{item.updateDate}}
+                </small>
               </div>
             </div>
           </div>
@@ -22,7 +32,7 @@
 
         <div class="row clearfix">
           <div class="col-md-12 column">
-            <ui-select multiple tagging tagging-label="（新規追加）" ng-model="item.tags" theme="bootstrap" sortable="true">
+            <ui-select ng-hide="true" multiple tagging tagging-label="（新規追加）" ng-model="item.tags" theme="bootstrap" sortable="true">
               <ui-select-match placeholder="タグ付け">
                 {{$item}}
               </ui-select-match>
@@ -39,8 +49,8 @@
           <div class="col-md-3 column">
             <img ng-hide="tmpImage" class="img-responsive center-block" ng-src="{{item.image}}" />
             <img ng-show="tmpImage" class="img-responsive center-block" ngf-src="tmpImage" ngf-default-src="/images/noimage.png" ngf-accept="'image/*'" />
-            <div class="panel panel-primary">
-              <div ngf-drop ngf-select ng-model="imgFiles" class="panel-body" 
+            <div class="panel panel-primary" ng-hide="true">
+              <div ngf-drop ngf-select ng-model="imgFiles" class="panel-body"
                   ngf-drag-over-class="{accept:'bg-primary', reject:'bg-danger', delay:100}"
                   ngf-multiple="false" ngf-allow-dir="false"
                   ngf-accept="'image/*'">
@@ -48,7 +58,7 @@
                 <p>Click to select</p>
               </div>
               <div ngf-no-file-drop>
-                <div ngf-select ng-model="imgFiles" class="panel-body" 
+                <div ngf-select ng-model="imgFiles" class="panel-body"
                         ngf-drag-over-class="{accept:'bg-primary', reject:'bg-danger', delay:100}"
                         ngf-multiple="false" ngf-allow-dir="false"
                         ngf-accept="'image/*'">
@@ -76,12 +86,12 @@
               </div>
 
               <div class="form-group">
-                <label class="col-md-3 control-label" for="item.date">日時</label>
+                <label class="col-md-3 control-label" for="item.startDate">日時</label>
                 <div class="col-md-3">
-                  <input type="text" size="10" class="form-control" ng-model="item.date" date-format="yyyy/MM/dd" data-autoclose="1" placeholder="yyyy/mm/dd" bs-datepicker id="item.date" />
+                  <input type="text" size="10" class="form-control" ng-model="item.startDate" date-format="yyyy/MM/dd" data-autoclose="1" placeholder="yyyy/mm/dd" bs-datepicker id="item.startDate" />
                 </div>
                 <div class="col-md-3">
-                  <input type="text" size="8" class="form-control" ng-model="item.date" data-time-format="hh:mm" data-autoclose="1" placeholder="hh:mm" bs-timepicker />
+                  <input type="text" size="8" class="form-control" ng-model="item.startDate" data-time-format="HH:mm" data-autoclose="1" placeholder="HH:mm" bs-timepicker />
                 </div>
                 <div class="col-md-3">
                 </div>
@@ -107,6 +117,20 @@
                   <input id="item.reseration" type="url" class="form-control" ng-model="item.reseration" placeholder="URL" />
                 </div>
               </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label">ステータス</label>
+                <div class="col-md-9">
+                  <div class="btn-group" ng-model="item.status" bs-radio-group>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="draft">下書き</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="wip">WIP</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="recruitment">募集中</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="feedback">アンケート待ち</label>
+                    <label class="btn btn-default"><input type="radio" class="btn btn-default" value="closed">終了</label>
+                  </div>
+                </div>
+              </div>
+
 
             </form>
           </div>

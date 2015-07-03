@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('DetailCtrl', function ($scope, $stateParams, Party, tdkService, confirmModalService, personListModalService, myService) {
+  .controller('DetailCtrl', function ($scope, $stateParams, Party, likeService, tdkService, confirmModalService, personListModalService, myService, commentService, attendService) {
     var id = $stateParams.id;
 
     Party.get({id: id}).$promise.then(function(item){
@@ -15,21 +15,8 @@ angular.module('tea')
         $scope.itsMine = me.id === item.owner.id;
       });
 
-      $scope.likeParty = function(item) {
-        item.likes.isLiked = !item.likes.isLiked;
-        item.likes.count += 1;
-      };
-
-      $scope.likeComment = function(comment) {
-        comment.likes.isLiked = !comment.likes.isLiked;
-        comment.likes.count += 1;
-      };
-
-      $scope.attendParty = function(item) {
-        item.attends.isAttended = !item.attends.isAttended;
-        item.attends.count += 1;
-      };
-
+      $scope.likeParty = likeService.likeItem;
+      $scope.likeComment = likeService.likeItem;
       $scope.likedModal = function(item) {
         var modal = personListModalService.createModal(item.likes.liked, 'いいねした人一覧')
         modal.$promise.then(modal.show);
@@ -41,8 +28,7 @@ angular.module('tea')
       };
 
       var attendFunction = function(scope) {
-        item.attends.count += 1;
-        item.attends.isAttended = !item.attends.isAttended;
+        attendService.attendParty($scope.item);
         return true;
       };
       var confirmOptions = {
@@ -55,23 +41,9 @@ angular.module('tea')
         if (!$scope.newComment) {
           return;
         }
-        $scope.item.comments.count += 1;
-        $scope.item.comments.commented.push({
-          text: $scope.newComment,
-          date: '2015/09/01 20:11:23',
-          auther: {
-            id: 222,
-            name: 'さぶろう',
-            image: 'https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg',
-          },
-          likes: {
-            count: 0,
-            isLiked: false,
-            liked: [],
-          },
+        commentService.postComment($scope.item, $scope.newComment).then(function(){
+          $scope.newComment = '';
         });
-        $scope.newComment = '';
       };
-
     });
   });

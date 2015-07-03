@@ -1,0 +1,13 @@
+{"is_success":1,"results":
+{
+  "count": 10000,
+  "isLiked": true,
+  "liked": [
+      {
+        "id": 222,
+        "name": "いいね済太郎",
+        "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
+      }
+  ]
+}
+}

@@ -1,17 +1,22 @@
 'use strict';
 
 angular.module('tea')
-  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService) {
+  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService, $alert) {
 
     var id = $stateParams.id;
     if (!id) {
-      $state.go('edit', {id: 123});
+      Party.get({id: 'new'}).$promise.then(function(item){
+        $state.go('edit', {id: item.id});
+      });
       return;
     }
 
     Party.get({id: id}).$promise.then(function(item){
       $scope.item = item;
-      var isNewPost = item.status === 1;
+      var isNewPost = item.status === 'unsaved';
+      if (isNewPost) {
+        item.status = 'draft';
+      }
 
       $scope.likedModal = function(item) {
         return {
@@ -21,7 +26,19 @@ angular.module('tea')
       };
 
       $scope.saveConfirm = confirmModalService.createConfirm(function(scope){
-        $state.go('detail', {id: item.id});
+        Party.save($scope.item).$promise.then(function(item){
+          if (item.errors) {
+            $scope.errors = item.errors;
+            $scope.errorMessages = item.messages;
+            $alert({
+              content: '入力エラーがあります',
+              type: 'danger',
+              placement: 'top-right',
+            }).$show();
+          } else {
+            $state.go('detail', {id: item.id});
+          }
+        });
       }, '確認', '保存しますか？', {});
       $scope.cancelConfirm = confirmModalService.createConfirm(function(scope){
         if (isNewPost) {

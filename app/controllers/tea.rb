@@ -4,6 +4,7 @@ Bizevo::App.controllers :tea do
     redirect url(:tea, :top)
   end
   get :top do
+    response.set_cookie "X-CSRF-Token", :value => csrf_token
     render "tea/index"
   end
 end

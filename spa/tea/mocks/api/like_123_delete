@@ -1,0 +1,13 @@
+{"is_success":1,"results":
+{
+  "count": 893,
+  "isLiked": false,
+  "liked": [
+      {
+        "id": 111,
+        "name": "いいね取り消し太郎",
+        "image": "https://pbs.twimg.com/profile_images/454133897006440448/alP_e4J8_bigger.jpeg"
+      }
+  ]
+}
+}

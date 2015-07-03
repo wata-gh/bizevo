@@ -1,7 +1,7 @@
 
 <div class="row clearfix" ng-hide="items.length">
   <div class="jumbotron">
-    <p>{{'勉強会が見つかりませんでした >_<'}}</p>
+    <p>勉強会が見つかりませんでした &gt;_&lt;</p>
   </div>
 </div>
 
@@ -19,8 +19,8 @@
             <div class="row clearfix">
               <div class="col-md-12 column">
                 <small>
-                  更新日：{{item.update}}
-                </small> 
+                  更新日：{{item.updateDate}}
+                </small>
               </div>
             </div>
             <div class="row clearfix">
@@ -69,7 +69,7 @@
             <hr />
             <div class="row clearfix">
               <div class="col-md-12 column">
-                {{item.description}}
+                <span class="ln" ng-bind-html="item.description | linky:'_blank'"></span>
               </div>
             </div>
 

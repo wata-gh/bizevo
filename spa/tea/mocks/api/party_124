@@ -1,7 +1,7 @@
 {"is_success":1,"results":
 {
   "id": 124,
-  "status": 2,
+  "status": "wip",
   "image": "https://pbs.twimg.com/profile_images/1345198632/o036202881302519966804_400x400.jpg",
   "title": "タイトル124",
   "description": "ほげほげ\n改行\nもげもげ",
@@ -55,9 +55,11 @@
     "count": 333,
     "commented": [
       {
+        "id": 12345,
+        "parentId": 124,
         "text": "コメントコメント\n改行\nこめんと",
-        "date": "2015/09/01 20:11:23",
-        "auther": {
+        "postDate": "2015/09/01 20:11:23",
+        "author": {
           "id": 222,
           "name": "さぶろう",
           "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
@@ -75,9 +77,11 @@
         }
       },
       {
+        "id": 12345,
+        "parentId": 124,
         "text": "コメントコメント2\n改行2\nこめんと2",
-        "date": "2015/09/01 20:11:23",
-        "auther": {
+        "postDate": "2015/09/01 20:11:23",
+        "author": {
           "id": 2222,
           "name": "さぶろう2",
           "image": "https://pbs.twimg.com/profile_images/546511706868822017/-XMTo767_bigger.jpeg"
@@ -96,6 +100,6 @@
       }
     ]
   },
-  "update": "2009/08/11 08:14:45"
+  "updateDate": "2009/08/11 08:14:45"
 }
 }

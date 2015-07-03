@@ -73,4 +73,9 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
       };
       return interceptor;
     });
+    var csrfTokenKey = 'X-CSRF-Token';
+    $httpProvider.defaults.headers.common[csrfTokenKey] = function(){
+      var $cookies = angular.injector(['ngCookies']).get('$cookies');
+      return $cookies[csrfTokenKey];
+    };
   });

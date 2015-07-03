@@ -6,7 +6,7 @@ middleware = require './proxy'
 
 apimock = (req, res, next) ->
   url = req.url.toString()
-  method = req.method.toString()
+  method = req.method.toString().toLowerCase();
 
   if /^\/api\/.+/.test url
     urlPrefix = "/api/"
@@ -15,6 +15,7 @@ apimock = (req, res, next) ->
     dummyPath += "_#{method}" unless /GET/i.test method
     res.setHeader "Content-Type", "application/json"
     req.url = urlPrefix + dummyPath
+    req.method = 'GET'
 
   next()
 

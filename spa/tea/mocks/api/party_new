@@ -1,10 +1,10 @@
 {"is_success":1,"results":
 {
   "id": 123,
-  "status": "unsaved",
+  "status": 1,
   "image": "https://pbs.twimg.com/profile_images/1345198632/o036202881302519966804_400x400.jpg",
   "title": "タイトル123",
-  "description": "<a href='http://www.google.com/'>google</a>\nhttp://www.google.com/\nほげほげ\n改行\nもげもげ\nあああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ",
+  "description": "ほげほげ\n改行\nもげもげ",
   "date": "2009/08/11 08:14:45",
   "venue": "6F研修室",
   "reseration": "http://www.amazon.co.jp/P.F.-%E3%83%89%E3%83%A9%E3%83%83%E3%82%AB%E3%83%BC/e/B000AP61TE",
@@ -55,10 +55,8 @@
     "count": 333,
     "commented": [
       {
-        "id": 12345,
-        "parentId": 123,
         "text": "コメントコメント\n改行\nこめんと",
-        "postDate": "2015/09/01 20:11:23",
+        "date": "2015/09/01 20:11:23",
         "author": {
           "id": 222,
           "name": "さぶろう",
@@ -77,10 +75,8 @@
         }
       },
       {
-        "id": 12345,
-        "parentId": 123,
         "text": "コメントコメント2\n改行2\nこめんと2",
-        "postDate": "2015/09/01 20:11:23",
+        "date": "2015/09/01 20:11:23",
         "author": {
           "id": 2222,
           "name": "さぶろう2",
