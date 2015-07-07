@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService, $alert) {
+  .controller('EditCtrl', function ($scope, $state, $stateParams, Party, Upload, confirmModalService, $alert, analyticsService) {
 
     var id = $stateParams.id;
     if (!id) {
@@ -47,6 +47,8 @@ angular.module('tea')
           $state.go('detail', {id: item.id});
         }
       }, '確認', '保存せずに終了しますか？', {});
+
+      analyticsService.pageTrack();
     });
 
     $scope.allTags = [];
@@ -76,5 +78,4 @@ angular.module('tea')
         }
       }
     };
-
   });
