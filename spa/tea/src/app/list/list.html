@@ -1,11 +1,11 @@
 
-<div class="row clearfix" ng-hide="items.length">
+<div class="row clearfix" ng-hide="items.length" ng-cloak>
   <div class="jumbotron">
     <p>勉強会が見つかりませんでした &gt;_&lt;</p>
   </div>
 </div>
 
-<div infinite-scroll="loadMore()" infinite-scroll-disabled='!hasNext()' class="row clearfix">
+<div ng-cloak infinite-scroll="loadMore()" infinite-scroll-disabled='!hasNext()' class="row clearfix">
   <div ng-repeat="item in items" class="col-md-12 column">
     <div class="panel panel-info">
       <div class="panel-heading">
