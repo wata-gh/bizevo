@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('tea')
-  .controller('ListCtrl', function ($scope, Party, likeService, personListModalService) {
+  .controller('ListCtrl', function ($scope, Party, likeService, personListModalService, $state, $stateParams, analyticsService) {
     $scope.items = [];
 
+    var page = $stateParams.page || 1;
     var _hasNext = false;
-    var _startIndex = 0;
     var _size = 10;
+    var _startIndex = (page -1) * _size;
     $scope.hasNext = function() {
       return _hasNext;
     };
@@ -16,16 +17,36 @@ angular.module('tea')
           index: _startIndex,
           size: _size,
       };
-      var items = Party.query(params, function(){
-        _hasNext = items.length >= _size;
-        _startIndex += items.length;
-        if (!items.length) {
-          return;
-        }
 
-        for (var i = 0; i < items.length; i++) {
-          $scope.items.push(items[i]);
-        }
+      var unloadOpts = {
+          reload: false,
+          location: true,
+          notify: false,
+      };
+      var stateParam = {
+          q: $stateParams.q,
+          tag: $stateParams.tag,
+          owner: $stateParams.owner,
+          sort: $stateParams.sort,
+      };
+      if (page > 1) {
+        stateParam['page'] = page;
+      }
+      $state.go($state.$current, stateParam, unloadOpts).then(function(){
+        var items = Party.query(params, function(){
+          _hasNext = items.length >= _size;
+          _startIndex += items.length;
+          analyticsService.pageTrack();
+
+          if (!items.length) {
+            return;
+          }
+
+          for (var i = 0; i < items.length; i++) {
+            $scope.items.push(items[i]);
+          }
+          page++;
+        });
       });
     };
     $scope.loadMore();
