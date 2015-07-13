@@ -26,7 +26,6 @@ angular.module('tea')
       var stateParam = {
           q: $stateParams.q,
           tag: $stateParams.tag,
-          status: $stateParams.status,
           owner: $stateParams.owner,
           sort: $stateParams.sort,
       };
