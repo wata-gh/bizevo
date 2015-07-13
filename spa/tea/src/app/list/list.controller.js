@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('tea')
+
   .controller('ListCtrl', function ($scope, Party, likeService, personListModalService, $state, $stateParams, analyticsService) {
     $scope.items = [];
 
@@ -33,10 +34,12 @@ angular.module('tea')
       if (page > 1) {
         stateParam['page'] = page;
       }
+
       $state.go($state.$current, stateParam, unloadOpts).then(function(){
         var items = Party.query(params, function(){
           _hasNext = items.length >= _size;
           _startIndex += items.length;
+
           analyticsService.pageTrack();
 
           if (!items.length) {
