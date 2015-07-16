@@ -16,7 +16,7 @@ angular.module('tea', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
         title: 'お知らせ'
       })
       .state('list', {
-        url: '/list?q&tag&owner&sort&page',
+        url: '/list?q&tag&owner&status&sort&page',
         templateUrl: 'app/list/list.html',
         controller: 'ListCtrl',
         title: '一覧'

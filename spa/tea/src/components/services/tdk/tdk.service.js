@@ -7,18 +7,21 @@ angular.module('tea')
 
     var service = {
         getTitle: function() {
-          return _title;
+          return (_title ? _title + ' | ' : '') + 'TeaParty in bizevo';
+        },
+        getPlaneTitle: function() {
+            return _title;
         },
         setTitle: function(title) {
-          _title = (title ? title + ' | ' : '') + 'TeaParty in bizevo';
-          $rootScope.$broadcast('setTeaTitle', _title);
+          _title = title;
+          return $rootScope.$broadcast('setTeaTitle', _title);
         },
         getDescription: function() {
           return _description;
         },
         setDescription: function(description) {
           _description = description ? description : '';
-          $rootScope.$broadcast('setTeaDescription', _description);
+          return $rootScope.$broadcast('setTeaDescription', _description);
         },
     };
 

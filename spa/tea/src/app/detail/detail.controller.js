@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tea')
-  .controller('DetailCtrl', function ($scope, $stateParams, Party, likeService, tdkService, confirmModalService, personListModalService, myService, commentService, attendService) {
+  .controller('DetailCtrl', function ($scope, $stateParams, Party, likeService, tdkService, confirmModalService, personListModalService, myService, commentService, attendService, analyticsService) {
     var id = $stateParams.id;
 
     Party.get({id: id}).$promise.then(function(item){
@@ -45,5 +45,7 @@ angular.module('tea')
           $scope.newComment = '';
         });
       };
+
+      analyticsService.pageTrack();
     });
   });
