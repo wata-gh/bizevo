@@ -3,6 +3,7 @@
   cursor: pointer;
 }
 </style>
+<%= javascript_include_tag 'react/react' %>
 
 <div class="ui teal segment">
   <h1 class="ui header"><%= @article.title %></h1>
@@ -45,6 +46,14 @@
 <div class="ui teal segment">
   <%= @md_text.html_safe %>
 </div>
+
+<script type="text/javascript">
+  var article_id = <%= @article.id %>
+</script>
+<div id="comment_area" class="ui teal segment">
+
+</div>
+<%= javascript_include_tag 'build/comments' %>
 
 <div class="ui small modal">
   <i class="close icon"></i>

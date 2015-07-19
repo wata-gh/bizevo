@@ -29,7 +29,7 @@ Padrino.configure_apps do
   # enable :sessions
   set :session_secret, 'b79c6ed9ef23a967de9da059a599ef1f076589812df924a85efb04020e1318f4'
   set :protection, :except => :path_traversal
-  set :protect_from_csrf, true
+  set :protect_from_csrf, except: %r{/kiita_api}
 end
 
 # Mounts the core application for this project
