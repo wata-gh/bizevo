@@ -117,11 +117,11 @@ Bizevo::App.controllers :kiita do
   end
 
   get :markdown do
-    file = File.open('config/sample.md')
-     @text = file.read
-    file.close
-
-    @md_text = mark_down_parse @text
+    text = ''
+    File.open('config/markdown_sample.md') do |file|
+      text = file.read
+    end
+    @md_text = mark_down_parse text
     render 'kiita/markdown'
   end
 
