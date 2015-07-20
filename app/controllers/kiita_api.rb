@@ -17,10 +17,9 @@ Bizevo::App.controllers :kiita_api do
     ac = ArticleComment.includes(:user)
       .joins(:user)
       .where :article_id => params[:id]
-    return err_res unless ac
-    comments_data = []
-    ac.each do |a|
-      comments_data << {
+    return err_res if ac.blank?
+    comments_data = ac.map do |a|
+      {
         :id => a.id,
         :name => a.user.name,
         :comment => a.comment,

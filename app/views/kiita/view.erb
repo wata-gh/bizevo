@@ -3,6 +3,19 @@
   cursor: pointer;
 }
 </style>
+<script type="text/javascript">
+$(function(){
+  $.ajaxPrefilter(function(options, originalOptions, xhr) {
+    var token;
+    if (!options.crossDomain) {
+      token = $('meta[name="csrf-token"]').attr('content');
+      if (token) {
+        return xhr.setRequestHeader('X-CSRF-Token', token);
+      }
+    }
+  });
+});
+</script>
 <%= javascript_include_tag 'react/react' %>
 
 <div class="ui teal segment">
