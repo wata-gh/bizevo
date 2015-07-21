@@ -1,0 +1,13 @@
+#!/bin/sh
+
+BASE_DIR=$(cd `dirname $0`; pwd)
+cd $BASE_DIR
+
+npm install
+bower install
+if [ -d bower_components/semantic/src/_site ]; then
+  mv bower_components/semantic/src/_site bower_components/semantic/src/site
+fi
+cp bower_components/semantic/src/theme.config.example bower_components/semantic/src/theme.config
+cp -r bower_components/semantic/src/themes public/
+gulp build

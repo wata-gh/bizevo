@@ -8,6 +8,7 @@ source     = require 'vinyl-source-stream'
 browserify = require 'gulp-browserify'
 bower      = require 'gulp-bower'
 gulpFilter = require 'gulp-filter'
+less       = require 'gulp-less'
 
 gulp.task 'js', ->
   gulp
@@ -41,13 +42,15 @@ gulp.task 'js', ->
 gulp.task 'vendor', ->
   jsFilter = gulpFilter '**/*.js'
   cssFilter = gulpFilter '**/*.css'
+  lessFilter = gulpFilter '**/*.less'
   gulp.src(bowerFiles())
   .pipe jsFilter
   .pipe plumber()
   .pipe concat('vendor.js')
   .pipe gulp.dest('./public/javascripts')
   gulp.src(bowerFiles())
-  .pipe cssFilter
+  .pipe lessFilter
+  .pipe less()
   .pipe plumber()
   .pipe concat('vendor.css')
   .pipe gulp.dest('./public/stylesheets')

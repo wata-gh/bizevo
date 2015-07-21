@@ -18,7 +18,8 @@
     "vinyl-source-stream": "~1.0.0",
     "gulp-bower": "~0.0.10",
     "gulp-bower-files": "~0.2.7",
-    "jade": "~1.9.2"
+    "jade": "~1.9.2",
+    "gulp-less": "^3.0.3"
   },
   "devDependencies": {
     "coffee-script": "~1.8.0",

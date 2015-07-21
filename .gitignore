@@ -17,4 +17,5 @@ node_modules
 bower_components
 coverage
 public/tea
+public/themes
 app/views/tea/**/*.erb
