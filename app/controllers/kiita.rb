@@ -116,6 +116,15 @@ Bizevo::App.controllers :kiita do
     render 'kiita/profile'
   end
 
+  get :markdown do
+    text = ''
+    File.open('config/markdown_sample.md') do |file|
+      text = file.read
+    end
+    @md_text = mark_down_parse text
+    render 'kiita/markdown'
+  end
+
   post :search do
     halt 404
   end
